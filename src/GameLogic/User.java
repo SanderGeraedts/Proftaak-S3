@@ -15,8 +15,10 @@ public class User {
 	 * @param email
 	 */
 	public User(int userID, String name, String password, String email) {
-		// TODO - implement User.User
-		throw new UnsupportedOperationException();
+		this.userID = userID;
+                this.name = name;
+                this.password = password;
+                this.email = email;
 	}
 
 }

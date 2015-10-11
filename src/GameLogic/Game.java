@@ -17,8 +17,8 @@ public class Game {
 	 * @param gameState
 	 */
 	public Game(int gameID, int gameState) {
-		// TODO - implement Game.Game
-		throw new UnsupportedOperationException();
+		this.gameID = gameID;
+                this.gameState = gameState;
 	}
         
         

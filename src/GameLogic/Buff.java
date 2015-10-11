@@ -13,8 +13,9 @@ public class Buff {
 	 * @param type
 	 */
 	public Buff(int id, String name, int type) {
-		// TODO - implement Buff.Buff
-		throw new UnsupportedOperationException();
+		this.ID = id;
+                this.Name = name;
+                this.Type = type;
 	}
 
 }

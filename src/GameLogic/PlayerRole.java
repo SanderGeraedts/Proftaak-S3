@@ -13,8 +13,9 @@ public class PlayerRole {
 	 * @param hitpoints
 	 */
 	public PlayerRole(int id, String name, int hitpoints) {
-		// TODO - implement PlayerRole.PlayerRole
-		throw new UnsupportedOperationException();
+		this.ID = id;
+                this.name = name;
+                this.hitpoints = hitpoints;
 	}
 
         /**

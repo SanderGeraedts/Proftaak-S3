@@ -13,8 +13,9 @@ public class PlayerController {
 	 * @param location
 	 */
 	public PlayerController(int state, int direction, int location) {
-		// TODO - implement PlayerController.PlayerController
-		throw new UnsupportedOperationException();
+		this.state = state;
+                this.direction = direction;
+                this.location = location;
 	}
         /*
         *Check if the player is dead. If player life is lower then 1. player is dead.

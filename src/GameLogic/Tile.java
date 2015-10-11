@@ -14,8 +14,10 @@ public class Tile {
 	 * @param sprite
 	 */
 	public Tile(int id, TileType type, String location, String sprite) {
-		// TODO - implement Tile.Tile
-		throw new UnsupportedOperationException();
+		this.ID = id;
+                this.Type = type;
+                this.Location = location;
+                this.Sprite = sprite;
 	}
 
 }

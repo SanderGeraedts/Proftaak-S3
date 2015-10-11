@@ -13,8 +13,8 @@ public class Player {
 	 * @param cooldown
 	 */
 	public Player(int id, int hitpoints, PlayerRole cooldown) {
-		// TODO - implement Player.Player
-		throw new UnsupportedOperationException();
+		this.ID = id;
+                this.hitpoints = hitpoints;
 	}
 
 }

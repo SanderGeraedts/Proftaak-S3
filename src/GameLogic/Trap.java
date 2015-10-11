@@ -13,8 +13,9 @@ public class Trap {
 	 * @param cooldown
 	 */
 	public Trap(int id, int damage, int cooldown) {
-		// TODO - implement Trap.Trap
-		throw new UnsupportedOperationException();
+		this.ID = id;
+                this.damage = damage;
+                this.cooldown = cooldown;
 	}
 
         /**

@@ -11,8 +11,8 @@ public class Maze {
 	 * @param mazeSize
 	 */
 	public Maze(int mazeID, int mazeSize) {
-		// TODO - implement Maze.Maze
-		throw new UnsupportedOperationException();
+		this.mazeID = mazeID;
+                this.mazeSize = mazeSize;
 	}
 
         /*
