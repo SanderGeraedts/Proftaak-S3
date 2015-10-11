@@ -17,11 +17,11 @@ public class Ability {
 	 * @param cooldownTimer
 	 */
 	public Ability(int id, String name, int damage, String spriteID, int cooldownTimer) {
-	this.id = id;
-        this.name = name;
-        this.damage = damage;
-        this.spriteID = spriteID;
-	this.cooldownTimer = cooldownTimer;
+            this.id = id;
+            this.name = name;
+            this.damage = damage;
+            this.spriteID = spriteID;
+            this.cooldownTimer = cooldownTimer;
         }
 
 }
