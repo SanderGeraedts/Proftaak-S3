@@ -1,5 +1,5 @@
 package GameLogic;
 
-public enum TileType {
+public enum Block {
 	Solid, Empty, Buff, Trap
 }

@@ -6,7 +6,7 @@ package GameLogicTests;
  * and open the template in the editor.
  */
 
-import GameLogic.TileType;
+import GameLogic.Block;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,27 +40,27 @@ public class TileTypeTest {
     }
 
     /**
-     * Test of values method, of class TileType.
+     * Test of values method, of class Block.
      */
     @Test
     public void testValues() {
         System.out.println("values");
-        TileType[] expResult = null;
-        TileType[] result = TileType.values();
+        Block[] expResult = null;
+        Block[] result = Block.values();
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of valueOf method, of class TileType.
+     * Test of valueOf method, of class Block.
      */
     @Test
     public void testValueOf() {
         System.out.println("valueOf");
         String name = "";
-        TileType expResult = null;
-        TileType result = TileType.valueOf(name);
+        Block expResult = null;
+        Block result = Block.valueOf(name);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
