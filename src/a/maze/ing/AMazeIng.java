@@ -25,7 +25,7 @@ import javafx.stage.Stage;
  * @author Hovsep
  */
 public class AMazeIng extends Application {
-    static int spritesize = 64;
+    static int spritesize = 16;
     @Override
     public void start(Stage primaryStage) 
     {
@@ -34,7 +34,7 @@ public class AMazeIng extends Application {
         Group poepgroep = new Group(poepnode);
         
         
-        Maze testmaze = new Maze(48, 2, 76);
+        Maze testmaze = new Maze(100, 2, 200);
         testmaze.printMaze(); 
         
         Block[][] mazegrid = testmaze.GetGrid();
@@ -54,10 +54,20 @@ public class AMazeIng extends Application {
                 switch(mazegrid[y][x])
                 {
                     case SOLID:
-                        Image img = Sprite.LoadSprite("Resources/WallSprite.jpg");
-                        images.add(img);
-                        nodes.add(new ImageView(img));
+                        //System.out.println("Drawing wall");
+                        Image sol = Sprite.LoadSprite("Resources/WallSprite.jpg");
+                        images.add(sol);
+                        Node wpos = new ImageView(sol);
+                        wpos.relocate(x*spritesize, y*spritesize);
+                        nodes.add(wpos);
+                        break;
                     case OPEN:
+                        //System.out.println("Drawing floor");
+                        Image ope = Sprite.LoadSprite("Resources/FloorSprite.jpg");
+                        images.add(ope);
+                        Node opos = new ImageView(ope);
+                        opos.relocate(x*spritesize, y*spritesize);
+                        nodes.add(opos);
                         break;
                     case OBSTACLE:
                         break;
@@ -80,7 +90,8 @@ public class AMazeIng extends Application {
         root.getChildren().add(btn);
         */
         //StackPane root = new StackPane();
-        Scene scene = new Scene(group, 300, 250, Color.DARKSALMON);
+        
+        Scene scene = new Scene(group, testmaze.getGridSize()*spritesize, testmaze.getGridSize()*spritesize, Color.DARKSALMON);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
