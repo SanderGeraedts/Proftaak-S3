@@ -29,6 +29,11 @@ public class Sprite {
         
     }
     
+    public Image LoadSprite(String path) {
+        Image img = new Image(path);
+        return img;
+    }
+    
     /**
      * 
      * @param w - width of the spritesheet
