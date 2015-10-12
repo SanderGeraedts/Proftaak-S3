@@ -29,7 +29,7 @@ public class Sprite {
         
     }
     
-    public Image LoadSprite(String path) {
+    public static Image LoadSprite(String path) {
         Image img = new Image(path);
         return img;
     }

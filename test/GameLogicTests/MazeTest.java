@@ -1,10 +1,9 @@
-package GameLogicTests;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package GameLogicTests;
 
 import GameLogic.Maze;
 import org.junit.After;
@@ -16,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kasper
+ * @author Robin
  */
 public class MazeTest {
     
@@ -40,13 +39,13 @@ public class MazeTest {
     }
 
     /**
-     * Test of generateMaze method, of class Maze.
+     * Test of printMaze method, of class Maze.
      */
     @Test
-    public void testGenerateMaze() {
-        System.out.println("generateMaze");
+    public void testPrintMaze() {
+        System.out.println("printMaze");
         Maze instance = null;
-        instance.generateMaze();
+        instance.printMaze();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

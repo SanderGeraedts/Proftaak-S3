@@ -1,5 +1,8 @@
 package GameLogic;
 
-public enum Block {
-	Solid, Empty, Buff, Trap
+public enum Block 
+{
+    SOLID,
+    OPEN,
+    OBSTACLE
 }
