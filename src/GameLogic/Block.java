@@ -4,5 +4,5 @@ public enum Block
 {
     SOLID,
     OPEN,
-    OBSTACLE
+    SPAWNPOINT
 }
