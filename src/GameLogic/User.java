@@ -10,14 +10,20 @@ public class User {
     private Stat stats;
 
     /**
-     * Constructor for User
+     * Constructor for User If stats is null stats must be created.
      *
      * @param userID Cannot be null and must be unique.
      * @param name Cannot be null and must be unique.
      * @param email Cannot be null.
+     * @param stats can be null.
      */
-    public User(int userID, String name, String email) {
+    public User(int userID, String name, String email, Stat stats) {
         throw new NotImplementedException();
+    }
+    
+    public int getStatID()
+    {
+        return stats.getStatsID();
     }
 
     public int getUserID() {

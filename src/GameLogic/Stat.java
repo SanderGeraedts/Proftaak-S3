@@ -4,7 +4,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Stat class used in User
- * 
+ *
  * @author Roy
  */
 public class Stat {
@@ -15,12 +15,13 @@ public class Stat {
     private int totalKills;
     private int totalDeaths;
     private int rating;
-    
+    //todo rating
 
     /**
      * Constructor for Stat
+     *
      * @param statsid must be identical to userID
-     * @param totalwins 
+     * @param totalwins
      * @param totallosses
      * @param totalkills
      * @param totaldeaths
