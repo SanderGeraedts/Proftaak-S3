@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Hovsep
+ * @author Kasper
  */
 public class AMazeIng extends Application {
     static int spritesize = 16;
