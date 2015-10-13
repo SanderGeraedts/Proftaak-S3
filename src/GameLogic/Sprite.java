@@ -29,8 +29,8 @@ public class Sprite {
         
     }
     
-    public static Image LoadSprite(String path) {
-        Image img = new Image(path, 16, 16, false, false);
+    public static Image LoadSprite(String path, int width, int height) {
+        Image img = new Image(path, width, height, false, false);
         return img;
     }
     

@@ -7,6 +7,7 @@ package a.maze.ing;
 
 import GameLogic.*;
 import java.util.ArrayList;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,8 +17,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
@@ -26,26 +29,46 @@ import javafx.stage.Stage;
  */
 public class AMazeIng extends Application {
     static int spritesize = 16;
+    
+    private String pressedKey = "";
+    
+    private Boolean upPressed = false;
+    private Boolean downPressed = false;
+    private Boolean leftPressed = false;
+    private Boolean rightPressed = false;
+    
+    private Image imgCharacter;
+    private Node nodCharacter;
+    private Rectangle recCharacter;
+    
+    private String key;
+    
+    public Group group;
+    
+    public ArrayList<Node> nodes;
+    
+    public Scene scene;
+    
+    public PlayerController pController;
+    
+    //PlayerController
+    
     @Override
     public void start(Stage primaryStage) 
-    {
-        Image poep = Sprite.LoadSprite("Resources/WallSprite.jpg");
-        Node poepnode = new ImageView(poep);
-        Group poepgroep = new Group(poepnode);
+    {        
+        Image imgWall = Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16);
+        Node nodWall = new ImageView(imgWall);
+        Group groupWall = new Group(nodWall);
         
         
-        Maze testmaze = new Maze(64, 2, 64);
+        Maze testmaze = new Maze(24, 2, 100);
         testmaze.printMaze(); 
         
         Block[][] mazegrid = testmaze.GetGrid();
         
         
         ArrayList<Image> images = new ArrayList<Image>();
-        ArrayList<Node> nodes = new ArrayList<Node>();
-        Group group;
-        
-        
-        
+        nodes = new ArrayList<Node>();        
         
         for(int y=0; y<testmaze.getGridSize(); y++)
         {
@@ -55,7 +78,7 @@ public class AMazeIng extends Application {
                 {
                     case SOLID:
                         //System.out.println("Drawing wall");
-                        Image sol = Sprite.LoadSprite("Resources/WallSprite.jpg");
+                        Image sol = Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16);
                         images.add(sol);
                         Node wpos = new ImageView(sol);
                         wpos.relocate(x*spritesize, y*spritesize);
@@ -63,14 +86,14 @@ public class AMazeIng extends Application {
                         break;
                     case OPEN:
                         //System.out.println("Drawing floor");
-                        Image ope = Sprite.LoadSprite("Resources/FloorSprite.jpg");
+                        Image ope = Sprite.LoadSprite("Resources/FloorSprite.jpg", 16, 16);
                         images.add(ope);
                         Node opos = new ImageView(ope);
                         opos.relocate(x*spritesize, y*spritesize);
                         nodes.add(opos);
                         break;
                     case SPAWNPOINT:
-                        Image spp = Sprite.LoadSprite("Resources/SpawnPoint.jpg");
+                        Image spp = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 16, 16);
                         images.add(spp);
                         Node sppp = new ImageView(spp);
                         sppp.relocate(x*spritesize, y*spritesize);
@@ -80,6 +103,14 @@ public class AMazeIng extends Application {
                 }
             }
         }
+        
+        //pController = new PlayerController(this);
+        
+        //PlayerController
+        imgCharacter = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 10, 10);
+        nodCharacter = new ImageView(imgCharacter);
+        nodes.add(nodCharacter);        
+        
         group = new Group(nodes);
         
         
@@ -96,11 +127,106 @@ public class AMazeIng extends Application {
         */
         //StackPane root = new StackPane();
         
-        Scene scene = new Scene(group, testmaze.getGridSize()*spritesize, testmaze.getGridSize()*spritesize, Color.DARKSALMON);
+        scene = new Scene(group, testmaze.getGridSize()*spritesize, testmaze.getGridSize()*spritesize, Color.DARKSALMON);
+        
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                System.out.println(event.getCode());
+                switch (event.getCode()) {
+                    case A:
+                        leftPressed = true;
+                        System.out.println("A pressed");
+                        break;
+                    case D:
+                        rightPressed = true;
+                        System.out.println("D pressed");
+                        break;
+                    case W:
+                        upPressed = true;
+                        System.out.println("W pressed");
+                        break;
+                    case S:
+                        downPressed = true;
+                        System.out.println("S pressed");
+                        break;
+                }
+            }
+
+        });
+
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                System.out.println(event.getCode());
+                switch (event.getCode()) {
+                    case A:
+                        leftPressed = false;
+                        System.out.println("A released");
+                        break;
+                    case D:
+                        rightPressed = false;
+                        System.out.println("D released");
+                        break;
+                    case W:
+                        upPressed = false;
+                        System.out.println("W released");
+                        break;
+                    case S:
+                        downPressed = false;
+                        System.out.println("S released");
+                        break;
+                }
+            }                        
+        });        
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        AnimationTimer timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    int dx = 0, dy = 0;
+                    //System.out.println("Pressed key: " + pressedKey);
+
+                    //System.out.println(recCharacter.getLayoutX() + " + " + recCharacter.getLayoutY());
+
+                    if (leftPressed) {
+                        dx -= 1;
+                        key = "A";
+                    } else if (rightPressed) {
+                        dx += 1;
+                        key = "D";
+                    } else if (downPressed) {
+                        dy += 1;
+                        key = "S";
+                    } else if (upPressed) {
+                        dy -= 1;
+                        key = "W";
+                    }
+                    moveImage(dx, dy);
+//                else {
+//                    switch(key){
+//                        case "A":
+//                            dx += 1;
+//                            break;
+//                        case "D": 
+//                            dx -= 1;
+//                            break;
+//                        case "S":
+//                            dy -= 1;
+//                            break;
+//                        case "W":
+//                            dy += 1;
+//                            break;
+//                        default:
+//                            break;
+//                    }
+
+                }
+            };
+        timer.start();
     }
 
     /**
@@ -111,6 +237,33 @@ public class AMazeIng extends Application {
         launch(args);
 
         
+    }
+    
+    private void moveImage(int dx, int dy) {
+        if (dx == 0 && dy == 0) {
+            return;
+        }
+
+        final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;
+        final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;
+
+        double x = cx + nodCharacter.getLayoutX() + dx * 4.40f;
+        double y = cy + nodCharacter.getLayoutY() + dy * 4.40f;
+
+        moveImgTo(x, y);
+    }
+
+    private void moveImgTo(double x, double y) {
+        final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;
+        final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;
+        System.out.println("x: " + x + " - y: " + y);
+        if (x - cx >= 0
+                && x + cx <= 600
+                && y - cy >= 0
+                && y + cy <= 800) {
+            nodCharacter.relocate(x - cx, y - cy);
+            recCharacter = new Rectangle((int) nodCharacter.getLayoutX(), (int) nodCharacter.getLayoutY(), 236, 236);
+        }
     }
     
 }

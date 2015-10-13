@@ -42,7 +42,7 @@ public class Maze {
         this.sprites = new ArrayList<Image>();
         this.spawnPoints = new ArrayList<SpawnPoint>();
         
-        sprites.add(Sprite.LoadSprite("Resources/WallSprite.jpg"));
+        sprites.add(Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16));
         
         
         //Starting off with nothing
