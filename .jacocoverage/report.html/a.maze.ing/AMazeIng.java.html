@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AMazeIng.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">a.maze.ing</a> &gt; <span class="el_source">AMazeIng.java</span></div><h1>AMazeIng.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package a.maze.ing;
+
+import GameLogic.*;
+import java.util.ArrayList;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+/**
+ *
+ * @author Hovsep
+ */
+<span class="nc" id="L27">public class AMazeIng extends Application {</span>
+<span class="nc" id="L28">    static int spritesize = 16;</span>
+    @Override
+    public void start(Stage primaryStage) 
+    {
+<span class="nc" id="L32">        Image poep = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;);</span>
+<span class="nc" id="L33">        Node poepnode = new ImageView(poep);</span>
+<span class="nc" id="L34">        Group poepgroep = new Group(poepnode);</span>
+        
+        
+<span class="nc" id="L37">        Maze testmaze = new Maze(100, 2, 200);</span>
+<span class="nc" id="L38">        testmaze.printMaze(); </span>
+        
+<span class="nc" id="L40">        Block[][] mazegrid = testmaze.GetGrid();</span>
+        
+        
+<span class="nc" id="L43">        ArrayList&lt;Image&gt; images = new ArrayList&lt;Image&gt;();</span>
+<span class="nc" id="L44">        ArrayList&lt;Node&gt; nodes = new ArrayList&lt;Node&gt;();</span>
+        Group group;
+        
+        
+        
+        
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for(int y=0; y&lt;testmaze.getGridSize(); y++)</span>
+        {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">            for(int x=0; x&lt;testmaze.getGridSize(); x++)</span>
+            {
+<span class="nc bnc" id="L54" title="All 3 branches missed.">                switch(mazegrid[y][x])</span>
+                {
+                    case SOLID:
+                        //System.out.println(&quot;Drawing wall&quot;);
+<span class="nc" id="L58">                        Image sol = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;);</span>
+<span class="nc" id="L59">                        images.add(sol);</span>
+<span class="nc" id="L60">                        Node wpos = new ImageView(sol);</span>
+<span class="nc" id="L61">                        wpos.relocate(x*spritesize, y*spritesize);</span>
+<span class="nc" id="L62">                        nodes.add(wpos);</span>
+<span class="nc" id="L63">                        break;</span>
+                    case OPEN:
+                        //System.out.println(&quot;Drawing floor&quot;);
+<span class="nc" id="L66">                        Image ope = Sprite.LoadSprite(&quot;Resources/FloorSprite.jpg&quot;);</span>
+<span class="nc" id="L67">                        images.add(ope);</span>
+<span class="nc" id="L68">                        Node opos = new ImageView(ope);</span>
+<span class="nc" id="L69">                        opos.relocate(x*spritesize, y*spritesize);</span>
+<span class="nc" id="L70">                        nodes.add(opos);</span>
+<span class="nc" id="L71">                        break;</span>
+                    case OBSTACLE:
+                        break;
+                            
+                }
+            }
+        }
+<span class="nc" id="L78">        group = new Group(nodes);</span>
+        
+        
+        /*Button btn = new Button();
+        btn.setText(&quot;Say 'Hello World'&quot;);
+        btn.setOnAction(new EventHandler&lt;ActionEvent&gt;() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println(&quot;Hello World!&quot;);
+            }
+        });
+        root.getChildren().add(btn);
+        */
+        //StackPane root = new StackPane();
+        
+<span class="nc" id="L94">        Scene scene = new Scene(group, testmaze.getGridSize()*spritesize, testmaze.getGridSize()*spritesize, Color.DARKSALMON);</span>
+        
+<span class="nc" id="L96">        primaryStage.setTitle(&quot;Hello World!&quot;);</span>
+<span class="nc" id="L97">        primaryStage.setScene(scene);</span>
+<span class="nc" id="L98">        primaryStage.show();</span>
+<span class="nc" id="L99">    }</span>
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+<span class="nc" id="L106">        launch(args);</span>
+
+        
+<span class="nc" id="L109">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
