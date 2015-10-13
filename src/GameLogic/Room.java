@@ -18,7 +18,7 @@ public class Room
 {
     public final Rectangle area;
     public int nrOfConnections;
-    public static int roomOffset= 4;
+    public static int roomOffset= 6;
     
     public Room(int x, int y, int w, int h)
     {
