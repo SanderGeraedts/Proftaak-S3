@@ -34,7 +34,7 @@ public class AMazeIng extends Application {
         Group poepgroep = new Group(poepnode);
         
         
-        Maze testmaze = new Maze(100, 2, 200);
+        Maze testmaze = new Maze(64, 2, 64);
         testmaze.printMaze(); 
         
         Block[][] mazegrid = testmaze.GetGrid();
