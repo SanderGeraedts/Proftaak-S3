@@ -70,7 +70,7 @@ public class Maze {
             }
         }
         
-        drawHallways();
+        drawHallways(3);
     }
     private void drawRoom(Room r)
     {
@@ -125,47 +125,95 @@ public class Maze {
         }
     }
     
-    private void drawHallways()
+    private void drawHallways(int nrOfHallways)
     { 
         
         for(Room room : finRooms){
                 
             Room roomShort1 = null;
             Room roomShort2 = null;
+            Room roomShort3 = null;
 
             double room1Length = 0;
             double room2Length = 0;
+            double room3Length = 0;
+            
+            if(nrOfHallways == 2){
+                for(Room r2 : finRooms){
+                    double length = r2.CalcLength(room);
+                    //check if room and r2 aren't the same and if r2 has less than 2 connections
+                    if(room != r2){
+                        if(length < room1Length || room1Length == 0){
+                            //set shortest room to 2nd shortest room
+                            roomShort2 = roomShort1;
+                            room2Length = room1Length;
 
-            for(Room r2 : finRooms){
-                double length = r2.CalcLength(room);
-                //check if room and r2 aren't the same and if r2 has less than 2 connections
-                if(room != r2){
-                    if(length < room1Length || room1Length == 0){
-                        //set shortest room to 2nd shortest room
-                        roomShort2 = roomShort1;
-                        room2Length = room1Length;
-
-                        //set shortest room to current room
-                        roomShort1 = r2;
-                        room1Length = length;
-                    }
-                    else if(room1Length < length && length < room2Length || room2Length==0){
-                        //set 2nd shortest room to current room
-                        roomShort2 = r2;
-                        room2Length = length;
+                            //set shortest room to current room
+                            roomShort1 = r2;
+                            room1Length = length;
+                        }
+                        else if(room1Length < length && length < room2Length || room2Length==0){
+                            //set 2nd shortest room to current room
+                            roomShort2 = r2;
+                            room2Length = length;
+                        }
                     }
                 }
-            }
 
-            //draw hallway
-            try{
-                drawHallway(room, roomShort1);
-                drawHallway(room, roomShort2);
+                //draw hallway
+                try{
+                    drawHallway(room, roomShort1);
+                    drawHallway(room, roomShort2);
+                }
+                catch(NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
-            catch(NullPointerException e){
-                System.out.println(e.getMessage());
+            if(nrOfHallways == 3){
+                for(Room r2 : finRooms){
+                    double length = r2.CalcLength(room);
+                    //check if room and r2 aren't the same and if r2 has less than 2 connections
+                    if(room != r2){
+                        if(length < room1Length || room1Length == 0){
+                            //set 2nd shortest room to 3rd shortest room
+                            roomShort3 = roomShort2;
+                            room3Length = room2Length;
+
+                            //set shortest room to 2nd shortest room
+                            roomShort2 = roomShort1;
+                            room2Length = room1Length;
+
+                            //set shortest room to current room
+                            roomShort1 = r2;
+                            room1Length = length;
+                        }
+                        else if(room1Length < length && length < room2Length || room2Length==0){
+                            //set 2nd shortest room to 3rd shortest room
+                            roomShort3 = roomShort2;
+                            room3Length = room2Length;
+
+                            //set 2nd shortest room to current room
+                            roomShort2 = r2;
+                            room2Length = length;
+                        }
+                        else if(room2Length < length && length < room3Length || room3Length==0){
+                            //set 3rd shortest room to current room
+                            roomShort3 = r2;
+                            room3Length = length;
+                        }
+                    }
+                }
+
+                //draw hallway
+                try{
+                    drawHallway(room, roomShort1);
+                    drawHallway(room, roomShort2);
+                    drawHallway(room, roomShort3);
+                }
+                catch(NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
-            
         }
     }
     
@@ -183,7 +231,7 @@ public class Maze {
                     line += " \u25A1 ";
                 }
                 if(grid[y][x] == Block.OBSTACLE){
-                    line += " Z ";
+                    line += " X ";
                 }
             }
             System.out.println(line);
