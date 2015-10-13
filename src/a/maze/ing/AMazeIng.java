@@ -41,6 +41,8 @@ public class AMazeIng extends Application {
     private Node nodCharacter;
     private Rectangle recCharacter;
     
+    private Node sppp;
+    
     private String key;
     
     public Group group;
@@ -95,7 +97,7 @@ public class AMazeIng extends Application {
                     case SPAWNPOINT:
                         Image spp = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 16, 16);
                         images.add(spp);
-                        Node sppp = new ImageView(spp);
+                        sppp = new ImageView(spp);
                         sppp.relocate(x*spritesize, y*spritesize);
                         nodes.add(sppp);
                         break;
@@ -106,9 +108,17 @@ public class AMazeIng extends Application {
         
         //pController = new PlayerController(this);
         
+        
         //PlayerController
+        double tempDoubleX = 0;
+        double tempDoubleY = 0;
+        if (nodes.contains(sppp)){
+            tempDoubleX = sppp.getLayoutX();
+            tempDoubleY = sppp.getLayoutY();
+        }
         imgCharacter = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 10, 10);
         nodCharacter = new ImageView(imgCharacter);
+        nodCharacter.relocate(tempDoubleX, tempDoubleY);
         nodes.add(nodCharacter);        
         
         group = new Group(nodes);
@@ -180,7 +190,7 @@ public class AMazeIng extends Application {
             }                        
         });        
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("a-MAZE-ing");
         primaryStage.setScene(scene);
         primaryStage.show();
         
@@ -247,8 +257,8 @@ public class AMazeIng extends Application {
         final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;
         final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;
 
-        double x = cx + nodCharacter.getLayoutX() + dx * 4.40f;
-        double y = cy + nodCharacter.getLayoutY() + dy * 4.40f;
+        double x = cx + nodCharacter.getLayoutX() + dx * 2.40f;
+        double y = cy + nodCharacter.getLayoutY() + dy * 2.40f;
 
         moveImgTo(x, y);
     }
