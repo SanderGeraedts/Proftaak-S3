@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Hovsep
+ * @author Kasper
  */
 public class AMazeIng extends Application {
     static int spritesize = 16;
@@ -69,7 +69,12 @@ public class AMazeIng extends Application {
                         opos.relocate(x*spritesize, y*spritesize);
                         nodes.add(opos);
                         break;
-                    case OBSTACLE:
+                    case SPAWNPOINT:
+                        Image spp = Sprite.LoadSprite("Resources/SpawnPoint.jpg");
+                        images.add(spp);
+                        Node sppp = new ImageView(spp);
+                        sppp.relocate(x*spritesize, y*spritesize);
+                        nodes.add(sppp);
                         break;
                             
                 }

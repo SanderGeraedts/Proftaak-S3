@@ -25,6 +25,9 @@ public class Maze {
         private final int roomTries;
         private ArrayList<Room> finRooms;
         
+        //Spawnpoints:
+        private ArrayList<SpawnPoint> spawnPoints;
+        
         //Graphics
         private final List<Image> sprites;
     
@@ -37,6 +40,7 @@ public class Maze {
         this.roomTries = roomtries;
         this.finRooms = new ArrayList<Room>();
         this.sprites = new ArrayList<Image>();
+        this.spawnPoints = new ArrayList<SpawnPoint>();
         
         sprites.add(Sprite.LoadSprite("Resources/WallSprite.jpg"));
         
@@ -71,7 +75,53 @@ public class Maze {
         }
         
         drawHallways(3);
+        
+        placeSpawnPoints(4);
     }
+    
+    private void placeSpawnPoints(int amount)
+    {
+        ArrayList<Room> spawnRooms = new ArrayList<Room>();
+        for(int i=0; i<amount; i++)
+        {
+            if(i==0)
+            {
+                int idx = newRand(finRooms.size());
+                Room r = finRooms.get(idx);
+
+                int sX = r.area.x + (r.area.width/2);
+                int sY = r.area.y + (r.area.height/2);
+
+                SpawnPoint sp = new SpawnPoint(sX, sY);
+                spawnPoints.add(sp);  
+                spawnRooms.add(r);
+                grid[sY][sX] = Block.SPAWNPOINT;
+            }
+            else
+            {
+                int idx = newRand(finRooms.size());
+                Room r = finRooms.get(idx);
+                
+                if(!spawnRooms.contains(r))
+                {
+                    int sX = r.area.x + (r.area.width/2);
+                    int sY = r.area.y + (r.area.height/2);
+
+                    SpawnPoint sp = new SpawnPoint(sX, sY);
+                    spawnPoints.add(sp);
+                    spawnRooms.add(r);
+                    grid[sY][sX] = Block.SPAWNPOINT;
+                }
+                else
+                {
+                    i--;
+                    continue;
+                }
+            }
+
+        }
+    }
+    
     private void drawRoom(Room r)
     {
         Rectangle rec = r.area;
@@ -230,7 +280,7 @@ public class Maze {
                 if(grid[y][x] == Block.OPEN){
                     line += " \u25A1 ";
                 }
-                if(grid[y][x] == Block.OBSTACLE){
+                if(grid[y][x] == Block.SPAWNPOINT){
                     line += " X ";
                 }
             }
