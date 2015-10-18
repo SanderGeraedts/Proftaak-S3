@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Maze.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">GameLogic</a> &gt; <span class="el_source">Maze.java</span></div><h1>Maze.java</h1><pre class="source lang-java linenums">package GameLogic;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Maze.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">GameLogic</a> &gt; <span class="el_source">Maze.java</span></div><h1>Maze.java</h1><pre class="source lang-java linenums">package GameLogic;
 
 import GameLogic.*;
 import java.awt.Rectangle;
@@ -25,206 +25,299 @@ public class Maze {
         private final int roomTries;
         private ArrayList&lt;Room&gt; finRooms;
         
+        //Spawnpoints:
+        private ArrayList&lt;SpawnPoint&gt; spawnPoints;
+        
         //Graphics
         private final List&lt;Image&gt; sprites;
     
     public Maze(int gridsize, int roomsize, int roomtries)
-<span class="nc" id="L32">    {</span>
-<span class="nc" id="L33">        this.gridSize = gridsize;</span>
-<span class="nc" id="L34">        this.grid = new Block[gridsize][gridsize]; //Y-X</span>
-<span class="nc" id="L35">        this.rand = new Random();</span>
-<span class="nc" id="L36">        this.roomSize = roomsize;</span>
-<span class="nc" id="L37">        this.roomTries = roomtries;</span>
-<span class="nc" id="L38">        this.finRooms = new ArrayList&lt;Room&gt;();</span>
-<span class="nc" id="L39">        this.sprites = new ArrayList&lt;Image&gt;();</span>
+<span class="nc" id="L35">    {</span>
+<span class="nc" id="L36">        this.gridSize = gridsize;</span>
+<span class="nc" id="L37">        this.grid = new Block[gridsize][gridsize]; //Y-X</span>
+<span class="nc" id="L38">        this.rand = new Random();</span>
+<span class="nc" id="L39">        this.roomSize = roomsize;</span>
+<span class="nc" id="L40">        this.roomTries = roomtries;</span>
+<span class="nc" id="L41">        this.finRooms = new ArrayList&lt;Room&gt;();</span>
+<span class="nc" id="L42">        this.sprites = new ArrayList&lt;Image&gt;();</span>
+<span class="nc" id="L43">        this.spawnPoints = new ArrayList&lt;SpawnPoint&gt;();</span>
         
-<span class="nc" id="L41">        sprites.add(Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;));</span>
+<span class="nc" id="L45">        sprites.add(Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;, 16, 16));</span>
         
         
         //Starting off with nothing
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        for(Block[] row : grid)</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        for(Block[] row : grid)</span>
         {
-<span class="nc" id="L47">            Arrays.fill(row, Block.SOLID);</span>
+<span class="nc" id="L51">            Arrays.fill(row, Block.SOLID);</span>
         }
-<span class="nc bnc" id="L49" title="All 2 branches missed.">        for(int i=0; i&lt;roomTries; i++)</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        for(int i=0; i&lt;roomTries; i++)</span>
         {
-<span class="nc" id="L51">            Room r = generateRoom();</span>
+<span class="nc" id="L55">            Room r = generateRoom();</span>
             //System.out.println(&quot;Room genned. X: &quot; + r.area.x + &quot; Y: &quot; + r.area.y + &quot; X2: &quot; + (r.area.x+r.area.width) + &quot; Y2: &quot; + (r.area.y+r.area.height));
-<span class="nc" id="L53">            boolean overlap = false;</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">            for(Room s : finRooms)</span>
+<span class="nc" id="L57">            boolean overlap = false;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            for(Room s : finRooms)</span>
             {
-<span class="nc bnc" id="L56" title="All 2 branches missed.">                if(r.OverLapsWith(s))</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">                if(r.OverLapsWith(s))</span>
                 {
                     //System.out.println(&quot;Room overlaps&quot;);
-<span class="nc" id="L59">                    overlap = true;</span>
+<span class="nc" id="L63">                    overlap = true;</span>
                 }
-<span class="nc" id="L61">            }</span>
+<span class="nc" id="L65">            }</span>
             
-<span class="nc bnc" id="L63" title="All 2 branches missed.">            if(overlap)</span>
-<span class="nc" id="L64">                continue;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            if(overlap)</span>
+<span class="nc" id="L68">                continue;</span>
             else
             {
-<span class="nc" id="L67">                finRooms.add(r);</span>
+<span class="nc" id="L71">                finRooms.add(r);</span>
                 //System.out.println(&quot;Room drawed&quot;);
-<span class="nc" id="L69">                drawRoom(r);</span>
+<span class="nc" id="L73">                drawRoom(r);</span>
             }
         }
         
-<span class="nc" id="L73">        drawHallways();</span>
-<span class="nc" id="L74">    }</span>
+<span class="nc" id="L77">        drawHallways(3);</span>
+        
+<span class="nc" id="L79">        placeSpawnPoints(4);</span>
+<span class="nc" id="L80">    }</span>
+    
+    private void placeSpawnPoints(int amount)
+    {
+<span class="nc" id="L84">        ArrayList&lt;Room&gt; spawnRooms = new ArrayList&lt;Room&gt;();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        for(int i=0; i&lt;amount; i++)</span>
+        {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">            if(i==0)</span>
+            {
+<span class="nc" id="L89">                int idx = newRand(finRooms.size());</span>
+<span class="nc" id="L90">                Room r = finRooms.get(idx);</span>
+
+<span class="nc" id="L92">                int sX = r.area.x + (r.area.width/2);</span>
+<span class="nc" id="L93">                int sY = r.area.y + (r.area.height/2);</span>
+
+<span class="nc" id="L95">                SpawnPoint sp = new SpawnPoint(sX, sY);</span>
+<span class="nc" id="L96">                spawnPoints.add(sp);  </span>
+<span class="nc" id="L97">                spawnRooms.add(r);</span>
+<span class="nc" id="L98">                grid[sY][sX] = Block.SPAWNPOINT;</span>
+<span class="nc" id="L99">            }</span>
+            else
+            {
+<span class="nc" id="L102">                int idx = newRand(finRooms.size());</span>
+<span class="nc" id="L103">                Room r = finRooms.get(idx);</span>
+                
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                if(!spawnRooms.contains(r))</span>
+                {
+<span class="nc" id="L107">                    int sX = r.area.x + (r.area.width/2);</span>
+<span class="nc" id="L108">                    int sY = r.area.y + (r.area.height/2);</span>
+
+<span class="nc" id="L110">                    SpawnPoint sp = new SpawnPoint(sX, sY);</span>
+<span class="nc" id="L111">                    spawnPoints.add(sp);</span>
+<span class="nc" id="L112">                    spawnRooms.add(r);</span>
+<span class="nc" id="L113">                    grid[sY][sX] = Block.SPAWNPOINT;</span>
+<span class="nc" id="L114">                }</span>
+                else
+                {
+<span class="nc" id="L117">                    i--;</span>
+<span class="nc" id="L118">                    continue;</span>
+                }
+            }
+
+        }
+<span class="nc" id="L123">    }</span>
+    
     private void drawRoom(Room r)
     {
-<span class="nc" id="L77">        Rectangle rec = r.area;</span>
-<span class="nc" id="L78">        System.out.println(&quot;Starting draw&quot;);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">        for(int y=rec.y; y&lt;rec.y+rec.height; y++)</span>
+<span class="nc" id="L127">        Rectangle rec = r.area;</span>
+<span class="nc" id="L128">        System.out.println(&quot;Starting draw&quot;);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for(int y=rec.y; y&lt;rec.y+rec.height; y++)</span>
         {
-<span class="nc bnc" id="L81" title="All 2 branches missed.">            for(int x= rec.x; x&lt;rec.x+rec.width; x++)</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            for(int x= rec.x; x&lt;rec.x+rec.width; x++)</span>
             {
-<span class="nc" id="L83">                System.out.println(&quot;Grid X:&quot; + x + &quot; Y:&quot; + y);</span>
-<span class="nc" id="L84">                grid[y][x]= Block.OPEN;</span>
+<span class="nc" id="L133">                System.out.println(&quot;Grid X:&quot; + x + &quot; Y:&quot; + y);</span>
+<span class="nc" id="L134">                grid[y][x]= Block.OPEN;</span>
             }
         }
-<span class="nc" id="L87">    }</span>
+<span class="nc" id="L137">    }</span>
     
     private void drawHallway(Room r1, Room r2){
-<span class="nc" id="L90">        int x = 0;</span>
-<span class="nc" id="L91">        int y = 0;</span>
+<span class="nc" id="L140">        int x = 0;</span>
+<span class="nc" id="L141">        int y = 0;</span>
         
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        if(r1.area.x &lt; r2.area.x){</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if(r1.area.x &lt; r2.area.x){</span>
             
-<span class="nc bnc" id="L95" title="All 2 branches missed.">            for(x = r1.area.x; x&lt;=r2.area.x; x++){</span>
-<span class="nc" id="L96">                y = r1.area.y;</span>
-<span class="nc" id="L97">                grid[y][x] = Block.OPEN;</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">            for(x = r1.area.x; x&lt;=r2.area.x; x++){</span>
+<span class="nc" id="L146">                y = r1.area.y;</span>
+<span class="nc" id="L147">                grid[y][x] = Block.OPEN;</span>
             }
-<span class="nc bnc" id="L99" title="All 2 branches missed.">            if(y &lt; r2.area.y){</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">                for(y = r1.area.y; y &lt;= r2.area.y; y++){</span>
-<span class="nc" id="L101">                    grid[y][x] = Block.OPEN;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">            if(y &lt; r2.area.y){</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">                for(y = r1.area.y; y &lt;= r2.area.y; y++){</span>
+<span class="nc" id="L151">                    grid[y][x] = Block.OPEN;</span>
                 }
             }
             else{
-<span class="nc bnc" id="L105" title="All 2 branches missed.">                for(y = r1.area.y; y &gt;= r2.area.y; y--){</span>
-<span class="nc" id="L106">                    grid[y][x] = Block.OPEN;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">                for(y = r1.area.y; y &gt;= r2.area.y; y--){</span>
+<span class="nc" id="L156">                    grid[y][x] = Block.OPEN;</span>
                 }
             }
         }
         else{
-<span class="nc bnc" id="L111" title="All 2 branches missed.">            for(x = r1.area.x; x&gt;=r2.area.x; x--){</span>
-<span class="nc" id="L112">                y = r1.area.y;</span>
-<span class="nc" id="L113">                grid[y][x] = Block.OPEN;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            for(x = r1.area.x; x&gt;=r2.area.x; x--){</span>
+<span class="nc" id="L162">                y = r1.area.y;</span>
+<span class="nc" id="L163">                grid[y][x] = Block.OPEN;</span>
             }
-<span class="nc bnc" id="L115" title="All 2 branches missed.">            if(y &lt; r2.area.y){</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">                for(y = r1.area.y; y &lt;= r2.area.y; y++){</span>
-<span class="nc" id="L117">                    grid[y][x] = Block.OPEN;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">            if(y &lt; r2.area.y){</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">                for(y = r1.area.y; y &lt;= r2.area.y; y++){</span>
+<span class="nc" id="L167">                    grid[y][x] = Block.OPEN;</span>
                 }
             }
             else{
-<span class="nc bnc" id="L121" title="All 2 branches missed.">                for(y = r1.area.y; y &gt;= r2.area.y; y--){</span>
-<span class="nc" id="L122">                    grid[y][x] = Block.OPEN;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">                for(y = r1.area.y; y &gt;= r2.area.y; y--){</span>
+<span class="nc" id="L172">                    grid[y][x] = Block.OPEN;</span>
                 }
             }
         }
-<span class="nc" id="L126">    }</span>
+<span class="nc" id="L176">    }</span>
     
-    private void drawHallways()
-    {
-        //due to lack of id's
-<span class="nc" id="L131">        ArrayList&lt;Room&gt; connected1 = new ArrayList&lt;Room&gt;();</span>
-<span class="nc" id="L132">        ArrayList&lt;Room&gt; connected2 = new ArrayList&lt;Room&gt;();</span>
+    private void drawHallways(int nrOfHallways)
+    { 
         
-<span class="nc bnc" id="L134" title="All 2 branches missed.">        for(Room room : finRooms){</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        for(Room room : finRooms){</span>
+                
+<span class="nc" id="L183">            Room roomShort1 = null;</span>
+<span class="nc" id="L184">            Room roomShort2 = null;</span>
+<span class="nc" id="L185">            Room roomShort3 = null;</span>
+
+<span class="nc" id="L187">            double room1Length = 0;</span>
+<span class="nc" id="L188">            double room2Length = 0;</span>
+<span class="nc" id="L189">            double room3Length = 0;</span>
             
-<span class="nc bnc" id="L136" title="All 2 branches missed.">            if(!connected2.contains(room)){</span>
-                
-<span class="nc" id="L138">                Room roomShort1 = null;</span>
-<span class="nc" id="L139">                Room roomShort2 = null;</span>
-                
-<span class="nc" id="L141">                double room1Length = 0;</span>
-<span class="nc" id="L142">                double room2Length = 0;</span>
-                
-<span class="nc bnc" id="L144" title="All 2 branches missed.">                for(Room r2 : finRooms){</span>
-<span class="nc" id="L145">                    double length = r2.CalcLength(room);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">            if(nrOfHallways == 2){</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">                for(Room r2 : finRooms){</span>
+<span class="nc" id="L193">                    double length = r2.CalcLength(room);</span>
                     //check if room and r2 aren't the same and if r2 has less than 2 connections
-<span class="nc bnc" id="L147" title="All 6 branches missed.">                    if(!(room.area.x == r2.area.x &amp;&amp; room.area.y == r2.area.y &amp;&amp; !connected2.contains(r2))){</span>
-<span class="nc bnc" id="L148" title="All 4 branches missed.">                        if(length &lt; room1Length || room1Length == 0){</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">                    if(room != r2){</span>
+<span class="nc bnc" id="L196" title="All 4 branches missed.">                        if(length &lt; room1Length || room1Length == 0){</span>
                             //set shortest room to 2nd shortest room
-<span class="nc" id="L150">                            roomShort2 = roomShort1;</span>
-<span class="nc" id="L151">                            room2Length = room1Length;</span>
+<span class="nc" id="L198">                            roomShort2 = roomShort1;</span>
+<span class="nc" id="L199">                            room2Length = room1Length;</span>
 
                             //set shortest room to current room
-<span class="nc" id="L154">                            roomShort1 = r2;</span>
-<span class="nc" id="L155">                            room1Length = length;</span>
+<span class="nc" id="L202">                            roomShort1 = r2;</span>
+<span class="nc" id="L203">                            room1Length = length;</span>
                         }
-<span class="nc bnc" id="L157" title="All 6 branches missed.">                        else if(room1Length &lt; length &amp;&amp; length &lt; room2Length || room2Length==0){</span>
+<span class="nc bnc" id="L205" title="All 6 branches missed.">                        else if(room1Length &lt; length &amp;&amp; length &lt; room2Length || room2Length==0){</span>
                             //set 2nd shortest room to current room
-<span class="nc" id="L159">                            roomShort2 = r2;</span>
-<span class="nc" id="L160">                            room2Length = length;</span>
+<span class="nc" id="L207">                            roomShort2 = r2;</span>
+<span class="nc" id="L208">                            room2Length = length;</span>
                         }
                     }
-<span class="nc" id="L163">                }</span>
-                
+<span class="nc" id="L211">                }</span>
+
                 //draw hallway
                 try{
-<span class="nc" id="L167">                    drawHallway(room, roomShort1);</span>
-<span class="nc" id="L168">                    drawHallway(room, roomShort2);</span>
+<span class="nc" id="L215">                    drawHallway(room, roomShort1);</span>
+<span class="nc" id="L216">                    drawHallway(room, roomShort2);</span>
                 }
-<span class="nc" id="L170">                catch(NullPointerException e){</span>
-<span class="nc" id="L171">                    System.out.println(e.getMessage());</span>
-<span class="nc" id="L172">                }</span>
+<span class="nc" id="L218">                catch(NullPointerException e){</span>
+<span class="nc" id="L219">                    System.out.println(e.getMessage());</span>
+<span class="nc" id="L220">                }</span>
             }
-<span class="nc" id="L174">        }</span>
-<span class="nc" id="L175">    }</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">            if(nrOfHallways == 3){</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">                for(Room r2 : finRooms){</span>
+<span class="nc" id="L224">                    double length = r2.CalcLength(room);</span>
+                    //check if room and r2 aren't the same and if r2 has less than 2 connections
+<span class="nc bnc" id="L226" title="All 2 branches missed.">                    if(room != r2){</span>
+<span class="nc bnc" id="L227" title="All 4 branches missed.">                        if(length &lt; room1Length || room1Length == 0){</span>
+                            //set 2nd shortest room to 3rd shortest room
+<span class="nc" id="L229">                            roomShort3 = roomShort2;</span>
+<span class="nc" id="L230">                            room3Length = room2Length;</span>
+
+                            //set shortest room to 2nd shortest room
+<span class="nc" id="L233">                            roomShort2 = roomShort1;</span>
+<span class="nc" id="L234">                            room2Length = room1Length;</span>
+
+                            //set shortest room to current room
+<span class="nc" id="L237">                            roomShort1 = r2;</span>
+<span class="nc" id="L238">                            room1Length = length;</span>
+                        }
+<span class="nc bnc" id="L240" title="All 6 branches missed.">                        else if(room1Length &lt; length &amp;&amp; length &lt; room2Length || room2Length==0){</span>
+                            //set 2nd shortest room to 3rd shortest room
+<span class="nc" id="L242">                            roomShort3 = roomShort2;</span>
+<span class="nc" id="L243">                            room3Length = room2Length;</span>
+
+                            //set 2nd shortest room to current room
+<span class="nc" id="L246">                            roomShort2 = r2;</span>
+<span class="nc" id="L247">                            room2Length = length;</span>
+                        }
+<span class="nc bnc" id="L249" title="All 6 branches missed.">                        else if(room2Length &lt; length &amp;&amp; length &lt; room3Length || room3Length==0){</span>
+                            //set 3rd shortest room to current room
+<span class="nc" id="L251">                            roomShort3 = r2;</span>
+<span class="nc" id="L252">                            room3Length = length;</span>
+                        }
+                    }
+<span class="nc" id="L255">                }</span>
+
+                //draw hallway
+                try{
+<span class="nc" id="L259">                    drawHallway(room, roomShort1);</span>
+<span class="nc" id="L260">                    drawHallway(room, roomShort2);</span>
+<span class="nc" id="L261">                    drawHallway(room, roomShort3);</span>
+                }
+<span class="nc" id="L263">                catch(NullPointerException e){</span>
+<span class="nc" id="L264">                    System.out.println(e.getMessage());</span>
+<span class="nc" id="L265">                }</span>
+            }
+<span class="nc" id="L267">        }</span>
+<span class="nc" id="L268">    }</span>
     
     public void printMaze()
     {
-<span class="nc bnc" id="L179" title="All 2 branches missed.">        for(int y=0; y&lt;gridSize; y++)</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        for(int y=0; y&lt;gridSize; y++)</span>
         {
-<span class="nc" id="L181">            String line = &quot;&quot;;</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">            for(int x=0; x&lt;gridSize; x++)</span>
+<span class="nc" id="L274">            String line = &quot;&quot;;</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">            for(int x=0; x&lt;gridSize; x++)</span>
             {
-<span class="nc bnc" id="L184" title="All 2 branches missed.">                if(grid[y][x] == Block.SOLID){</span>
-<span class="nc" id="L185">                    line += &quot; \u25A0 &quot;;</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                if(grid[y][x] == Block.SOLID){</span>
+<span class="nc" id="L278">                    line += &quot; \u25A0 &quot;;</span>
                 }
-<span class="nc bnc" id="L187" title="All 2 branches missed.">                if(grid[y][x] == Block.OPEN){</span>
-<span class="nc" id="L188">                    line += &quot; \u25A1 &quot;;</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">                if(grid[y][x] == Block.OPEN){</span>
+<span class="nc" id="L281">                    line += &quot; \u25A1 &quot;;</span>
                 }
-<span class="nc bnc" id="L190" title="All 2 branches missed.">                if(grid[y][x] == Block.OBSTACLE){</span>
-<span class="nc" id="L191">                    line += &quot; Z &quot;;</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">                if(grid[y][x] == Block.SPAWNPOINT){</span>
+<span class="nc" id="L284">                    line += &quot; X &quot;;</span>
                 }
             }
-<span class="nc" id="L194">            System.out.println(line);</span>
+<span class="nc" id="L287">            System.out.println(line);</span>
         }
         
-<span class="nc" id="L197">    }</span>
+<span class="nc" id="L290">    }</span>
     
     private Room generateRoom()
     {
-<span class="nc" id="L201">        int width= newRand(roomSize);</span>
-<span class="nc" id="L202">        int height = newRand(roomSize);</span>
-<span class="nc" id="L203">        System.out.println(&quot;W:&quot; + width + &quot; H:&quot; + height);</span>
-<span class="nc" id="L204">        Room r = new Room(1+newRand(gridSize-width-2), 1+newRand(gridSize-height-2), 2+width, 2+height);</span>
-<span class="nc" id="L205">        return r;</span>
+<span class="nc" id="L294">        int width= newRand(roomSize);</span>
+<span class="nc" id="L295">        int height = newRand(roomSize);</span>
+<span class="nc" id="L296">        System.out.println(&quot;W:&quot; + width + &quot; H:&quot; + height);</span>
+<span class="nc" id="L297">        Room r = new Room(1+newRand(gridSize-width-2), 1+newRand(gridSize-height-2), 2+width, 2+height);</span>
+<span class="nc" id="L298">        return r;</span>
     }
     
     private int newRand(int bound)
     {
-<span class="nc" id="L210">        return rand.nextInt(bound);</span>
+<span class="nc" id="L303">        return rand.nextInt(bound);</span>
     }
         /*
         *Spawn a buff in a random location in the maze.
         */
 	public void spawnBuff() {
 		// TODO - implement Maze.spawnBuff
-<span class="nc" id="L217">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L310">		throw new UnsupportedOperationException();</span>
 	}
         
     public Block[][] GetGrid()
     {
-<span class="nc" id="L222">        return this.grid;</span>
+<span class="nc" id="L315">        return this.grid;</span>
     }
     
     public int getGridSize()
     {
-<span class="nc" id="L227">        return gridSize;</span>
+<span class="nc" id="L320">        return gridSize;</span>
     }
 
 }

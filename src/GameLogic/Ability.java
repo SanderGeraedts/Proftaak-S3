@@ -1,5 +1,8 @@
 package GameLogic;
 
+/**
+* Todo: add more constraints, class nearly impossible to test.
+*/
 public class Ability {
 
 	private String name;

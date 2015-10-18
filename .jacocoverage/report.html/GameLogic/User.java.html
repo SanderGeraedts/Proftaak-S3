@@ -1,25 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">GameLogic</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package GameLogic;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">GameLogic</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package GameLogic;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class User {
 
-	private int userID;
-	private String name;
-	private String password;
-	private String email;
+    private int userID;
+    private String name;
+    private String email;
+    private Stat stats;
 
-	/**
-	 * 
-	 * @param userID
-	 * @param name
-	 * @param password
-	 * @param email
-	 */
-<span class="nc" id="L17">	public User(int userID, String name, String password, String email) {</span>
-<span class="nc" id="L18">		this.userID = userID;</span>
-<span class="nc" id="L19">                this.name = name;</span>
-<span class="nc" id="L20">                this.password = password;</span>
-<span class="nc" id="L21">                this.email = email;</span>
-<span class="nc" id="L22">	}</span>
+    /**
+     * Constructor for User If stats is null stats must be created.
+     *
+     * @param userID Cannot be null and must be unique.
+     * @param name Cannot be null and must be unique.
+     * @param email Cannot be null.
+     * @param stats can be null.
+     */
+<span class="nc" id="L20">    public User(int userID, String name, String email, Stat stats) {</span>
+<span class="nc" id="L21">        throw new NotImplementedException();</span>
+    }
+    
+    public int getStatID()
+    {
+<span class="nc" id="L26">        return stats.getStatsID();</span>
+    }
 
+    public int getUserID() {
+<span class="nc" id="L30">        return userID;</span>
+    }
+
+    public String getName() {
+<span class="nc" id="L34">        return name;</span>
+    }
+
+    public String getEmail() {
+<span class="nc" id="L38">        return email;</span>
+    }
+
+    /**
+     * Login method for verifying user. Checks in database if name and password
+     * has correspondig account. if User exist then return user with
+     * corresponding stats
+     *
+     * @param name
+     * @param password
+     * @return User if account exists otherwise return null.
+     */
+    public User login(String name, String password) {
+<span class="nc" id="L51">        throw new NotImplementedException();</span>
+    }
+
+    /**
+     * Create account Creates an account in the database.
+     *
+     * @param userid cannot not be null and must be unique.
+     * @param name cannot not be null and must be unique.
+     * @param password cannot not be null.
+     * @param email cannot be null.
+     * @param stats cannot be null.
+     * @return true if succesfully added in database.
+     */
+    public Boolean createAccount(String userid, String name, String password, String email, Stat stats) {
+<span class="nc" id="L65">        throw new NotImplementedException();</span>
+    }
+
+    /**
+     * Changes stats after a game ended.
+     *
+     * @param kills how many players were killed by player.
+     * @param deaths how many times player died.
+     * @param win if the game is won must be true, lost is false;
+     */
+    public void changeStats(int kills, int deaths, boolean win) {
+<span class="nc" id="L76">        throw new NotImplementedException();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
