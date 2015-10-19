@@ -1,6 +1,8 @@
 package GameLogic;
 
+
 import javafx.scene.image.Image;
+
 
 public class Ability {
 
@@ -31,21 +33,21 @@ public class Ability {
                 damage = 10;
                 spriteID = "1";
                 cooldownTimer = 1;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
             case 1:
                 name = "Stealth";
                 damage = 30;
                 spriteID = "2";
                 cooldownTimer = 30;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
             case 2:
                 name = "Poison Trap";
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
 
             //Mage Skills
@@ -54,21 +56,21 @@ public class Ability {
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
             case 4:
                 name = "Iceball";
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
             case 5:
                 name = "Poep Trap";
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
 
             //Warrior Skills    
@@ -77,21 +79,21 @@ public class Ability {
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
             case 7:
                 name = "Sunning blow";
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
             case 8:
                 name = "Spike Trap";
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
 
             //Hunter Skills   
@@ -100,26 +102,31 @@ public class Ability {
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
             case 10:
                 name = "Hawkshot ";
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
             case 11:
                 name = "Bear Trap";
                 damage = 15;
                 spriteID = "3";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("");
+                img = Sprite.LoadSprite("",16,16);
                 break;
         }
     }
 
-    public String GetSkillInfo() {
+    
+    /*
+    *  Get al Ability Information
+    */
+    @Override
+    public String toString() {
         String temp = "Name: " + name + "\nDamage: " + damage + "\nCooldown: " + cooldownTimer;
         return temp;
     }

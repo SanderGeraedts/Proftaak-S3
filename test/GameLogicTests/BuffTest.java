@@ -6,6 +6,7 @@ package GameLogicTests;
  * and open the template in the editor.
  */
 
+import GameLogic.Buff;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,7 +16,9 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kasper
+ * @author Sander Geraedts
+ * 
+ * Needs more testing when methods are added
  */
 public class BuffTest {
     
@@ -39,9 +42,10 @@ public class BuffTest {
     }
 
     @Test
-    public void testSomeMethod() {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testConstructor() {
+        Buff buff = new Buff(1, "Test", 1);
+        
+        assertNotNull("Shouldn't be null", buff);
     }
     
 }

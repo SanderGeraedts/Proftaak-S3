@@ -22,6 +22,8 @@ import static org.junit.Assert.*;
  */
 public class GameTest {
     
+    
+    
     public GameTest() {
     }
     
@@ -39,6 +41,13 @@ public class GameTest {
     
     @After
     public void tearDown() {
+    }
+    
+    @Test
+    public void testConstructor(){
+        Game game = new Game(1, 1);
+        
+        assertNotNull("game shouldn't be null", game);
     }
 
     /**

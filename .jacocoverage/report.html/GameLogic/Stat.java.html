@@ -1,31 +1,97 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Stat.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">GameLogic</a> &gt; <span class="el_source">Stat.java</span></div><h1>Stat.java</h1><pre class="source lang-java linenums">package GameLogic;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Stat.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">GameLogic</a> &gt; <span class="el_source">Stat.java</span></div><h1>Stat.java</h1><pre class="source lang-java linenums">package GameLogic;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+/**
+ * Stat class used in User
+ *
+ * @author Roy
+ */
 public class Stat {
 
-	private int statsID;
-	private int totalWins;
-	private int totalLosses;
-	private int totalKills;
-	private int totalDeaths;
-	private int rating;
+    private int statsID;
+    private int totalWins;
+    private int totalLosses;
+    private int totalKills;
+    private int totalDeaths;
+    private int rating;
+    //todo rating
 
-<span class="nc" id="L12">	public Stat() {</span>
-		// TODO - implement Stat.Stat
-<span class="nc" id="L14">		throw new UnsupportedOperationException();</span>
-	}
+    /**
+     * Constructor for Stat
+     *
+     * @param statsid must be identical to userID
+     * @param totalwins
+     * @param totallosses
+     * @param totalkills
+     * @param totaldeaths
+     * @param rating
+     */
+<span class="fc" id="L30">    public Stat(int statsid, int totalwins, int totallosses, int totalkills, int totaldeaths, int rating) {</span>
+<span class="fc" id="L31">        throw new NotImplementedException();</span>
 
-        /**
-        *Give back the stats.
-        * @param totalWins
-        * @param totalLosses
-        * @param totalKills
-        * @param totalDeaths
-        * @param rating
-        */
-	public void requestStats() {
-		// TODO - implement Stat.requestStats
-<span class="nc" id="L27">		throw new UnsupportedOperationException();</span>
-	}
+    }
 
+    public int getStatsID() {
+<span class="nc" id="L36">        return statsID;</span>
+    }
+
+    public int getTotalWins() {
+<span class="nc" id="L40">        return totalWins;</span>
+    }
+
+    public int getTotalLosses() {
+<span class="nc" id="L44">        return totalLosses;</span>
+    }
+
+    public int getTotalKills() {
+<span class="nc" id="L48">        return totalKills;</span>
+    }
+
+    public int getTotalDeaths() {
+<span class="nc" id="L52">        return totalDeaths;</span>
+    }
+
+    /**
+     * Add kills
+     *
+     * @param kills how many players were killed.
+     */
+    public void addKills(int kills) {
+<span class="nc" id="L61">        throw new NotImplementedException();</span>
+    }
+
+    /**
+     * Add deaths
+     *
+     * @param deaths how many times player died.
+     */
+    public void addDeaths(int deaths) {
+<span class="nc" id="L70">        throw new NotImplementedException();</span>
+    }
+
+    /**
+     * Add wins or losses
+     *
+     * @param won if won is true one win is added otherwise one loss.
+     */
+    public void winOrLose(boolean won) {
+<span class="nc" id="L79">        throw new NotImplementedException();</span>
+    }
+
+    /**
+     * //Samder: Isn't this method useless??? 
+     * 
+     * Give back the stats.
+     *
+     * @param totalWins
+     * @param totalLosses
+     * @param totalKills
+     * @param totalDeaths
+     * @param rating
+     */
+    public void requestStats() {
+<span class="nc" id="L94">        throw new NotImplementedException();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

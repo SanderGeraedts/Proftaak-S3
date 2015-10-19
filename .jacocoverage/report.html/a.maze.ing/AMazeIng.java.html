@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AMazeIng.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">a.maze.ing</a> &gt; <span class="el_source">AMazeIng.java</span></div><h1>AMazeIng.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AMazeIng.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">a.maze.ing</a> &gt; <span class="el_source">AMazeIng.java</span></div><h1>AMazeIng.java</h1><pre class="source lang-java linenums">/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,6 +7,7 @@ package a.maze.ing;
 
 import GameLogic.*;
 import java.util.ArrayList;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,66 +17,111 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
  *
- * @author Hovsep
+ * @author Kasper
  */
-<span class="nc" id="L27">public class AMazeIng extends Application {</span>
-<span class="nc" id="L28">    static int spritesize = 16;</span>
+<span class="nc" id="L30">public class AMazeIng extends Application {</span>
+<span class="nc" id="L31">    static int spritesize = 16;</span>
+    
+<span class="nc" id="L33">    private String pressedKey = &quot;&quot;;</span>
+    
+<span class="nc" id="L35">    private Boolean upPressed = false;</span>
+<span class="nc" id="L36">    private Boolean downPressed = false;</span>
+<span class="nc" id="L37">    private Boolean leftPressed = false;</span>
+<span class="nc" id="L38">    private Boolean rightPressed = false;</span>
+    
+    private Image imgCharacter;
+    private Node nodCharacter;
+    private Rectangle recCharacter;
+    
+    private Node sppp;
+    
+    private String key;
+    
+    public Group group;
+    
+    public ArrayList&lt;Node&gt; nodes;
+    
+    public Scene scene;
+    
+    public PlayerController pController;
+    
+    //PlayerController
+    
     @Override
     public void start(Stage primaryStage) 
-    {
-<span class="nc" id="L32">        Image poep = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;);</span>
-<span class="nc" id="L33">        Node poepnode = new ImageView(poep);</span>
-<span class="nc" id="L34">        Group poepgroep = new Group(poepnode);</span>
+    {        
+<span class="nc" id="L61">        Image imgWall = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L62">        Node nodWall = new ImageView(imgWall);</span>
+<span class="nc" id="L63">        Group groupWall = new Group(nodWall);</span>
         
         
-<span class="nc" id="L37">        Maze testmaze = new Maze(100, 2, 200);</span>
-<span class="nc" id="L38">        testmaze.printMaze(); </span>
+<span class="nc" id="L66">        Maze testmaze = new Maze(24, 2, 100);</span>
+<span class="nc" id="L67">        testmaze.printMaze(); </span>
         
-<span class="nc" id="L40">        Block[][] mazegrid = testmaze.GetGrid();</span>
-        
-        
-<span class="nc" id="L43">        ArrayList&lt;Image&gt; images = new ArrayList&lt;Image&gt;();</span>
-<span class="nc" id="L44">        ArrayList&lt;Node&gt; nodes = new ArrayList&lt;Node&gt;();</span>
-        Group group;
+<span class="nc" id="L69">        Block[][] mazegrid = testmaze.GetGrid();</span>
         
         
+<span class="nc" id="L72">        ArrayList&lt;Image&gt; images = new ArrayList&lt;Image&gt;();</span>
+<span class="nc" id="L73">        nodes = new ArrayList&lt;Node&gt;();        </span>
         
-        
-<span class="nc bnc" id="L50" title="All 2 branches missed.">        for(int y=0; y&lt;testmaze.getGridSize(); y++)</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        for(int y=0; y&lt;testmaze.getGridSize(); y++)</span>
         {
-<span class="nc bnc" id="L52" title="All 2 branches missed.">            for(int x=0; x&lt;testmaze.getGridSize(); x++)</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            for(int x=0; x&lt;testmaze.getGridSize(); x++)</span>
             {
-<span class="nc bnc" id="L54" title="All 3 branches missed.">                switch(mazegrid[y][x])</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">                switch(mazegrid[y][x])</span>
                 {
                     case SOLID:
                         //System.out.println(&quot;Drawing wall&quot;);
-<span class="nc" id="L58">                        Image sol = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;);</span>
-<span class="nc" id="L59">                        images.add(sol);</span>
-<span class="nc" id="L60">                        Node wpos = new ImageView(sol);</span>
-<span class="nc" id="L61">                        wpos.relocate(x*spritesize, y*spritesize);</span>
-<span class="nc" id="L62">                        nodes.add(wpos);</span>
-<span class="nc" id="L63">                        break;</span>
+<span class="nc" id="L83">                        Image sol = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L84">                        images.add(sol);</span>
+<span class="nc" id="L85">                        Node wpos = new ImageView(sol);</span>
+<span class="nc" id="L86">                        wpos.relocate(x*spritesize, y*spritesize);</span>
+<span class="nc" id="L87">                        nodes.add(wpos);</span>
+<span class="nc" id="L88">                        break;</span>
                     case OPEN:
                         //System.out.println(&quot;Drawing floor&quot;);
-<span class="nc" id="L66">                        Image ope = Sprite.LoadSprite(&quot;Resources/FloorSprite.jpg&quot;);</span>
-<span class="nc" id="L67">                        images.add(ope);</span>
-<span class="nc" id="L68">                        Node opos = new ImageView(ope);</span>
-<span class="nc" id="L69">                        opos.relocate(x*spritesize, y*spritesize);</span>
-<span class="nc" id="L70">                        nodes.add(opos);</span>
-<span class="nc" id="L71">                        break;</span>
-                    case OBSTACLE:
+<span class="nc" id="L91">                        Image ope = Sprite.LoadSprite(&quot;Resources/FloorSprite.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L92">                        images.add(ope);</span>
+<span class="nc" id="L93">                        Node opos = new ImageView(ope);</span>
+<span class="nc" id="L94">                        opos.relocate(x*spritesize, y*spritesize);</span>
+<span class="nc" id="L95">                        nodes.add(opos);</span>
+<span class="nc" id="L96">                        break;</span>
+                    case SPAWNPOINT:
+<span class="nc" id="L98">                        Image spp = Sprite.LoadSprite(&quot;Resources/SpawnPoint.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L99">                        images.add(spp);</span>
+<span class="nc" id="L100">                        sppp = new ImageView(spp);</span>
+<span class="nc" id="L101">                        sppp.relocate(x*spritesize, y*spritesize);</span>
+<span class="nc" id="L102">                        nodes.add(sppp);</span>
                         break;
                             
                 }
             }
         }
-<span class="nc" id="L78">        group = new Group(nodes);</span>
+        
+        //pController = new PlayerController(this);
+        
+        
+        //PlayerController
+<span class="nc" id="L113">        double tempDoubleX = 0;</span>
+<span class="nc" id="L114">        double tempDoubleY = 0;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (nodes.contains(sppp)){</span>
+<span class="nc" id="L116">            tempDoubleX = sppp.getLayoutX();</span>
+<span class="nc" id="L117">            tempDoubleY = sppp.getLayoutY();</span>
+        }
+<span class="nc" id="L119">        imgCharacter = Sprite.LoadSprite(&quot;Resources/SpawnPoint.jpg&quot;, 10, 10);</span>
+<span class="nc" id="L120">        nodCharacter = new ImageView(imgCharacter);</span>
+<span class="nc" id="L121">        nodCharacter.relocate(tempDoubleX, tempDoubleY);</span>
+<span class="nc" id="L122">        nodes.add(nodCharacter);        </span>
+        
+<span class="nc" id="L124">        group = new Group(nodes);</span>
         
         
         /*Button btn = new Button();
@@ -91,22 +137,144 @@ import javafx.stage.Stage;
         */
         //StackPane root = new StackPane();
         
-<span class="nc" id="L94">        Scene scene = new Scene(group, testmaze.getGridSize()*spritesize, testmaze.getGridSize()*spritesize, Color.DARKSALMON);</span>
+<span class="nc" id="L140">        scene = new Scene(group, testmaze.getGridSize()*spritesize, testmaze.getGridSize()*spritesize, Color.DARKSALMON);</span>
         
-<span class="nc" id="L96">        primaryStage.setTitle(&quot;Hello World!&quot;);</span>
-<span class="nc" id="L97">        primaryStage.setScene(scene);</span>
-<span class="nc" id="L98">        primaryStage.show();</span>
-<span class="nc" id="L99">    }</span>
+<span class="nc" id="L142">        scene.setOnKeyPressed(new EventHandler&lt;KeyEvent&gt;() {</span>
+            @Override
+            public void handle(KeyEvent event) {
+<span class="nc" id="L145">                System.out.println(event.getCode());</span>
+<span class="nc bnc" id="L146" title="All 5 branches missed.">                switch (event.getCode()) {</span>
+                    case A:
+<span class="nc" id="L148">                        leftPressed = true;</span>
+<span class="nc" id="L149">                        System.out.println(&quot;A pressed&quot;);</span>
+<span class="nc" id="L150">                        break;</span>
+                    case D:
+<span class="nc" id="L152">                        rightPressed = true;</span>
+<span class="nc" id="L153">                        System.out.println(&quot;D pressed&quot;);</span>
+<span class="nc" id="L154">                        break;</span>
+                    case W:
+<span class="nc" id="L156">                        upPressed = true;</span>
+<span class="nc" id="L157">                        System.out.println(&quot;W pressed&quot;);</span>
+<span class="nc" id="L158">                        break;</span>
+                    case S:
+<span class="nc" id="L160">                        downPressed = true;</span>
+<span class="nc" id="L161">                        System.out.println(&quot;S pressed&quot;);</span>
+                        break;
+                }
+<span class="nc" id="L164">            }</span>
+
+        });
+
+<span class="nc" id="L168">        scene.setOnKeyReleased(new EventHandler&lt;KeyEvent&gt;() {</span>
+            @Override
+            public void handle(KeyEvent event) {
+<span class="nc" id="L171">                System.out.println(event.getCode());</span>
+<span class="nc bnc" id="L172" title="All 5 branches missed.">                switch (event.getCode()) {</span>
+                    case A:
+<span class="nc" id="L174">                        leftPressed = false;</span>
+<span class="nc" id="L175">                        System.out.println(&quot;A released&quot;);</span>
+<span class="nc" id="L176">                        break;</span>
+                    case D:
+<span class="nc" id="L178">                        rightPressed = false;</span>
+<span class="nc" id="L179">                        System.out.println(&quot;D released&quot;);</span>
+<span class="nc" id="L180">                        break;</span>
+                    case W:
+<span class="nc" id="L182">                        upPressed = false;</span>
+<span class="nc" id="L183">                        System.out.println(&quot;W released&quot;);</span>
+<span class="nc" id="L184">                        break;</span>
+                    case S:
+<span class="nc" id="L186">                        downPressed = false;</span>
+<span class="nc" id="L187">                        System.out.println(&quot;S released&quot;);</span>
+                        break;
+                }
+<span class="nc" id="L190">            }                        </span>
+        });        
+        
+<span class="nc" id="L193">        primaryStage.setTitle(&quot;a-MAZE-ing&quot;);</span>
+<span class="nc" id="L194">        primaryStage.setScene(scene);</span>
+<span class="nc" id="L195">        primaryStage.show();</span>
+        
+<span class="nc" id="L197">        AnimationTimer timer = new AnimationTimer() {</span>
+                @Override
+                public void handle(long now) {
+<span class="nc" id="L200">                    int dx = 0, dy = 0;</span>
+                    //System.out.println(&quot;Pressed key: &quot; + pressedKey);
+
+                    //System.out.println(recCharacter.getLayoutX() + &quot; + &quot; + recCharacter.getLayoutY());
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">                    if (leftPressed) {</span>
+<span class="nc" id="L206">                        dx -= 1;</span>
+<span class="nc" id="L207">                        key = &quot;A&quot;;</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">                    } else if (rightPressed) {</span>
+<span class="nc" id="L209">                        dx += 1;</span>
+<span class="nc" id="L210">                        key = &quot;D&quot;;</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">                    } else if (downPressed) {</span>
+<span class="nc" id="L212">                        dy += 1;</span>
+<span class="nc" id="L213">                        key = &quot;S&quot;;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">                    } else if (upPressed) {</span>
+<span class="nc" id="L215">                        dy -= 1;</span>
+<span class="nc" id="L216">                        key = &quot;W&quot;;</span>
+                    }
+<span class="nc" id="L218">                    moveImage(dx, dy);</span>
+//                else {
+//                    switch(key){
+//                        case &quot;A&quot;:
+//                            dx += 1;
+//                            break;
+//                        case &quot;D&quot;: 
+//                            dx -= 1;
+//                            break;
+//                        case &quot;S&quot;:
+//                            dy -= 1;
+//                            break;
+//                        case &quot;W&quot;:
+//                            dy += 1;
+//                            break;
+//                        default:
+//                            break;
+//                    }
+
+<span class="nc" id="L237">                }</span>
+            };
+<span class="nc" id="L239">        timer.start();</span>
+<span class="nc" id="L240">    }</span>
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) 
     {
-<span class="nc" id="L106">        launch(args);</span>
+<span class="nc" id="L247">        launch(args);</span>
 
         
-<span class="nc" id="L109">    }</span>
+<span class="nc" id="L250">    }</span>
+    
+    private void moveImage(int dx, int dy) {
+<span class="nc bnc" id="L253" title="All 4 branches missed.">        if (dx == 0 &amp;&amp; dy == 0) {</span>
+<span class="nc" id="L254">            return;</span>
+        }
+
+<span class="nc" id="L257">        final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;</span>
+<span class="nc" id="L258">        final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;</span>
+
+<span class="nc" id="L260">        double x = cx + nodCharacter.getLayoutX() + dx * 2.40f;</span>
+<span class="nc" id="L261">        double y = cy + nodCharacter.getLayoutY() + dy * 2.40f;</span>
+
+<span class="nc" id="L263">        moveImgTo(x, y);</span>
+<span class="nc" id="L264">    }</span>
+
+    private void moveImgTo(double x, double y) {
+<span class="nc" id="L267">        final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;</span>
+<span class="nc" id="L268">        final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;</span>
+<span class="nc" id="L269">        System.out.println(&quot;x: &quot; + x + &quot; - y: &quot; + y);</span>
+<span class="nc bnc" id="L270" title="All 8 branches missed.">        if (x - cx &gt;= 0</span>
+                &amp;&amp; x + cx &lt;= 600
+                &amp;&amp; y - cy &gt;= 0
+                &amp;&amp; y + cy &lt;= 800) {
+<span class="nc" id="L274">            nodCharacter.relocate(x - cx, y - cy);</span>
+<span class="nc" id="L275">            recCharacter = new Rectangle((int) nodCharacter.getLayoutX(), (int) nodCharacter.getLayoutY(), 236, 236);</span>
+        }
+<span class="nc" id="L277">    }</span>
     
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

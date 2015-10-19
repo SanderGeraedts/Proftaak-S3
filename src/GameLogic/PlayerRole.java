@@ -41,7 +41,7 @@ public class PlayerRole {
             case 0:
                 name = "Rogue";
                 hitpoints = 190;
-                defaultImg = Sprite.LoadSprite("");
+                defaultImg = Sprite.LoadSprite("", 16, 16);
                 ability[0] = new Ability(0);
                 ability[1] = new Ability(1);
                 ability[2] = new Ability(2);
@@ -50,7 +50,7 @@ public class PlayerRole {
             case 1:
                 name = "Mage";
                 hitpoints = 170;
-                defaultImg = Sprite.LoadSprite("");
+                defaultImg = Sprite.LoadSprite("", 16, 16);
                 ability[3] = new Ability(3);
                 ability[4] = new Ability(4);
                 ability[5] = new Ability(5);
@@ -58,7 +58,7 @@ public class PlayerRole {
             case 2:
                 name = "Warrior";
                 hitpoints = 290;
-                defaultImg = Sprite.LoadSprite("");
+                defaultImg = Sprite.LoadSprite("", 16, 16);
                 ability[6] = new Ability(6);
                 ability[7] = new Ability(7);
                 ability[8] = new Ability(8);
@@ -66,14 +66,18 @@ public class PlayerRole {
             case 3:
                 name = "Hunter";
                 hitpoints = 180;
-                defaultImg = Sprite.LoadSprite("");
+                defaultImg = Sprite.LoadSprite("", 16, 16);
                 ability[9] = new Ability(9);
                 ability[10] = new Ability(10);
                 ability[11] = new Ability(11);
         }
     }
 
-    public String getInfo() {
+    /*
+     * get selected character info.
+     */
+    @Override
+    public String toString() {
         String temp = "Chooses a random character";
         if (ID < 4) {
             temp = "Character info" + "\nName: " + name + "\nHitpoints: " + hitpoints;

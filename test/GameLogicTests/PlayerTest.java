@@ -6,6 +6,8 @@ package GameLogicTests;
  * and open the template in the editor.
  */
 
+import GameLogic.Player;
+import GameLogic.PlayerRole;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,6 +38,13 @@ public class PlayerTest {
     
     @After
     public void tearDown() {
+    }
+    
+    @Test
+    public void testConstructor(){
+        Player player = new Player(1, 1, new PlayerRole(1));
+        
+        assertNotNull("Player shouldn't be null", player);
     }
 
     @Test
