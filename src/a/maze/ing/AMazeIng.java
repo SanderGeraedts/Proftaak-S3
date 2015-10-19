@@ -38,6 +38,10 @@ public class AMazeIng extends Application {
     private Boolean downPressed = false;
     private Boolean leftPressed = false;
     private Boolean rightPressed = false;
+    private Boolean onePressed = false;
+    private Boolean twoPressed = false;
+    private Boolean threePressed = false;
+    private Boolean fourPressed = false;
 
     private Image imgCharacter;
     private Node nodCharacter;
@@ -63,10 +67,14 @@ public class AMazeIng extends Application {
     public Boolean collision;
 
     public Node tempNode;
+    
+    //Player Abilities
+    private List<Ability> abilities;
 
     //PlayerController
     @Override
     public void start(Stage primaryStage) {
+        abilities = new ArrayList<Ability>();
         solidBlocks = new ArrayList<Node>();
 
         Image imgWall = Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16);
@@ -137,7 +145,15 @@ public class AMazeIng extends Application {
                         leftPressed = true;
                         System.out.println("A pressed");
                         break;
+                    case LEFT:
+                        leftPressed = true;
+                        System.out.println("A pressed");
+                        break;
                     case D:
+                        rightPressed = true;
+                        System.out.println("D pressed");
+                        break;
+                    case RIGHT:
                         rightPressed = true;
                         System.out.println("D pressed");
                         break;
@@ -145,9 +161,29 @@ public class AMazeIng extends Application {
                         upPressed = true;
                         System.out.println("W pressed");
                         break;
+                    case UP:
+                        upPressed = true;
+                        System.out.println("W pressed");
+                        break;
                     case S:
                         downPressed = true;
                         System.out.println("S pressed");
+                        break;
+                    case DOWN:
+                        downPressed = true;
+                        System.out.println("S pressed");
+                        break;
+                    case DIGIT1:
+                        onePressed = true;
+                        break;
+                    case DIGIT2:
+                        twoPressed = true;
+                        break;
+                    case DIGIT3:
+                        threePressed = true;
+                        break;
+                    case DIGIT4:
+                        fourPressed = true;
                         break;
                 }
             }
@@ -163,17 +199,41 @@ public class AMazeIng extends Application {
                         leftPressed = false;
                         System.out.println("A released");
                         break;
+                    case LEFT:
+                        leftPressed = false;
+                        break;
                     case D:
                         rightPressed = false;
                         System.out.println("D released");
+                        break;
+                    case RIGHT:
+                        rightPressed = false;
                         break;
                     case W:
                         upPressed = false;
                         System.out.println("W released");
                         break;
+                    case UP:
+                        upPressed = false;
+                        break;
                     case S:
                         downPressed = false;
                         System.out.println("S released");
+                        break;
+                    case DOWN:
+                        downPressed = false;
+                        break;
+                    case DIGIT1:
+                        onePressed = false;
+                        break;
+                    case DIGIT2:
+                        twoPressed = false;
+                        break;
+                    case DIGIT3:
+                        threePressed = false;
+                        break;
+                    case DIGIT4:
+                        fourPressed = false;
                         break;
                 }
             }
@@ -187,6 +247,16 @@ public class AMazeIng extends Application {
             @Override
             public void handle(long now) {
                 int dx = 0, dy = 0;
+                
+                if (onePressed) {
+                    abilities.add(new Ability(0));
+                } else if (twoPressed) {
+                    abilities.add(new Ability(1));
+                } else if (threePressed) {
+                    abilities.add(new Ability(2));              
+                } else if (fourPressed) {
+                    abilities.add(new Ability(3));                   
+                }
                 
                 if (leftPressed) {
                     collision = false;                    
