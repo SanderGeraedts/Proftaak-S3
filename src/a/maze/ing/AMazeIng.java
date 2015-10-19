@@ -279,7 +279,7 @@ public class AMazeIng extends Application {
                 } else if (fourPressed) {
                     abilities.add(new Ability(3));                   
                 }
-               
+              
                     //System.out.println("Pressed key: " + pressedKey);
                 //System.out.println(recCharacter.getLayoutX() + " + " + recCharacter.getLayoutY());
                 if (leftPressed) {
