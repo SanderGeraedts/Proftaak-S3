@@ -31,6 +31,12 @@ public class Maze {
         //Graphics
         private final List<Image> sprites;
     
+        /**
+         * 
+         * @param gridsize: The size of the grid in blocks. If gridsize = 16, the maze will be 16x16 blocks.
+         * @param roomsize: The max width or heigth of a room.
+         * @param roomtries: The number of times the maze tries to generate a room 
+         */
     public Maze(int gridsize, int roomsize, int roomtries)
     {
         this.gridSize = gridsize;
@@ -79,6 +85,10 @@ public class Maze {
         placeSpawnPoints(4);
     }
     
+    /**
+     * Places the spawnpoints in the maze depending on the amount of spawnpoints specified in [amount].
+     * @param amount: the number of spawnpoints
+     */
     private void placeSpawnPoints(int amount)
     {
         ArrayList<Room> spawnRooms = new ArrayList<Room>();
@@ -122,6 +132,10 @@ public class Maze {
         }
     }
     
+    /**
+     * Draws a given room
+     * @param r : the given room
+     */
     private void drawRoom(Room r)
     {
         Rectangle rec = r.area;
@@ -136,6 +150,12 @@ public class Maze {
         }
     }
     
+    /**
+     * draws a hallway between [r1] and [r2]
+     * 
+     * @param r1
+     * @param r2 
+     */
     private void drawHallway(Room r1, Room r2){
         int x = 0;
         int y = 0;
@@ -175,6 +195,11 @@ public class Maze {
         }
     }
     
+    /**
+     * for each room looks for the [nrOfHallways] closest rooms near it and draws a hallway between them.
+     * 
+     * @param nrOfHallways: the number of hallways that the maze tries to draw for each room. Can be either 2 or 3.
+     */
     private void drawHallways(int nrOfHallways)
     { 
         
@@ -219,7 +244,7 @@ public class Maze {
                     System.out.println(e.getMessage());
                 }
             }
-            if(nrOfHallways == 3){
+            else if(nrOfHallways == 3){
                 for(Room r2 : finRooms){
                     double length = r2.CalcLength(room);
                     //check if room and r2 aren't the same and if r2 has less than 2 connections
@@ -264,9 +289,15 @@ public class Maze {
                     System.out.println(e.getMessage());
                 }
             }
+            else{
+                System.out.println("Wrong output");
+            }
         }
     }
     
+    /**
+     * prints the maze to the console
+     */
     public void printMaze()
     {
         for(int y=0; y<gridSize; y++)
@@ -289,6 +320,11 @@ public class Maze {
         
     }
     
+    /**
+     * Generates a room and returns it.
+     * 
+     * @return Room. 
+     */
     private Room generateRoom()
     {
         int width= newRand(roomSize);
@@ -298,23 +334,37 @@ public class Maze {
         return r;
     }
     
+    /**
+     * generates a random number between and including 0 and [bound]
+     * @param bound: The upper limit of the randomizer
+     * @return: a random int.
+     */
     private int newRand(int bound)
     {
         return rand.nextInt(bound);
     }
-        /*
-        *Spawn a buff in a random location in the maze.
-        */
-	public void spawnBuff() {
-		// TODO - implement Maze.spawnBuff
-		throw new UnsupportedOperationException();
-	}
-        
+    
+    /*
+    *Spawn a buff in a random location in the maze.
+    */
+    public void spawnBuff() {
+            // TODO - implement Maze.spawnBuff
+            throw new UnsupportedOperationException();
+    }
+
+    /**
+     * 
+     * @return the grid
+     */
     public Block[][] GetGrid()
     {
         return this.grid;
     }
     
+    /**
+     * 
+     * @return the gridsize
+     */
     public int getGridSize()
     {
         return gridSize;

@@ -17,5 +17,9 @@ public class Buff {
                 this.Name = name;
                 this.Type = type;
 	}
-
+        
+        
+        /**
+         * To do: ToString & shits
+         */
 }
