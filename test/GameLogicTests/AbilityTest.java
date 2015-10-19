@@ -46,6 +46,7 @@ public class AbilityTest {
     }
 
     @Test
+    //Check
     public void testConstructor() {
         Ability a = new Ability(-1);
         Ability b = new Ability(1);
@@ -53,6 +54,7 @@ public class AbilityTest {
         Ability d = new Ability(5);
         Ability e = new Ability(2);
         
+        //exception
         assertNull("bad input, should be null", a);
         assertNotNull("Should not be null", b);
         assertNotNull("Should not be null", c);
@@ -62,7 +64,7 @@ public class AbilityTest {
     
     @Test
     public void testGetSkillInfo(){
-        assertNotNull("Ability good.GetSkillInfo() shouldn't return null", good.GetSkillInfo());
-        assertNull("Ability bad.GetSkillInfo() should return null", bad.GetSkillInfo());
+        assertNotNull("Ability good.GetSkillInfo() shouldn't return null", good.toString());
+        assertNull("Ability bad.GetSkillInfo() should return null", bad.toString());
     }
 }
