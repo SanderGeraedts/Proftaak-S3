@@ -75,16 +75,23 @@ public class AMazeIng extends Application {
 
     //Player Abilities
     private List<Ability> abilities;
-    int abilityCount = 0;    
+    int abilityCount = 0;
     public List<Node> abilityNodes;
+
+    Node tempAbilityOne;
+
+    int abilityRunning;
 
     //PlayerController
     @Override
     public void start(Stage primaryStage) {
         pController = new PlayerController(this);
+        pController.direction = "UP";
         abilities = new ArrayList<Ability>();
         abilityNodes = new ArrayList<Node>();
         solidBlocks = new ArrayList<Node>();
+
+        abilityRunning = 0;
 
         Image imgWall = Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16);
         Node nodWall = new ImageView(imgWall);
@@ -186,34 +193,34 @@ public class AMazeIng extends Application {
                     case DIGIT1:
                         onePressed = true;
                         abilityCount++;
-                        if(abilityCount==1) {
+                        if (abilityCount == 1) {
                             Ability ability = new Ability(0);
                             abilities.add(ability);
-                            Node tempAbility = new ImageView(ability.img);
-                            tempAbility.setLayoutX(playerPos.getLayoutX());
-                            tempAbility.setLayoutY(playerPos.getLayoutY());
-                            abilityNodes.add(tempAbility);
-                            
+                            tempAbilityOne = new ImageView(ability.img);
+                            tempAbilityOne.setLayoutX(playerPos.getLayoutX());
+                            tempAbilityOne.setLayoutY(playerPos.getLayoutY());
+                            group.getChildren().add(tempAbilityOne);
+                            nodCharacter.toFront();
                         }
                         break;
                     case DIGIT2:
                         twoPressed = true;
                         abilityCount++;
-                        if(abilityCount==1) {
+                        if (abilityCount == 1) {
                             abilities.add(new Ability(1));
                         }
                         break;
                     case DIGIT3:
                         threePressed = true;
                         abilityCount++;
-                        if(abilityCount==1) {
+                        if (abilityCount == 1) {
                             abilities.add(new Ability(2));
                         }
                         break;
                     case DIGIT4:
                         fourPressed = true;
                         abilityCount++;
-                        if(abilityCount==1) {
+                        if (abilityCount == 1) {
                             abilities.add(new Ability(3));
                         }
                         break;
@@ -291,7 +298,30 @@ public class AMazeIng extends Application {
             @Override
             public void handle(long now) {
                 int dx = 0, dy = 0;
+                switch (pController.direction) {
+                    case "UP":
+                        if (onePressed || abilityRunning == 1) {
+                            
+                            for (Node n : solidBlocks) {
+                                if (n.getLayoutX() == tempAbilityOne.getLayoutX() && n.getLayoutY() == tempAbilityOne.getLayoutY() - spritesize) {
+                                    collision = true;
+                                }
+                            }
+                            if (collision == false) {
+                            tempAbilityOne.relocate(tempAbilityOne.getLayoutX(), tempAbilityOne.getLayoutY() - 4);
+                            abilityRunning = 1;
+                            }
+                            else {
+                                abilityRunning = 0;
+                            }
+                        }
+                        break;
+                        //case "DOWN":
 
+                    //if (onePressed)
+                    default:
+                    //donothing
+                }
                 if (leftPressed || leftCount > 0) {
                     collision = false;
 
