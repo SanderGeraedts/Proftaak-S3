@@ -19,5 +19,6 @@ import static java.lang.Math.sqrt;
 public class StellingVanSander {
     public int calc(int A2, int B2) {
         return (int) sqrt(A2 + B2);
+        //test
     }
 }
