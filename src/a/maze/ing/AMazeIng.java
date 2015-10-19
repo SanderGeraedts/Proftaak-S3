@@ -68,6 +68,11 @@ public class AMazeIng extends Application {
 
     public Node tempNode;
 
+    int leftCount = 0;
+    int rightCount = 0;
+    int upCount = 0;
+    int downCount = 0;
+
     //Player Abilities
     private List<Ability> abilities;
 
@@ -81,7 +86,7 @@ public class AMazeIng extends Application {
         Node nodWall = new ImageView(imgWall);
         Group groupWall = new Group(nodWall);
 
-        Maze testmaze = new Maze(52, 2, 128);
+        Maze testmaze = new Maze(40, 2, 128);
         testmaze.printMaze();
 
         Block[][] mazegrid = testmaze.GetGrid();
@@ -125,7 +130,7 @@ public class AMazeIng extends Application {
                 }
             }
         }
-        
+
         double tempDoubleX = 0;
         double tempDoubleY = 0;
         if (nodes.contains(sppp)) {
@@ -139,45 +144,56 @@ public class AMazeIng extends Application {
         playerPos = nodCharacter;
         tempNode = playerPos;
 
-        group = new Group(nodes);        
+        group = new Group(nodes);
         scene = new Scene(group, testmaze.getGridSize() * spritesize, testmaze.getGridSize() * spritesize, Color.DARKSALMON);
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println(event.getCode());
                 switch (event.getCode()) {
                     case A:
                         leftPressed = true;
                         System.out.println("A pressed");
                         break;
                     case LEFT:
-                        leftPressed = true;
-                        System.out.println("A pressed");
+                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
+                            leftPressed = true;
+                            System.out.println("A pressed");
+                            leftCount = 1;
+                        }
                         break;
                     case D:
                         rightPressed = true;
                         System.out.println("D pressed");
                         break;
                     case RIGHT:
-                        rightPressed = true;
-                        System.out.println("D pressed");
+                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
+                            rightPressed = true;
+                            System.out.println("D pressed");
+                            rightCount = 1;
+                        }
                         break;
                     case W:
                         upPressed = true;
                         System.out.println("W pressed");
                         break;
                     case UP:
-                        upPressed = true;
-                        System.out.println("W pressed");
+                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
+                            upPressed = true;
+                            System.out.println("W pressed");
+                            upCount = 1;
+                        }
                         break;
                     case S:
                         downPressed = true;
                         System.out.println("S pressed");
                         break;
                     case DOWN:
-                        downPressed = true;
-                        System.out.println("S pressed");
+                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
+                            downPressed = true;
+                            System.out.println("S pressed");
+                            downCount = 1;
+                        }
                         break;
                     case DIGIT1:
                         onePressed = true;
@@ -196,55 +212,54 @@ public class AMazeIng extends Application {
 
         });
 
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                System.out.println(event.getCode());
-                switch (event.getCode()) {
-                    case A:
-                        leftPressed = false;
-                        System.out.println("A released");
-                        break;
-                    case LEFT:
-                        leftPressed = false;
-                        break;
-                    case D:
-                        rightPressed = false;
-                        System.out.println("D released");
-                        break;
-                    case RIGHT:
-                        rightPressed = false;
-                        break;
-                    case W:
-                        upPressed = false;
-                        System.out.println("W released");
-                        break;
-                    case UP:
-                        upPressed = false;
-                        break;
-                    case S:
-                        downPressed = false;
-                        System.out.println("S released");
-                        break;
-                    case DOWN:
-                        downPressed = false;
-                        break;
-                    case DIGIT1:
-                        onePressed = false;
-                        break;
-                    case DIGIT2:
-                        twoPressed = false;
-                        break;
-                    case DIGIT3:
-                        threePressed = false;
-                        break;
-                    case DIGIT4:
-                        fourPressed = false;
-                        break;
-                }
-            }
-        });
-
+        /*scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+         @Override
+         public void handle(KeyEvent event) {
+         System.out.println(event.getCode());
+         switch (event.getCode()) {
+         case A:
+         leftPressed = false;
+         System.out.println("A released");
+         break;
+         case LEFT:
+         leftPressed = false;
+         break;
+         case D:
+         rightPressed = false;
+         System.out.println("D released");
+         break;
+         case RIGHT:
+         rightPressed = false;
+         break;
+         case W:
+         upPressed = false;
+         System.out.println("W released");
+         break;
+         case UP:
+         upPressed = false;
+         break;
+         case S:
+         downPressed = false;
+         System.out.println("S released");
+         break;
+         case DOWN:
+         downPressed = false;
+         break;
+         case DIGIT1:
+         onePressed = false;
+         break;
+         case DIGIT2:
+         twoPressed = false;
+         break;
+         case DIGIT3:
+         threePressed = false;
+         break;
+         case DIGIT4:
+         fourPressed = false;
+         break;
+         }
+         }
+         });*/
         primaryStage.setTitle("a-MAZE-ing");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -262,8 +277,8 @@ public class AMazeIng extends Application {
                 } else if (fourPressed) {
                     abilities.add(new Ability(3));
                 }
-                
-                if (leftPressed) {
+
+                if (leftPressed || leftCount > 0) {
                     collision = false;
 
                     for (Node n : solidBlocks) {
@@ -271,15 +286,19 @@ public class AMazeIng extends Application {
                             collision = true;
                         }
                     }
+                    System.out.println(leftCount);
 
-                    if (collision == false) {
-                        playerPos.relocate(playerPos.getLayoutX() - spritesize, playerPos.getLayoutY());
+                    if (leftCount < 17 && collision == false) {
+                        playerPos.relocate(playerPos.getLayoutX() - 1, playerPos.getLayoutY());
+                        leftCount++;
+                    } else {
                         leftPressed = false;
+                        leftCount = 0;
                         dx -= 1;
                         key = "A";
                     }
 
-                } else if (rightPressed) {
+                } else if (rightPressed || rightCount > 0) {
                     collision = false;
 
                     for (Node n : solidBlocks) {
@@ -287,15 +306,19 @@ public class AMazeIng extends Application {
                             collision = true;
                         }
                     }
+                    System.out.println(rightCount);
 
-                    if (collision == false) {
-                        playerPos.relocate(playerPos.getLayoutX() + spritesize, playerPos.getLayoutY());
+                    if (rightCount < 17 && collision == false) {
+                        playerPos.relocate(playerPos.getLayoutX() + 1, playerPos.getLayoutY());
+                        rightCount++;
+                    } else {
                         rightPressed = false;
+                        rightCount = 0;
                         dx -= 1;
-                        key = "D";
+                        key = "A";
                     }
 
-                } else if (downPressed) {
+                } else if (downPressed || downCount > 0) {
                     collision = false;
 
                     for (Node n : solidBlocks) {
@@ -303,15 +326,19 @@ public class AMazeIng extends Application {
                             collision = true;
                         }
                     }
+                    System.out.println(downCount);
 
-                    if (collision == false) {
-                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() + spritesize);
+                    if (downCount < 17 && collision == false) {
+                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() + 1);
+                        downCount++;
+                    } else {
                         downPressed = false;
+                        downCount = 0;
                         dx -= 1;
-                        key = "S";
+                        key = "A";
                     }
 
-                } else if (upPressed) {
+                } else if (upPressed || upCount > 0) {
                     collision = false;
 
                     for (Node n : solidBlocks) {
@@ -319,12 +346,16 @@ public class AMazeIng extends Application {
                             collision = true;
                         }
                     }
+                    System.out.println(upCount);
 
-                    if (collision == false) {
-                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() - spritesize);
+                    if (upCount < 17 && collision == false) {
+                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() - 1);
+                        upCount++;
+                    } else {
                         upPressed = false;
+                        upCount = 0;
                         dx -= 1;
-                        key = "W";
+                        key = "A";
                     }
 
                 }
