@@ -1,76 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PlayerRole.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;A-maze-ing&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">GameLogic</a> &gt; <span class="el_source">PlayerRole.java</span></div><h1>PlayerRole.java</h1><pre class="source lang-java linenums">package GameLogic;
 
+import java.util.ArrayList;
+import javafx.scene.image.Image;
+
 public class PlayerRole {
 
-	private int ID; //This is the Role ID
-	private String name; //This is the Role name.
-	private int hitpoints; // This is the amount of hp the character has.
-        private Ability[] ability;
-	/**
-	 * 
-	 * @param id
-	 * @param name
-	 * @param hitpoints
-	 */
-<span class="fc" id="L15">	public PlayerRole(int id) {</span>
-               
-<span class="fc" id="L17">               this.ID = id;</span>
-                
-<span class="fc" id="L19">               ability = new Ability[3];</span>
-                
-<span class="fc" id="L21">               ability[0] = new Ability((ID * 3) + 1);</span>
-<span class="fc" id="L22">               ability[1] = new Ability((ID * 3) + 2);</span>
-<span class="fc" id="L23">               ability[2] = new Ability((ID * 3) + 3);</span>
-                
-<span class="fc" id="L25">                createRole(id);</span>
-<span class="fc" id="L26">	}</span>
-        
-        public int getHitpoints(){
-<span class="nc" id="L29">            return hitpoints;</span>
-        }
-        public int setHitpoints(int hitpoints){
-<span class="nc" id="L32">            return this.hitpoints = hitpoints;</span>
-        }
-        
-        
-        
-        /**
-        *Create a new Role. With given abilities
+    private int ID; //This is the Role ID
+    private String name; //This is the Role name.
+    private int hitpoints; // This is the amount of hp the character has.
+    private Ability[] ability;
+    Image defaultImg;
+<span class="fc" id="L13">    Ability[] ab = new Ability[3];</span>
+
+    /**
+     *
+     * @param id
+     * @param name
+     * @param hitpoints
+     */
+<span class="fc" id="L21">    public PlayerRole(int id) {</span>
+<span class="fc" id="L22">        this.ID = id;</span>
+<span class="nc" id="L23">        createRole(id);</span>
+<span class="nc" id="L24">    }</span>
+
+    public int getHitpoints() {
+<span class="nc" id="L27">        return hitpoints;</span>
+    }
+
+    public int setHitpoints(int hitpoints) {
+<span class="nc" id="L31">        return this.hitpoints = hitpoints;</span>
+    }
+
+    /**
+     * Create all roles. With given ID u select the right Role.
+     *
      * @param ID
-        */
-	public void createRole(int ID) {
-<span class="pc bpc" id="L42" title="4 of 5 branches missed.">            switch(ID){</span>
+     */
+    public void createRole(int ID) {
+<span class="pc bpc" id="L40" title="4 of 5 branches missed.">        switch (ID) {</span>
             case 0:
-<span class="nc" id="L44">                    name = &quot;Rogue&quot;;</span>
-<span class="nc" id="L45">                    hitpoints = 190;</span>
-<span class="nc" id="L46">                break;</span>
+<span class="nc" id="L42">                name = &quot;Rogue&quot;;</span>
+<span class="nc" id="L43">                hitpoints = 190;</span>
+<span class="nc" id="L44">                defaultImg = Sprite.LoadSprite(&quot;&quot;, 16, 16);</span>
+<span class="nc" id="L45">                ability[0] = new Ability(0);</span>
+<span class="nc" id="L46">                ability[1] = new Ability(1);</span>
+<span class="nc" id="L47">                ability[2] = new Ability(2);</span>
+
+<span class="nc" id="L49">                break;</span>
             case 1:
-<span class="fc" id="L48">                    name = &quot;Mage&quot;;</span>
-<span class="fc" id="L49">                    hitpoints = 170;</span>
-<span class="fc" id="L50">                break;</span>
+<span class="fc" id="L51">                name = &quot;Mage&quot;;</span>
+<span class="fc" id="L52">                hitpoints = 170;</span>
+<span class="nc" id="L53">                defaultImg = Sprite.LoadSprite(&quot;&quot;, 16, 16);</span>
+<span class="nc" id="L54">                ability[3] = new Ability(3);</span>
+<span class="nc" id="L55">                ability[4] = new Ability(4);</span>
+<span class="nc" id="L56">                ability[5] = new Ability(5);</span>
+<span class="nc" id="L57">                break;</span>
             case 2:
-<span class="nc" id="L52">                    name = &quot;Warrior&quot;;</span>
-<span class="nc" id="L53">                    hitpoints = 290;</span>
-<span class="nc" id="L54">                break;</span>
+<span class="nc" id="L59">                name = &quot;Warrior&quot;;</span>
+<span class="nc" id="L60">                hitpoints = 290;</span>
+<span class="nc" id="L61">                defaultImg = Sprite.LoadSprite(&quot;&quot;, 16, 16);</span>
+<span class="nc" id="L62">                ability[6] = new Ability(6);</span>
+<span class="nc" id="L63">                ability[7] = new Ability(7);</span>
+<span class="nc" id="L64">                ability[8] = new Ability(8);</span>
+<span class="nc" id="L65">                break;</span>
             case 3:
-<span class="nc" id="L56">                    name = &quot;Gunner&quot;;</span>
-<span class="nc" id="L57">                    hitpoints = 180;</span>
-            }
-		
-<span class="fc" id="L60">	}</span>
-        
-        public String getInfo(){
-<span class="nc" id="L63">          String temp = &quot;Chooses a random character&quot;;</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">            if( ID  &lt; 4){</span>
-<span class="nc" id="L65">               temp = &quot;Character info&quot;+&quot;\nName: &quot;+ name + &quot;\nHitpoints: &quot;+ hitpoints;</span>
-<span class="nc" id="L66">               return temp; </span>
-           }
-           else{
-<span class="nc" id="L69">                return temp;</span>
-           }
-                
+<span class="nc" id="L67">                name = &quot;Hunter&quot;;</span>
+<span class="nc" id="L68">                hitpoints = 180;</span>
+<span class="nc" id="L69">                defaultImg = Sprite.LoadSprite(&quot;&quot;, 16, 16);</span>
+<span class="nc" id="L70">                ability[9] = new Ability(9);</span>
+<span class="nc" id="L71">                ability[10] = new Ability(10);</span>
+<span class="nc" id="L72">                ability[11] = new Ability(11);</span>
+        }
+<span class="nc" id="L74">    }</span>
+
+    /*
+     * get selected character info.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L81">        String temp = &quot;Chooses a random character&quot;;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (ID &lt; 4) {</span>
+<span class="nc" id="L83">            temp = &quot;Character info&quot; + &quot;\nName: &quot; + name + &quot;\nHitpoints: &quot; + hitpoints;</span>
+<span class="nc" id="L84">            return temp;</span>
+        } else {
+<span class="nc" id="L86">            return temp;</span>
         }
 
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
