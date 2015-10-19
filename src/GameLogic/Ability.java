@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 
 /**
 * Todo: add more constraints, class nearly impossible to test.
+* 
+* TEST TEST TEST TEST TEST 
 */
 public class Ability {
 

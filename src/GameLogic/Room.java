@@ -18,12 +18,15 @@ public class Room
 {
     public final Rectangle area;
     public int nrOfConnections;
-    public static int roomOffset= 6;
+    public static int roomOffset= 2;
     
-    public Room(int x, int y, int w, int h)
+    public boolean edge=false;
+    
+    public Room(int x, int y, int w, int h, boolean edge)
     {
         this.area = new Rectangle(x, y, w, h);
         this.nrOfConnections = 0;
+        this.edge= edge;
     }
     
     public boolean OverLapsWith(Room roomin)

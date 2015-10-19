@@ -81,7 +81,7 @@ public class AMazeIng extends Application {
         Node nodWall = new ImageView(imgWall);
         Group groupWall = new Group(nodWall);
 
-        Maze testmaze = new Maze(24, 2, 100);
+        Maze testmaze = new Maze(64, 2, 128);
         testmaze.printMaze();
 
         Block[][] mazegrid = testmaze.GetGrid();
@@ -93,6 +93,7 @@ public class AMazeIng extends Application {
             for (int x = 0; x < testmaze.getGridSize(); x++) {
                 switch (mazegrid[y][x]) {
                     case SOLID:
+                        //System.out.println("Drawing wall");
                         Image sol = Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16);
                         images.add(sol);
                         Node wpos = new ImageView(sol);
@@ -101,6 +102,7 @@ public class AMazeIng extends Application {
                         solidBlocks.add(wpos);
                         break;
                     case OPEN:
+                        //System.out.println("Drawing floor");
                         Image ope = Sprite.LoadSprite("Resources/FloorSprite.jpg", 16, 16);
                         images.add(ope);
                         Node opos = new ImageView(ope);
@@ -114,11 +116,20 @@ public class AMazeIng extends Application {
                         sppp.relocate(x * spritesize, y * spritesize);
                         nodes.add(sppp);
                         break;
+                    case EDGE:
+                        Image edg = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
+                        images.add(edg);
+                        Node edgp = new ImageView(edg);
+                        edgp.relocate(x*spritesize, y*spritesize);
+                        nodes.add(edgp);
+                        break;
 
                 }
             }
         }
-        
+
+        //pController = new PlayerController(this);
+        //PlayerController
         double tempDoubleX = 0;
         double tempDoubleY = 0;
         if (nodes.contains(sppp)) {
@@ -133,7 +144,19 @@ public class AMazeIng extends Application {
         tempNode = playerPos;
 
         group = new Group(nodes);
-        
+
+        /*Button btn = new Button();
+         btn.setText("Say 'Hello World'");
+         btn.setOnAction(new EventHandler<ActionEvent>() {
+            
+         @Override
+         public void handle(ActionEvent event) {
+         System.out.println("Hello World!");
+         }
+         });
+         root.getChildren().add(btn);
+         */
+        //StackPane root = new StackPane();
         scene = new Scene(group, testmaze.getGridSize() * spritesize, testmaze.getGridSize() * spritesize, Color.DARKSALMON);
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -246,8 +269,7 @@ public class AMazeIng extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                int dx = 0, dy = 0;
-                
+                int dx = 0, dy = 0;                
                 if (onePressed) {
                     abilities.add(new Ability(0));
                 } else if (twoPressed) {
@@ -257,7 +279,9 @@ public class AMazeIng extends Application {
                 } else if (fourPressed) {
                     abilities.add(new Ability(3));                   
                 }
-                
+               
+                    //System.out.println("Pressed key: " + pressedKey);
+                //System.out.println(recCharacter.getLayoutX() + " + " + recCharacter.getLayoutY());
                 if (leftPressed) {
                     collision = false;                    
                     
@@ -326,7 +350,27 @@ public class AMazeIng extends Application {
                         dx -= 1;
                         key = "W";
                     }
+
                 }
+                //moveImage(dx, dy);
+//                else {
+//                    switch(key){
+//                        case "A":
+//                            dx += 1;
+//                            break;
+//                        case "D": 
+//                            dx -= 1;
+//                            break;
+//                        case "S":
+//                            dy -= 1;
+//                            break;
+//                        case "W":
+//                            dy += 1;
+//                            break;
+//                        default:
+//                            break;
+//                    }
+
             }
         };
         timer.start();

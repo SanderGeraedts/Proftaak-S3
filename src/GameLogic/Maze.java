@@ -56,6 +56,9 @@ public class Maze {
         {
             Arrays.fill(row, Block.SOLID);
         }
+        
+        addMapEdges();
+        
         for(int i=0; i<roomTries; i++)
         {
             Room r = generateRoom();
@@ -80,11 +83,37 @@ public class Maze {
             }
         }
         
+                
         drawHallways(3);
         
         placeSpawnPoints(4);
     }
     
+    private void addMapEdges()
+    {
+        Room topEdge = new Room(0, 0, gridSize-1, 1, true);
+        Room bottEdge = new Room(0, gridSize-1, gridSize, 1, true);
+        
+        Room leftEdge = new Room(0, 0, 1, gridSize-1, true);
+        Room rightEdge = new Room(gridSize-1, 0, 1, gridSize-1,true);
+        
+        finRooms.add(topEdge);
+        finRooms.add(bottEdge);
+        finRooms.add(leftEdge);
+        finRooms.add(rightEdge);
+        drawRoom(topEdge);
+        drawRoom(bottEdge);
+        drawRoom(leftEdge);
+        drawRoom(rightEdge);
+        /*
+        Arrays.fill(grid[0], Block.EDGE);
+        Arrays.fill(grid[gridSize-1], Block.EDGE);
+        for(int y=0; y<gridSize; y++)
+        {
+            grid[y][0] = Block.EDGE;
+            grid[y][gridSize-1] = Block.EDGE;
+        }*/
+    }
     /**
      * Places the spawnpoints in the maze depending on the amount of spawnpoints specified in [amount].
      * @param amount: the number of spawnpoints
@@ -98,6 +127,11 @@ public class Maze {
             {
                 int idx = newRand(finRooms.size());
                 Room r = finRooms.get(idx);
+                if(r.edge)
+                {
+                    i--;
+                    continue;
+                }
 
                 int sX = r.area.x + (r.area.width/2);
                 int sY = r.area.y + (r.area.height/2);
@@ -111,7 +145,11 @@ public class Maze {
             {
                 int idx = newRand(finRooms.size());
                 Room r = finRooms.get(idx);
-                
+                if(r.edge)
+                {
+                    i--;
+                    continue;
+                }
                 if(!spawnRooms.contains(r))
                 {
                     int sX = r.area.x + (r.area.width/2);
@@ -145,7 +183,15 @@ public class Maze {
             for(int x= rec.x; x<rec.x+rec.width; x++)
             {
                 System.out.println("Grid X:" + x + " Y:" + y);
-                grid[y][x]= Block.OPEN;
+                if(r.edge)
+                {
+                    grid[y][x] = Block.EDGE;
+                }
+                else
+                {
+                    grid[y][x]= Block.OPEN;
+                }
+                    
             }
         }
     }
@@ -204,7 +250,8 @@ public class Maze {
     { 
         
         for(Room room : finRooms){
-                
+            if(room.edge)
+                continue;
             Room roomShort1 = null;
             Room roomShort2 = null;
             Room roomShort3 = null;
@@ -215,6 +262,8 @@ public class Maze {
             
             if(nrOfHallways == 2){
                 for(Room r2 : finRooms){
+                    if(r2.edge)
+                        continue;
                     double length = r2.CalcLength(room);
                     //check if room and r2 aren't the same and if r2 has less than 2 connections
                     if(room != r2){
@@ -241,11 +290,15 @@ public class Maze {
                     drawHallway(room, roomShort2);
                 }
                 catch(NullPointerException e){
+                    System.out.println("Sanders kutcode");
                     System.out.println(e.getMessage());
+                    //continue;
                 }
             }
             else if(nrOfHallways == 3){
                 for(Room r2 : finRooms){
+                    if(r2.edge)
+                        continue;
                     double length = r2.CalcLength(room);
                     //check if room and r2 aren't the same and if r2 has less than 2 connections
                     if(room != r2){
@@ -286,7 +339,9 @@ public class Maze {
                     drawHallway(room, roomShort3);
                 }
                 catch(NullPointerException e){
+                    System.out.println("Toch sanders kutcode");
                     System.out.println(e.getMessage());
+                    //continue;
                 }
             }
             else{
@@ -312,6 +367,9 @@ public class Maze {
                     line += " \u25A1 ";
                 }
                 if(grid[y][x] == Block.SPAWNPOINT){
+                    line += " S ";
+                }
+                if(grid[y][x] == Block.EDGE) {
                     line += " X ";
                 }
             }
@@ -330,7 +388,7 @@ public class Maze {
         int width= newRand(roomSize);
         int height = newRand(roomSize);
         System.out.println("W:" + width + " H:" + height);
-        Room r = new Room(1+newRand(gridSize-width-2), 1+newRand(gridSize-height-2), 2+width, 2+height);
+        Room r = new Room(1+newRand(gridSize-width-2), 1+newRand(gridSize-height-2), 2+width, 2+height, false);
         return r;
     }
     
