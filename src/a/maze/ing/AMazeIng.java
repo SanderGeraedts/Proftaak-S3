@@ -212,54 +212,63 @@ public class AMazeIng extends Application {
 
         });
 
-        /*scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-         @Override
-         public void handle(KeyEvent event) {
-         System.out.println(event.getCode());
-         switch (event.getCode()) {
-         case A:
-         leftPressed = false;
-         System.out.println("A released");
-         break;
-         case LEFT:
-         leftPressed = false;
-         break;
-         case D:
-         rightPressed = false;
-         System.out.println("D released");
-         break;
-         case RIGHT:
-         rightPressed = false;
-         break;
-         case W:
-         upPressed = false;
-         System.out.println("W released");
-         break;
-         case UP:
-         upPressed = false;
-         break;
-         case S:
-         downPressed = false;
-         System.out.println("S released");
-         break;
-         case DOWN:
-         downPressed = false;
-         break;
-         case DIGIT1:
-         onePressed = false;
-         break;
-         case DIGIT2:
-         twoPressed = false;
-         break;
-         case DIGIT3:
-         threePressed = false;
-         break;
-         case DIGIT4:
-         fourPressed = false;
-         break;
-         }
-         }
-         });*/
+//        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent event) {
+//                System.out.println(event.getCode());
+//                switch (event.getCode()) {
+//                    case A:
+//                        leftPressed = false;
+//                        System.out.println("A released");
+//                        break;
+//                    case LEFT:
+//                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
+//                        leftPressed = false;
+//                        }
+//                        break;
+//                    case D:
+//                        rightPressed = false;
+//                        System.out.println("D released");
+//                        break;
+//                    case RIGHT:
+//                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
+//                        rightPressed = false;
+//                        }
+//                        break;
+//                    case W:
+//                        upPressed = false;
+//                        System.out.println("W released");
+//                        break;
+//                    case UP:
+//                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
+//                        upPressed = false;
+//                        }
+//                        break;
+//                    case S:
+//                        downPressed = false;
+//                        System.out.println("S released");
+//                        break;
+//                    case DOWN:
+//                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
+//                        downPressed = false;
+//                        }
+//                        break;
+//                    case DIGIT1:
+//                        onePressed = false;
+//                        break;
+//                    case DIGIT2:
+//                        twoPressed = false;
+//                        break;
+//                    case DIGIT3:
+//                        threePressed = false;
+//                        break;
+//                    case DIGIT4:
+//                        fourPressed = false;
+//                        break;
+//                }
+//            }
+//        });
+
         primaryStage.setTitle("a-MAZE-ing");
         primaryStage.setScene(scene);
         primaryStage.show();
