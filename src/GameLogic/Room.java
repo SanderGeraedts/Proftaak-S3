@@ -17,29 +17,42 @@ import static java.lang.Math.sqrt;
 public class Room 
 {
     public final Rectangle area;
-    public int nrOfConnections;
     public static int roomOffset= 2;
     
     public boolean edge=false;
     
+    /**
+     * 
+     * @param x: The x-coordinate of the room. Must be higher than 0.
+     * @param y: The y-coordinate of the room. Must be higher than 0.
+     * @param w: The width of the room. Must be higher than 1.
+     * @param h: The height of the room. Must be higher than 1.
+     * @param edge: if the room is a part of the edge of the maze, return true, else false.
+     */
     public Room(int x, int y, int w, int h, boolean edge)
     {
         this.area = new Rectangle(x, y, w, h);
-        this.nrOfConnections = 0;
         this.edge= edge;
     }
     
+    /**
+     * Checks if [rooomin] overlaps with this room combined with the [roomOffset].
+     * 
+     * @param roomin: The room which needs to be checked if it overlaps with this room
+     * @return true if the room overlaps, else false.
+     */
     public boolean OverLapsWith(Room roomin)
     {
         Rectangle r = roomin.area;
         return area.x < r.x + r.width+roomOffset && area.x + area.width+roomOffset > r.x && area.y < r.y + r.height+roomOffset && area.y + area.height+roomOffset > r.y;
     }
     
-    public void AddConnection()
-    {
-        this.nrOfConnections++;
-    }
-    
+    /**
+     * Calculates the approximate lenght between this room and [room]. Returns the lenght as a double
+     * 
+     * @param room
+     * @return the length as a double
+     */
     public double CalcLength(Room room){
        double length;
         

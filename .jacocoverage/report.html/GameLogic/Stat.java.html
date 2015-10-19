@@ -81,7 +81,7 @@ public class Stat {
 
     /**
      * //Samder: Isn't this method useless??? 
-     * 
+     * //Roy: Yes Yes.
      * Give back the stats.
      *
      * @param totalWins

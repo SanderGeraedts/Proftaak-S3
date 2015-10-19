@@ -17,35 +17,51 @@ import static java.lang.Math.sqrt;
 public class Room 
 {
     public final Rectangle area;
-    public int nrOfConnections;
-<span class="nc" id="L21">    public static int roomOffset= 6;</span>
+<span class="fc" id="L20">    public static int roomOffset= 2;</span>
     
-    public Room(int x, int y, int w, int h)
-<span class="nc" id="L24">    {</span>
-<span class="nc" id="L25">        this.area = new Rectangle(x, y, w, h);</span>
-<span class="nc" id="L26">        this.nrOfConnections = 0;</span>
-<span class="nc" id="L27">    }</span>
+<span class="fc" id="L22">    public boolean edge=false;</span>
     
+    /**
+     * 
+     * @param x: The x-coordinate of the room. Must be higher than 0.
+     * @param y: The y-coordinate of the room. Must be higher than 0.
+     * @param w: The width of the room. Must be higher than 1.
+     * @param h: The height of the room. Must be higher than 1.
+     * @param edge: if the room is a part of the edge of the maze, return true, else false.
+     */
+    public Room(int x, int y, int w, int h, boolean edge)
+<span class="fc" id="L33">    {</span>
+<span class="fc" id="L34">        this.area = new Rectangle(x, y, w, h);</span>
+<span class="fc" id="L35">        this.edge= edge;</span>
+<span class="fc" id="L36">    }</span>
+    
+    /**
+     * Checks if [rooomin] overlaps with this room combined with the [roomOffset].
+     * 
+     * @param roomin: The room which needs to be checked if it overlaps with this room
+     * @return true if the room overlaps, else false.
+     */
     public boolean OverLapsWith(Room roomin)
     {
-<span class="nc" id="L31">        Rectangle r = roomin.area;</span>
-<span class="nc bnc" id="L32" title="All 8 branches missed.">        return area.x &lt; r.x + r.width+roomOffset &amp;&amp; area.x + area.width+roomOffset &gt; r.x &amp;&amp; area.y &lt; r.y + r.height+roomOffset &amp;&amp; area.y + area.height+roomOffset &gt; r.y;</span>
+<span class="fc" id="L46">        Rectangle r = roomin.area;</span>
+<span class="pc bpc" id="L47" title="3 of 8 branches missed.">        return area.x &lt; r.x + r.width+roomOffset &amp;&amp; area.x + area.width+roomOffset &gt; r.x &amp;&amp; area.y &lt; r.y + r.height+roomOffset &amp;&amp; area.y + area.height+roomOffset &gt; r.y;</span>
     }
     
-    public void AddConnection()
-    {
-<span class="nc" id="L37">        this.nrOfConnections++;</span>
-<span class="nc" id="L38">    }</span>
-    
+    /**
+     * Calculates the approximate lenght between this room and [room]. Returns the lenght as a double
+     * 
+     * @param room
+     * @return the length as a double
+     */
     public double CalcLength(Room room){
        double length;
         
-<span class="nc" id="L43">       double xLength = sqrt(pow((double)room.area.x - (double)this.area.x, 2));</span>
-<span class="nc" id="L44">       double yLength = sqrt(pow((double)room.area.y - (double)this.area.y, 2));</span>
+<span class="fc" id="L59">       double xLength = sqrt(pow((double)room.area.x - (double)this.area.x, 2));</span>
+<span class="fc" id="L60">       double yLength = sqrt(pow((double)room.area.y - (double)this.area.y, 2));</span>
        
-<span class="nc" id="L46">       length = xLength + yLength;</span>
+<span class="fc" id="L62">       length = xLength + yLength;</span>
        
-<span class="nc" id="L48">       return length;</span>
+<span class="fc" id="L64">       return length;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -7,6 +7,7 @@ package a.maze.ing;
 
 import GameLogic.*;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -27,195 +28,262 @@ import javafx.stage.Stage;
  *
  * @author Kasper
  */
-<span class="nc" id="L30">public class AMazeIng extends Application {</span>
-<span class="nc" id="L31">    static int spritesize = 16;</span>
-    
-<span class="nc" id="L33">    private String pressedKey = &quot;&quot;;</span>
-    
-<span class="nc" id="L35">    private Boolean upPressed = false;</span>
-<span class="nc" id="L36">    private Boolean downPressed = false;</span>
-<span class="nc" id="L37">    private Boolean leftPressed = false;</span>
-<span class="nc" id="L38">    private Boolean rightPressed = false;</span>
-    
+<span class="nc" id="L31">public class AMazeIng extends Application {</span>
+
+<span class="nc" id="L33">    static int spritesize = 16;</span>
+
+<span class="nc" id="L35">    private String pressedKey = &quot;&quot;;</span>
+
+<span class="nc" id="L37">    private Boolean upPressed = false;</span>
+<span class="nc" id="L38">    private Boolean downPressed = false;</span>
+<span class="nc" id="L39">    private Boolean leftPressed = false;</span>
+<span class="nc" id="L40">    private Boolean rightPressed = false;</span>
+
     private Image imgCharacter;
     private Node nodCharacter;
     private Rectangle recCharacter;
-    
+
     private Node sppp;
-    
+
     private String key;
-    
+
     public Group group;
-    
+
     public ArrayList&lt;Node&gt; nodes;
-    
+
     public Scene scene;
-    
+
     public PlayerController pController;
-    
+
+    //Moving checks
+    public List&lt;Node&gt; solidBlocks;
+
+    public Node playerPos;
+
+    public Boolean collision;
+
+    public Node tempNode;
+
     //PlayerController
-    
     @Override
-    public void start(Stage primaryStage) 
-    {        
-<span class="nc" id="L61">        Image imgWall = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;, 16, 16);</span>
-<span class="nc" id="L62">        Node nodWall = new ImageView(imgWall);</span>
-<span class="nc" id="L63">        Group groupWall = new Group(nodWall);</span>
-        
-        
-<span class="nc" id="L66">        Maze testmaze = new Maze(24, 2, 100);</span>
-<span class="nc" id="L67">        testmaze.printMaze(); </span>
-        
-<span class="nc" id="L69">        Block[][] mazegrid = testmaze.GetGrid();</span>
-        
-        
-<span class="nc" id="L72">        ArrayList&lt;Image&gt; images = new ArrayList&lt;Image&gt;();</span>
-<span class="nc" id="L73">        nodes = new ArrayList&lt;Node&gt;();        </span>
-        
-<span class="nc bnc" id="L75" title="All 2 branches missed.">        for(int y=0; y&lt;testmaze.getGridSize(); y++)</span>
-        {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">            for(int x=0; x&lt;testmaze.getGridSize(); x++)</span>
-            {
-<span class="nc bnc" id="L79" title="All 4 branches missed.">                switch(mazegrid[y][x])</span>
-                {
+    public void start(Stage primaryStage) {
+<span class="nc" id="L70">        solidBlocks = new ArrayList&lt;Node&gt;();</span>
+
+<span class="nc" id="L72">        Image imgWall = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L73">        Node nodWall = new ImageView(imgWall);</span>
+<span class="nc" id="L74">        Group groupWall = new Group(nodWall);</span>
+
+<span class="nc" id="L76">        Maze testmaze = new Maze(64, 2, 128);</span>
+<span class="nc" id="L77">        testmaze.printMaze();</span>
+
+<span class="nc" id="L79">        Block[][] mazegrid = testmaze.GetGrid();</span>
+
+<span class="nc" id="L81">        ArrayList&lt;Image&gt; images = new ArrayList&lt;Image&gt;();</span>
+<span class="nc" id="L82">        nodes = new ArrayList&lt;Node&gt;();</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        for (int y = 0; y &lt; testmaze.getGridSize(); y++) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            for (int x = 0; x &lt; testmaze.getGridSize(); x++) {</span>
+<span class="nc bnc" id="L86" title="All 5 branches missed.">                switch (mazegrid[y][x]) {</span>
                     case SOLID:
                         //System.out.println(&quot;Drawing wall&quot;);
-<span class="nc" id="L83">                        Image sol = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;, 16, 16);</span>
-<span class="nc" id="L84">                        images.add(sol);</span>
-<span class="nc" id="L85">                        Node wpos = new ImageView(sol);</span>
-<span class="nc" id="L86">                        wpos.relocate(x*spritesize, y*spritesize);</span>
-<span class="nc" id="L87">                        nodes.add(wpos);</span>
-<span class="nc" id="L88">                        break;</span>
+<span class="nc" id="L89">                        Image sol = Sprite.LoadSprite(&quot;Resources/WallSprite.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L90">                        images.add(sol);</span>
+<span class="nc" id="L91">                        Node wpos = new ImageView(sol);</span>
+<span class="nc" id="L92">                        wpos.relocate(x * spritesize, y * spritesize);</span>
+<span class="nc" id="L93">                        nodes.add(wpos);</span>
+<span class="nc" id="L94">                        solidBlocks.add(wpos);</span>
+<span class="nc" id="L95">                        break;</span>
                     case OPEN:
                         //System.out.println(&quot;Drawing floor&quot;);
-<span class="nc" id="L91">                        Image ope = Sprite.LoadSprite(&quot;Resources/FloorSprite.jpg&quot;, 16, 16);</span>
-<span class="nc" id="L92">                        images.add(ope);</span>
-<span class="nc" id="L93">                        Node opos = new ImageView(ope);</span>
-<span class="nc" id="L94">                        opos.relocate(x*spritesize, y*spritesize);</span>
-<span class="nc" id="L95">                        nodes.add(opos);</span>
-<span class="nc" id="L96">                        break;</span>
+<span class="nc" id="L98">                        Image ope = Sprite.LoadSprite(&quot;Resources/FloorSprite.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L99">                        images.add(ope);</span>
+<span class="nc" id="L100">                        Node opos = new ImageView(ope);</span>
+<span class="nc" id="L101">                        opos.relocate(x * spritesize, y * spritesize);</span>
+<span class="nc" id="L102">                        nodes.add(opos);</span>
+<span class="nc" id="L103">                        break;</span>
                     case SPAWNPOINT:
-<span class="nc" id="L98">                        Image spp = Sprite.LoadSprite(&quot;Resources/SpawnPoint.jpg&quot;, 16, 16);</span>
-<span class="nc" id="L99">                        images.add(spp);</span>
-<span class="nc" id="L100">                        sppp = new ImageView(spp);</span>
-<span class="nc" id="L101">                        sppp.relocate(x*spritesize, y*spritesize);</span>
-<span class="nc" id="L102">                        nodes.add(sppp);</span>
+<span class="nc" id="L105">                        Image spp = Sprite.LoadSprite(&quot;Resources/SpawnPoint.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L106">                        images.add(spp);</span>
+<span class="nc" id="L107">                        sppp = new ImageView(spp);</span>
+<span class="nc" id="L108">                        sppp.relocate(x * spritesize, y * spritesize);</span>
+<span class="nc" id="L109">                        nodes.add(sppp);</span>
+<span class="nc" id="L110">                        break;</span>
+                    case EDGE:
+<span class="nc" id="L112">                        Image edg = Sprite.LoadSprite(&quot;Resources/MapEdge.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L113">                        images.add(edg);</span>
+<span class="nc" id="L114">                        Node edgp = new ImageView(edg);</span>
+<span class="nc" id="L115">                        edgp.relocate(x*spritesize, y*spritesize);</span>
+<span class="nc" id="L116">                        nodes.add(edgp);</span>
                         break;
-                            
+
                 }
             }
         }
-        
+
         //pController = new PlayerController(this);
-        
-        
         //PlayerController
-<span class="nc" id="L113">        double tempDoubleX = 0;</span>
-<span class="nc" id="L114">        double tempDoubleY = 0;</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (nodes.contains(sppp)){</span>
-<span class="nc" id="L116">            tempDoubleX = sppp.getLayoutX();</span>
-<span class="nc" id="L117">            tempDoubleY = sppp.getLayoutY();</span>
+<span class="nc" id="L125">        double tempDoubleX = 0;</span>
+<span class="nc" id="L126">        double tempDoubleY = 0;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (nodes.contains(sppp)) {</span>
+<span class="nc" id="L128">            tempDoubleX = sppp.getLayoutX();</span>
+<span class="nc" id="L129">            tempDoubleY = sppp.getLayoutY();</span>
         }
-<span class="nc" id="L119">        imgCharacter = Sprite.LoadSprite(&quot;Resources/SpawnPoint.jpg&quot;, 10, 10);</span>
-<span class="nc" id="L120">        nodCharacter = new ImageView(imgCharacter);</span>
-<span class="nc" id="L121">        nodCharacter.relocate(tempDoubleX, tempDoubleY);</span>
-<span class="nc" id="L122">        nodes.add(nodCharacter);        </span>
-        
-<span class="nc" id="L124">        group = new Group(nodes);</span>
-        
-        
+<span class="nc" id="L131">        imgCharacter = Sprite.LoadSprite(&quot;Resources/SpawnPoint.jpg&quot;, 16, 16);</span>
+<span class="nc" id="L132">        nodCharacter = new ImageView(imgCharacter);</span>
+<span class="nc" id="L133">        nodCharacter.relocate(tempDoubleX, tempDoubleY);</span>
+<span class="nc" id="L134">        nodes.add(nodCharacter);</span>
+<span class="nc" id="L135">        playerPos = nodCharacter;</span>
+<span class="nc" id="L136">        tempNode = playerPos;</span>
+
+<span class="nc" id="L138">        group = new Group(nodes);</span>
+
         /*Button btn = new Button();
-        btn.setText(&quot;Say 'Hello World'&quot;);
-        btn.setOnAction(new EventHandler&lt;ActionEvent&gt;() {
+         btn.setText(&quot;Say 'Hello World'&quot;);
+         btn.setOnAction(new EventHandler&lt;ActionEvent&gt;() {
             
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println(&quot;Hello World!&quot;);
-            }
-        });
-        root.getChildren().add(btn);
-        */
+         @Override
+         public void handle(ActionEvent event) {
+         System.out.println(&quot;Hello World!&quot;);
+         }
+         });
+         root.getChildren().add(btn);
+         */
         //StackPane root = new StackPane();
-        
-<span class="nc" id="L140">        scene = new Scene(group, testmaze.getGridSize()*spritesize, testmaze.getGridSize()*spritesize, Color.DARKSALMON);</span>
-        
-<span class="nc" id="L142">        scene.setOnKeyPressed(new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L152">        scene = new Scene(group, testmaze.getGridSize() * spritesize, testmaze.getGridSize() * spritesize, Color.DARKSALMON);</span>
+
+<span class="nc" id="L154">        scene.setOnKeyPressed(new EventHandler&lt;KeyEvent&gt;() {</span>
             @Override
             public void handle(KeyEvent event) {
-<span class="nc" id="L145">                System.out.println(event.getCode());</span>
-<span class="nc bnc" id="L146" title="All 5 branches missed.">                switch (event.getCode()) {</span>
+<span class="nc" id="L157">                System.out.println(event.getCode());</span>
+<span class="nc bnc" id="L158" title="All 5 branches missed.">                switch (event.getCode()) {</span>
                     case A:
-<span class="nc" id="L148">                        leftPressed = true;</span>
-<span class="nc" id="L149">                        System.out.println(&quot;A pressed&quot;);</span>
-<span class="nc" id="L150">                        break;</span>
+<span class="nc" id="L160">                        leftPressed = true;</span>
+<span class="nc" id="L161">                        System.out.println(&quot;A pressed&quot;);</span>
+<span class="nc" id="L162">                        break;</span>
                     case D:
-<span class="nc" id="L152">                        rightPressed = true;</span>
-<span class="nc" id="L153">                        System.out.println(&quot;D pressed&quot;);</span>
-<span class="nc" id="L154">                        break;</span>
+<span class="nc" id="L164">                        rightPressed = true;</span>
+<span class="nc" id="L165">                        System.out.println(&quot;D pressed&quot;);</span>
+<span class="nc" id="L166">                        break;</span>
                     case W:
-<span class="nc" id="L156">                        upPressed = true;</span>
-<span class="nc" id="L157">                        System.out.println(&quot;W pressed&quot;);</span>
-<span class="nc" id="L158">                        break;</span>
+<span class="nc" id="L168">                        upPressed = true;</span>
+<span class="nc" id="L169">                        System.out.println(&quot;W pressed&quot;);</span>
+<span class="nc" id="L170">                        break;</span>
                     case S:
-<span class="nc" id="L160">                        downPressed = true;</span>
-<span class="nc" id="L161">                        System.out.println(&quot;S pressed&quot;);</span>
+<span class="nc" id="L172">                        downPressed = true;</span>
+<span class="nc" id="L173">                        System.out.println(&quot;S pressed&quot;);</span>
                         break;
                 }
-<span class="nc" id="L164">            }</span>
+<span class="nc" id="L176">            }</span>
 
         });
 
-<span class="nc" id="L168">        scene.setOnKeyReleased(new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L180">        scene.setOnKeyReleased(new EventHandler&lt;KeyEvent&gt;() {</span>
             @Override
             public void handle(KeyEvent event) {
-<span class="nc" id="L171">                System.out.println(event.getCode());</span>
-<span class="nc bnc" id="L172" title="All 5 branches missed.">                switch (event.getCode()) {</span>
+<span class="nc" id="L183">                System.out.println(event.getCode());</span>
+<span class="nc bnc" id="L184" title="All 5 branches missed.">                switch (event.getCode()) {</span>
                     case A:
-<span class="nc" id="L174">                        leftPressed = false;</span>
-<span class="nc" id="L175">                        System.out.println(&quot;A released&quot;);</span>
-<span class="nc" id="L176">                        break;</span>
+<span class="nc" id="L186">                        leftPressed = false;</span>
+<span class="nc" id="L187">                        System.out.println(&quot;A released&quot;);</span>
+<span class="nc" id="L188">                        break;</span>
                     case D:
-<span class="nc" id="L178">                        rightPressed = false;</span>
-<span class="nc" id="L179">                        System.out.println(&quot;D released&quot;);</span>
-<span class="nc" id="L180">                        break;</span>
+<span class="nc" id="L190">                        rightPressed = false;</span>
+<span class="nc" id="L191">                        System.out.println(&quot;D released&quot;);</span>
+<span class="nc" id="L192">                        break;</span>
                     case W:
-<span class="nc" id="L182">                        upPressed = false;</span>
-<span class="nc" id="L183">                        System.out.println(&quot;W released&quot;);</span>
-<span class="nc" id="L184">                        break;</span>
+<span class="nc" id="L194">                        upPressed = false;</span>
+<span class="nc" id="L195">                        System.out.println(&quot;W released&quot;);</span>
+<span class="nc" id="L196">                        break;</span>
                     case S:
-<span class="nc" id="L186">                        downPressed = false;</span>
-<span class="nc" id="L187">                        System.out.println(&quot;S released&quot;);</span>
+<span class="nc" id="L198">                        downPressed = false;</span>
+<span class="nc" id="L199">                        System.out.println(&quot;S released&quot;);</span>
                         break;
                 }
-<span class="nc" id="L190">            }                        </span>
-        });        
-        
-<span class="nc" id="L193">        primaryStage.setTitle(&quot;a-MAZE-ing&quot;);</span>
-<span class="nc" id="L194">        primaryStage.setScene(scene);</span>
-<span class="nc" id="L195">        primaryStage.show();</span>
-        
-<span class="nc" id="L197">        AnimationTimer timer = new AnimationTimer() {</span>
-                @Override
-                public void handle(long now) {
-<span class="nc" id="L200">                    int dx = 0, dy = 0;</span>
+<span class="nc" id="L202">            }</span>
+        });
+
+<span class="nc" id="L205">        primaryStage.setTitle(&quot;a-MAZE-ing&quot;);</span>
+<span class="nc" id="L206">        primaryStage.setScene(scene);</span>
+<span class="nc" id="L207">        primaryStage.show();</span>
+
+<span class="nc" id="L209">        AnimationTimer timer = new AnimationTimer() {</span>
+            @Override
+            public void handle(long now) {
+<span class="nc" id="L212">                int dx = 0, dy = 0;</span>
+
                     //System.out.println(&quot;Pressed key: &quot; + pressedKey);
-
-                    //System.out.println(recCharacter.getLayoutX() + &quot; + &quot; + recCharacter.getLayoutY());
-
-<span class="nc bnc" id="L205" title="All 2 branches missed.">                    if (leftPressed) {</span>
-<span class="nc" id="L206">                        dx -= 1;</span>
-<span class="nc" id="L207">                        key = &quot;A&quot;;</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">                    } else if (rightPressed) {</span>
-<span class="nc" id="L209">                        dx += 1;</span>
-<span class="nc" id="L210">                        key = &quot;D&quot;;</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">                    } else if (downPressed) {</span>
-<span class="nc" id="L212">                        dy += 1;</span>
-<span class="nc" id="L213">                        key = &quot;S&quot;;</span>
-<span class="nc bnc" id="L214" title="All 2 branches missed.">                    } else if (upPressed) {</span>
-<span class="nc" id="L215">                        dy -= 1;</span>
-<span class="nc" id="L216">                        key = &quot;W&quot;;</span>
+                //System.out.println(recCharacter.getLayoutX() + &quot; + &quot; + recCharacter.getLayoutY());
+<span class="nc bnc" id="L216" title="All 2 branches missed.">                if (leftPressed) {</span>
+<span class="nc" id="L217">                    collision = false;                    </span>
+                    
+<span class="nc bnc" id="L219" title="All 2 branches missed.">                    for (Node n : solidBlocks) {</span>
+<span class="nc bnc" id="L220" title="All 4 branches missed.">                       if (n.getLayoutX() == playerPos.getLayoutX() - spritesize &amp;&amp; n.getLayoutY() == playerPos.getLayoutY()) {</span>
+<span class="nc" id="L221">                           collision = true;</span>
+                       }
+<span class="nc" id="L223">                    }</span>
+                    
+<span class="nc bnc" id="L225" title="All 2 branches missed.">                    if (collision == false) </span>
+                    {                    
+<span class="nc" id="L227">                        playerPos.relocate(playerPos.getLayoutX() - spritesize, playerPos.getLayoutY());</span>
+<span class="nc" id="L228">                        leftPressed = false;</span>
+<span class="nc" id="L229">                        dx -= 1;</span>
+<span class="nc" id="L230">                        key = &quot;A&quot;;</span>
                     }
-<span class="nc" id="L218">                    moveImage(dx, dy);</span>
+                    
+
+<span class="nc bnc" id="L234" title="All 2 branches missed.">                } else if (rightPressed) {</span>
+<span class="nc" id="L235">                    collision = false;                    </span>
+                    
+<span class="nc bnc" id="L237" title="All 2 branches missed.">                    for (Node n : solidBlocks) {</span>
+<span class="nc bnc" id="L238" title="All 4 branches missed.">                       if (n.getLayoutX() == playerPos.getLayoutX() + spritesize &amp;&amp; n.getLayoutY() == playerPos.getLayoutY()) {</span>
+<span class="nc" id="L239">                           collision = true;</span>
+                       }
+<span class="nc" id="L241">                    }</span>
+                    
+<span class="nc bnc" id="L243" title="All 2 branches missed.">                    if (collision == false) </span>
+                    {                    
+<span class="nc" id="L245">                        playerPos.relocate(playerPos.getLayoutX() + spritesize, playerPos.getLayoutY());</span>
+<span class="nc" id="L246">                        rightPressed = false;</span>
+<span class="nc" id="L247">                        dx -= 1;</span>
+<span class="nc" id="L248">                        key = &quot;D&quot;;</span>
+                    }
+
+<span class="nc bnc" id="L251" title="All 2 branches missed.">                } else if (downPressed) {</span>
+<span class="nc" id="L252">                    collision = false;                    </span>
+                    
+<span class="nc bnc" id="L254" title="All 2 branches missed.">                    for (Node n : solidBlocks) {</span>
+<span class="nc bnc" id="L255" title="All 4 branches missed.">                       if (n.getLayoutX() == playerPos.getLayoutX() &amp;&amp; n.getLayoutY() == playerPos.getLayoutY() + spritesize) {</span>
+<span class="nc" id="L256">                           collision = true;</span>
+                       }
+<span class="nc" id="L258">                    }</span>
+                    
+<span class="nc bnc" id="L260" title="All 2 branches missed.">                    if (collision == false) </span>
+                    {                    
+<span class="nc" id="L262">                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() + spritesize);</span>
+<span class="nc" id="L263">                        downPressed = false;</span>
+<span class="nc" id="L264">                        dx -= 1;</span>
+<span class="nc" id="L265">                        key = &quot;S&quot;;</span>
+                    }
+
+<span class="nc bnc" id="L268" title="All 2 branches missed.">                } else if (upPressed) {</span>
+<span class="nc" id="L269">                    collision = false;                    </span>
+                    
+<span class="nc bnc" id="L271" title="All 2 branches missed.">                    for (Node n : solidBlocks) {</span>
+<span class="nc bnc" id="L272" title="All 4 branches missed.">                       if (n.getLayoutX() == playerPos.getLayoutX() &amp;&amp; n.getLayoutY() == playerPos.getLayoutY() - spritesize) {</span>
+<span class="nc" id="L273">                           collision = true;</span>
+                       }
+<span class="nc" id="L275">                    }</span>
+                    
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                    if (collision == false) </span>
+                    {                    
+<span class="nc" id="L279">                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() - spritesize);</span>
+<span class="nc" id="L280">                        upPressed = false;</span>
+<span class="nc" id="L281">                        dx -= 1;</span>
+<span class="nc" id="L282">                        key = &quot;W&quot;;</span>
+                    }
+
+                }
+                //moveImage(dx, dy);
 //                else {
 //                    switch(key){
 //                        case &quot;A&quot;:
@@ -234,47 +302,45 @@ import javafx.stage.Stage;
 //                            break;
 //                    }
 
-<span class="nc" id="L237">                }</span>
-            };
-<span class="nc" id="L239">        timer.start();</span>
-<span class="nc" id="L240">    }</span>
+<span class="nc" id="L305">            }</span>
+        };
+<span class="nc" id="L307">        timer.start();</span>
+<span class="nc" id="L308">    }</span>
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) 
-    {
-<span class="nc" id="L247">        launch(args);</span>
+    public static void main(String[] args) {
+<span class="nc" id="L314">        launch(args);</span>
 
-        
-<span class="nc" id="L250">    }</span>
-    
+<span class="nc" id="L316">    }</span>
+
     private void moveImage(int dx, int dy) {
-<span class="nc bnc" id="L253" title="All 4 branches missed.">        if (dx == 0 &amp;&amp; dy == 0) {</span>
-<span class="nc" id="L254">            return;</span>
+<span class="nc bnc" id="L319" title="All 4 branches missed.">        if (dx == 0 &amp;&amp; dy == 0) {</span>
+<span class="nc" id="L320">            return;</span>
         }
 
-<span class="nc" id="L257">        final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;</span>
-<span class="nc" id="L258">        final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;</span>
+<span class="nc" id="L323">        final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;</span>
+<span class="nc" id="L324">        final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;</span>
 
-<span class="nc" id="L260">        double x = cx + nodCharacter.getLayoutX() + dx * 2.40f;</span>
-<span class="nc" id="L261">        double y = cy + nodCharacter.getLayoutY() + dy * 2.40f;</span>
+<span class="nc" id="L326">        double x = cx + nodCharacter.getLayoutX() + dx * 2.40f;</span>
+<span class="nc" id="L327">        double y = cy + nodCharacter.getLayoutY() + dy * 2.40f;</span>
 
-<span class="nc" id="L263">        moveImgTo(x, y);</span>
-<span class="nc" id="L264">    }</span>
+<span class="nc" id="L329">        moveImgTo(x, y);</span>
+<span class="nc" id="L330">    }</span>
 
     private void moveImgTo(double x, double y) {
-<span class="nc" id="L267">        final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;</span>
-<span class="nc" id="L268">        final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;</span>
-<span class="nc" id="L269">        System.out.println(&quot;x: &quot; + x + &quot; - y: &quot; + y);</span>
-<span class="nc bnc" id="L270" title="All 8 branches missed.">        if (x - cx &gt;= 0</span>
+<span class="nc" id="L333">        final double cx = nodCharacter.getBoundsInLocal().getWidth() / 2;</span>
+<span class="nc" id="L334">        final double cy = nodCharacter.getBoundsInLocal().getHeight() / 2;</span>
+<span class="nc" id="L335">        System.out.println(&quot;x: &quot; + x + &quot; - y: &quot; + y);</span>
+<span class="nc bnc" id="L336" title="All 8 branches missed.">        if (x - cx &gt;= 0</span>
                 &amp;&amp; x + cx &lt;= 600
                 &amp;&amp; y - cy &gt;= 0
                 &amp;&amp; y + cy &lt;= 800) {
-<span class="nc" id="L274">            nodCharacter.relocate(x - cx, y - cy);</span>
-<span class="nc" id="L275">            recCharacter = new Rectangle((int) nodCharacter.getLayoutX(), (int) nodCharacter.getLayoutY(), 236, 236);</span>
+<span class="nc" id="L340">            nodCharacter.relocate(x - cx, y - cy);</span>
+<span class="nc" id="L341">            recCharacter = new Rectangle((int) nodCharacter.getLayoutX(), (int) nodCharacter.getLayoutY(), 236, 236);</span>
         }
-<span class="nc" id="L277">    }</span>
-    
+<span class="nc" id="L343">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

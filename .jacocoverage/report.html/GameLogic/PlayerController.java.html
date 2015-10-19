@@ -32,54 +32,55 @@ public class PlayerController {
 
     /**
      *
+     * @param guiMaze
      * @param state
      * @param direction
      * @param location
      */
-<span class="nc" id="L39">    public PlayerController(/*int state, int direction, int location,*/AMazeIng guiMaze) {</span>
+<span class="nc" id="L40">    public PlayerController(/*int state, int direction, int location,*/AMazeIng guiMaze) {</span>
 //        this.state = state;
 //        this.direction = direction;
 //        this.location = location;
-<span class="nc" id="L43">        this.guiMaze = guiMaze;</span>
+<span class="nc" id="L44">        this.guiMaze = guiMaze;</span>
 
         //Logix
         
 
-<span class="nc" id="L48">    }</span>
+<span class="nc" id="L49">    }</span>
 
-    private void moveImage(int dx, int dy) {
-<span class="nc bnc" id="L51" title="All 4 branches missed.">        if (dx == 0 &amp;&amp; dy == 0) {</span>
-<span class="nc" id="L52">            return;</span>
+    private void moveImage(int dx, int dy) throws InterruptedException {
+<span class="nc bnc" id="L52" title="All 4 branches missed.">        if (dx == 0 &amp;&amp; dy == 0) {</span>
+<span class="nc" id="L53">            return;</span>
         }
 
-<span class="nc" id="L55">        final double cx = nod.getBoundsInLocal().getWidth() / 2;</span>
-<span class="nc" id="L56">        final double cy = nod.getBoundsInLocal().getHeight() / 2;</span>
+<span class="nc" id="L56">        final double cx = nod.getBoundsInLocal().getWidth() / 2;</span>
+<span class="nc" id="L57">        final double cy = nod.getBoundsInLocal().getHeight() / 2;</span>
 
-<span class="nc" id="L58">        double x = cx + nod.getLayoutX() + dx * 4.40f;</span>
-<span class="nc" id="L59">        double y = cy + nod.getLayoutY() + dy * 4.40f;</span>
+<span class="nc" id="L59">        double x = cx + nod.getLayoutX() + dx * 4.40f;</span>
+<span class="nc" id="L60">        double y = cy + nod.getLayoutY() + dy * 4.40f;</span>
 
-<span class="nc" id="L61">        moveImgTo(x, y);</span>
-<span class="nc" id="L62">    }</span>
+<span class="nc" id="L62">        moveImgTo(x, y);</span>
+<span class="nc" id="L63">    }</span>
 
     private void moveImgTo(double x, double y) {
-<span class="nc" id="L65">        final double cx = nod.getBoundsInLocal().getWidth() / 2;</span>
-<span class="nc" id="L66">        final double cy = nod.getBoundsInLocal().getHeight() / 2;</span>
-<span class="nc" id="L67">        System.out.println(&quot;x: &quot; + x + &quot; - y: &quot; + y);</span>
-<span class="nc bnc" id="L68" title="All 8 branches missed.">        if (x - cx &gt;= 0</span>
+<span class="nc" id="L66">        final double cx = nod.getBoundsInLocal().getWidth() / 2;</span>
+<span class="nc" id="L67">        final double cy = nod.getBoundsInLocal().getHeight() / 2;</span>
+<span class="nc" id="L68">        System.out.println(&quot;x: &quot; + x + &quot; - y: &quot; + y);</span>
+<span class="nc bnc" id="L69" title="All 8 branches missed.">        if (x - cx &gt;= 0</span>
                 &amp;&amp; x + cx &lt;= 800
                 &amp;&amp; y - cy &gt;= 0
                 &amp;&amp; y + cy &lt;= 600) {
-<span class="nc" id="L72">            nod.relocate(x - cx, y - cy);</span>
-<span class="nc" id="L73">            rec = new Rectangle((int) nod.getLayoutX(), (int) nod.getLayoutY(), 236, 236);</span>
+<span class="nc" id="L73">            nod.relocate(x - cx, y - cy);</span>
+<span class="nc" id="L74">            rec = new Rectangle((int) nod.getLayoutX(), (int) nod.getLayoutY(), 236, 236);</span>
         }
-<span class="nc" id="L75">    }</span>
+<span class="nc" id="L76">    }</span>
 
     /*
      *Check if the player is dead. If player life is lower then 1. player is dead.
      */
     public void isDead() {
         // TODO - implement PlayerController.isDead
-<span class="nc" id="L82">        throw new UnsupportedOperationException();</span>
+<span class="nc" id="L83">        throw new UnsupportedOperationException();</span>
     }
 
     /*
@@ -87,7 +88,7 @@ public class PlayerController {
      */
     public void playerMove() {
         // TODO - implement PlayerController.playerMove
-<span class="nc" id="L90">        throw new UnsupportedOperationException();</span>
+<span class="nc" id="L91">        throw new UnsupportedOperationException();</span>
     }
 
     /*
@@ -95,7 +96,7 @@ public class PlayerController {
      */
     public void collisionCheck() {
         // TODO - implement PlayerController.collisionCheck
-<span class="nc" id="L98">        throw new UnsupportedOperationException();</span>
+<span class="nc" id="L99">        throw new UnsupportedOperationException();</span>
     }
 
     /*
@@ -103,7 +104,7 @@ public class PlayerController {
      */
     public void checkDamage() {
         // TODO - implement PlayerController.checkDamage
-<span class="nc" id="L106">        throw new UnsupportedOperationException();</span>
+<span class="nc" id="L107">        throw new UnsupportedOperationException();</span>
     }
 
     /*
@@ -111,7 +112,7 @@ public class PlayerController {
      */
     public void checkTrap() {
         // TODO - implement PlayerController.checkTrap
-<span class="nc" id="L114">        throw new UnsupportedOperationException();</span>
+<span class="nc" id="L115">        throw new UnsupportedOperationException();</span>
     }
 
     /**
@@ -121,7 +122,7 @@ public class PlayerController {
      */
     public void useAbility(int id) {
         // TODO - implement PlayerController.useAbility
-<span class="nc" id="L124">        throw new UnsupportedOperationException();</span>
+<span class="nc" id="L125">        throw new UnsupportedOperationException();</span>
     }
 
 }
