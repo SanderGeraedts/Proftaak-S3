@@ -7,6 +7,7 @@ package a.maze.ing;
 
 import GameLogic.*;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -28,117 +29,121 @@ import javafx.stage.Stage;
  * @author Kasper
  */
 public class AMazeIng extends Application {
+
     static int spritesize = 16;
-    
+
     private String pressedKey = "";
-    
+
     private Boolean upPressed = false;
     private Boolean downPressed = false;
     private Boolean leftPressed = false;
     private Boolean rightPressed = false;
-    
+
     private Image imgCharacter;
     private Node nodCharacter;
     private Rectangle recCharacter;
-    
+
     private Node sppp;
-    
+
     private String key;
-    
+
     public Group group;
-    
+
     public ArrayList<Node> nodes;
-    
+
     public Scene scene;
-    
+
     public PlayerController pController;
-    
+
+    //Moving checks
+    public List<Node> solidBlocks;
+
+    public Node playerPos;
+
+    public Boolean collision;
+
+    public Node tempNode;
+
     //PlayerController
-    
     @Override
-    public void start(Stage primaryStage) 
-    {        
+    public void start(Stage primaryStage) {
+        solidBlocks = new ArrayList<Node>();
+
         Image imgWall = Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16);
         Node nodWall = new ImageView(imgWall);
         Group groupWall = new Group(nodWall);
-        
-        
+
         Maze testmaze = new Maze(24, 2, 100);
-        testmaze.printMaze(); 
-        
+        testmaze.printMaze();
+
         Block[][] mazegrid = testmaze.GetGrid();
-        
-        
+
         ArrayList<Image> images = new ArrayList<Image>();
-        nodes = new ArrayList<Node>();        
-        
-        for(int y=0; y<testmaze.getGridSize(); y++)
-        {
-            for(int x=0; x<testmaze.getGridSize(); x++)
-            {
-                switch(mazegrid[y][x])
-                {
+        nodes = new ArrayList<Node>();
+
+        for (int y = 0; y < testmaze.getGridSize(); y++) {
+            for (int x = 0; x < testmaze.getGridSize(); x++) {
+                switch (mazegrid[y][x]) {
                     case SOLID:
                         //System.out.println("Drawing wall");
                         Image sol = Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16);
                         images.add(sol);
                         Node wpos = new ImageView(sol);
-                        wpos.relocate(x*spritesize, y*spritesize);
+                        wpos.relocate(x * spritesize, y * spritesize);
                         nodes.add(wpos);
+                        solidBlocks.add(wpos);
                         break;
                     case OPEN:
                         //System.out.println("Drawing floor");
                         Image ope = Sprite.LoadSprite("Resources/FloorSprite.jpg", 16, 16);
                         images.add(ope);
                         Node opos = new ImageView(ope);
-                        opos.relocate(x*spritesize, y*spritesize);
+                        opos.relocate(x * spritesize, y * spritesize);
                         nodes.add(opos);
                         break;
                     case SPAWNPOINT:
                         Image spp = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 16, 16);
                         images.add(spp);
                         sppp = new ImageView(spp);
-                        sppp.relocate(x*spritesize, y*spritesize);
+                        sppp.relocate(x * spritesize, y * spritesize);
                         nodes.add(sppp);
                         break;
-                            
+
                 }
             }
         }
-        
+
         //pController = new PlayerController(this);
-        
-        
         //PlayerController
         double tempDoubleX = 0;
         double tempDoubleY = 0;
-        if (nodes.contains(sppp)){
+        if (nodes.contains(sppp)) {
             tempDoubleX = sppp.getLayoutX();
             tempDoubleY = sppp.getLayoutY();
         }
-        imgCharacter = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 10, 10);
+        imgCharacter = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 16, 16);
         nodCharacter = new ImageView(imgCharacter);
         nodCharacter.relocate(tempDoubleX, tempDoubleY);
-        nodes.add(nodCharacter);        
-        
+        nodes.add(nodCharacter);
+        playerPos = nodCharacter;
+        tempNode = playerPos;
+
         group = new Group(nodes);
-        
-        
+
         /*Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+         btn.setText("Say 'Hello World'");
+         btn.setOnAction(new EventHandler<ActionEvent>() {
             
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        root.getChildren().add(btn);
-        */
+         @Override
+         public void handle(ActionEvent event) {
+         System.out.println("Hello World!");
+         }
+         });
+         root.getChildren().add(btn);
+         */
         //StackPane root = new StackPane();
-        
-        scene = new Scene(group, testmaze.getGridSize()*spritesize, testmaze.getGridSize()*spritesize, Color.DARKSALMON);
-        
+        scene = new Scene(group, testmaze.getGridSize() * spritesize, testmaze.getGridSize() * spritesize, Color.DARKSALMON);
+
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -187,35 +192,91 @@ public class AMazeIng extends Application {
                         System.out.println("S released");
                         break;
                 }
-            }                        
-        });        
-        
+            }
+        });
+
         primaryStage.setTitle("a-MAZE-ing");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
         AnimationTimer timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    int dx = 0, dy = 0;
+            @Override
+            public void handle(long now) {
+                int dx = 0, dy = 0;
+
                     //System.out.println("Pressed key: " + pressedKey);
-
-                    //System.out.println(recCharacter.getLayoutX() + " + " + recCharacter.getLayoutY());
-
-                    if (leftPressed) {
+                //System.out.println(recCharacter.getLayoutX() + " + " + recCharacter.getLayoutY());
+                if (leftPressed) {
+                    collision = false;                    
+                    
+                    for (Node n : solidBlocks) {
+                       if (n.getLayoutX() == playerPos.getLayoutX() - spritesize && n.getLayoutY() == playerPos.getLayoutY()) {
+                           collision = true;
+                       }
+                    }
+                    
+                    if (collision == false) 
+                    {                    
+                        playerPos.relocate(playerPos.getLayoutX() - spritesize, playerPos.getLayoutY());
+                        leftPressed = false;
                         dx -= 1;
                         key = "A";
-                    } else if (rightPressed) {
-                        dx += 1;
+                    }
+                    
+
+                } else if (rightPressed) {
+                    collision = false;                    
+                    
+                    for (Node n : solidBlocks) {
+                       if (n.getLayoutX() == playerPos.getLayoutX() + spritesize && n.getLayoutY() == playerPos.getLayoutY()) {
+                           collision = true;
+                       }
+                    }
+                    
+                    if (collision == false) 
+                    {                    
+                        playerPos.relocate(playerPos.getLayoutX() + spritesize, playerPos.getLayoutY());
+                        rightPressed = false;
+                        dx -= 1;
                         key = "D";
-                    } else if (downPressed) {
-                        dy += 1;
+                    }
+
+                } else if (downPressed) {
+                    collision = false;                    
+                    
+                    for (Node n : solidBlocks) {
+                       if (n.getLayoutX() == playerPos.getLayoutX() && n.getLayoutY() == playerPos.getLayoutY() + spritesize) {
+                           collision = true;
+                       }
+                    }
+                    
+                    if (collision == false) 
+                    {                    
+                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() + spritesize);
+                        downPressed = false;
+                        dx -= 1;
                         key = "S";
-                    } else if (upPressed) {
-                        dy -= 1;
+                    }
+
+                } else if (upPressed) {
+                    collision = false;                    
+                    
+                    for (Node n : solidBlocks) {
+                       if (n.getLayoutX() == playerPos.getLayoutX() && n.getLayoutY() == playerPos.getLayoutY() - spritesize) {
+                           collision = true;
+                       }
+                    }
+                    
+                    if (collision == false) 
+                    {                    
+                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() - spritesize);
+                        upPressed = false;
+                        dx -= 1;
                         key = "W";
                     }
-                    moveImage(dx, dy);
+
+                }
+                //moveImage(dx, dy);
 //                else {
 //                    switch(key){
 //                        case "A":
@@ -234,21 +295,19 @@ public class AMazeIng extends Application {
 //                            break;
 //                    }
 
-                }
-            };
+            }
+        };
         timer.start();
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
         launch(args);
 
-        
     }
-    
+
     private void moveImage(int dx, int dy) {
         if (dx == 0 && dy == 0) {
             return;
@@ -275,5 +334,5 @@ public class AMazeIng extends Application {
             recCharacter = new Rectangle((int) nodCharacter.getLayoutX(), (int) nodCharacter.getLayoutY(), 236, 236);
         }
     }
-    
+
 }
