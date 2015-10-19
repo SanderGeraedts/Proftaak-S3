@@ -15,7 +15,7 @@ public class Ability {
     private int damage;
     private String spriteID;
     private int cooldownTimer;
-    Image img;
+    public Image img;
 
     /**
      *
@@ -38,7 +38,7 @@ public class Ability {
                 damage = 10;
                 spriteID = "1";
                 cooldownTimer = 1;
-                img = Sprite.LoadSprite("",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
                 break;
             case 1:
                 name = "Stealth";

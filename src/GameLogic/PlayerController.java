@@ -12,7 +12,7 @@ import javafx.scene.input.KeyEvent;
 public class PlayerController {
 
     private int state;
-    private int direction;
+    public String direction;
     private int location;
 
     private AMazeIng guiMaze;
@@ -37,7 +37,7 @@ public class PlayerController {
      * @param direction
      * @param location
      */
-    public PlayerController(/*int state, int direction, int location,*/AMazeIng guiMaze) {
+    public PlayerController(/*int state, String direction, int location,*/AMazeIng guiMaze) {
 //        this.state = state;
 //        this.direction = direction;
 //        this.location = location;

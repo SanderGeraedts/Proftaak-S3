@@ -75,11 +75,15 @@ public class AMazeIng extends Application {
 
     //Player Abilities
     private List<Ability> abilities;
+    int abilityCount = 0;    
+    public List<Node> abilityNodes;
 
     //PlayerController
     @Override
     public void start(Stage primaryStage) {
+        pController = new PlayerController(this);
         abilities = new ArrayList<Ability>();
+        abilityNodes = new ArrayList<Node>();
         solidBlocks = new ArrayList<Node>();
 
         Image imgWall = Sprite.LoadSprite("Resources/WallSprite.jpg", 16, 16);
@@ -151,72 +155,78 @@ public class AMazeIng extends Application {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
-                    case A:
-                        leftPressed = true;
-                        System.out.println("A pressed");
-                        break;
                     case LEFT:
                         if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
                             leftPressed = true;
-                            System.out.println("A pressed");
                             leftCount = 1;
+                            pController.direction = "LEFT";
                         }
-                        break;
-                    case D:
-                        rightPressed = true;
-                        System.out.println("D pressed");
                         break;
                     case RIGHT:
                         if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
                             rightPressed = true;
-                            System.out.println("D pressed");
                             rightCount = 1;
+                            pController.direction = "RIGHT";
                         }
-                        break;
-                    case W:
-                        upPressed = true;
-                        System.out.println("W pressed");
                         break;
                     case UP:
                         if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
                             upPressed = true;
-                            System.out.println("W pressed");
                             upCount = 1;
+                            pController.direction = "UP";
                         }
-                        break;
-                    case S:
-                        downPressed = true;
-                        System.out.println("S pressed");
                         break;
                     case DOWN:
                         if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
                             downPressed = true;
-                            System.out.println("S pressed");
                             downCount = 1;
+                            pController.direction = "DOWN";
                         }
                         break;
                     case DIGIT1:
                         onePressed = true;
+                        abilityCount++;
+                        if(abilityCount==1) {
+                            Ability ability = new Ability(0);
+                            abilities.add(ability);
+                            Node tempAbility = new ImageView(ability.img);
+                            tempAbility.setLayoutX(playerPos.getLayoutX());
+                            tempAbility.setLayoutY(playerPos.getLayoutY());
+                            abilityNodes.add(tempAbility);
+                            
+                        }
                         break;
                     case DIGIT2:
                         twoPressed = true;
+                        abilityCount++;
+                        if(abilityCount==1) {
+                            abilities.add(new Ability(1));
+                        }
                         break;
                     case DIGIT3:
                         threePressed = true;
+                        abilityCount++;
+                        if(abilityCount==1) {
+                            abilities.add(new Ability(2));
+                        }
                         break;
                     case DIGIT4:
                         fourPressed = true;
+                        abilityCount++;
+                        if(abilityCount==1) {
+                            abilities.add(new Ability(3));
+                        }
                         break;
                 }
             }
 
         });
 
-//        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent event) {
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
 //                System.out.println(event.getCode());
-//                switch (event.getCode()) {
+                switch (event.getCode()) {
 //                    case A:
 //                        leftPressed = false;
 //                        System.out.println("A released");
@@ -253,21 +263,25 @@ public class AMazeIng extends Application {
 //                        downPressed = false;
 //                        }
 //                        break;
-//                    case DIGIT1:
-//                        onePressed = false;
-//                        break;
-//                    case DIGIT2:
-//                        twoPressed = false;
-//                        break;
-//                    case DIGIT3:
-//                        threePressed = false;
-//                        break;
-//                    case DIGIT4:
-//                        fourPressed = false;
-//                        break;
-//                }
-//            }
-//        });
+                    case DIGIT1:
+                        onePressed = false;
+                        abilityCount = 0;
+                        break;
+                    case DIGIT2:
+                        twoPressed = false;
+                        abilityCount = 0;
+                        break;
+                    case DIGIT3:
+                        threePressed = false;
+                        abilityCount = 0;
+                        break;
+                    case DIGIT4:
+                        fourPressed = false;
+                        abilityCount = 0;
+                        break;
+                }
+            }
+        });
 
         primaryStage.setTitle("a-MAZE-ing");
         primaryStage.setScene(scene);
@@ -277,15 +291,6 @@ public class AMazeIng extends Application {
             @Override
             public void handle(long now) {
                 int dx = 0, dy = 0;
-                if (onePressed) {
-                    abilities.add(new Ability(0));
-                } else if (twoPressed) {
-                    abilities.add(new Ability(1));
-                } else if (threePressed) {
-                    abilities.add(new Ability(2));
-                } else if (fourPressed) {
-                    abilities.add(new Ability(3));
-                }
 
                 if (leftPressed || leftCount > 0) {
                     collision = false;
@@ -303,8 +308,6 @@ public class AMazeIng extends Application {
                     } else {
                         leftPressed = false;
                         leftCount = 0;
-                        dx -= 1;
-                        key = "A";
                     }
 
                 } else if (rightPressed || rightCount > 0) {
@@ -323,8 +326,6 @@ public class AMazeIng extends Application {
                     } else {
                         rightPressed = false;
                         rightCount = 0;
-                        dx -= 1;
-                        key = "A";
                     }
 
                 } else if (downPressed || downCount > 0) {
@@ -343,8 +344,6 @@ public class AMazeIng extends Application {
                     } else {
                         downPressed = false;
                         downCount = 0;
-                        dx -= 1;
-                        key = "A";
                     }
 
                 } else if (upPressed || upCount > 0) {
@@ -363,8 +362,6 @@ public class AMazeIng extends Application {
                     } else {
                         upPressed = false;
                         upCount = 0;
-                        dx -= 1;
-                        key = "A";
                     }
 
                 }
