@@ -73,7 +73,7 @@ public class AMazeIng extends Application {
         Node nodWall = new ImageView(imgWall);
         Group groupWall = new Group(nodWall);
 
-        Maze testmaze = new Maze(24, 2, 100);
+        Maze testmaze = new Maze(64, 2, 128);
         testmaze.printMaze();
 
         Block[][] mazegrid = testmaze.GetGrid();
@@ -107,6 +107,13 @@ public class AMazeIng extends Application {
                         sppp = new ImageView(spp);
                         sppp.relocate(x * spritesize, y * spritesize);
                         nodes.add(sppp);
+                        break;
+                    case EDGE:
+                        Image edg = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
+                        images.add(edg);
+                        Node edgp = new ImageView(edg);
+                        edgp.relocate(x*spritesize, y*spritesize);
+                        nodes.add(edgp);
                         break;
 
                 }
