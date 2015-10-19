@@ -12,18 +12,18 @@ public class PlayerRole {
 	 * @param name
 	 * @param hitpoints
 	 */
-<span class="nc" id="L15">	public PlayerRole(int id) {</span>
+<span class="fc" id="L15">	public PlayerRole(int id) {</span>
                
-<span class="nc" id="L17">               this.ID = id;</span>
+<span class="fc" id="L17">               this.ID = id;</span>
                 
-<span class="nc" id="L19">               ability = new Ability[3];</span>
+<span class="fc" id="L19">               ability = new Ability[3];</span>
                 
-<span class="nc" id="L21">               ability[0] = new Ability((ID * 3) + 1);</span>
-<span class="nc" id="L22">               ability[1] = new Ability((ID * 3) + 2);</span>
-<span class="nc" id="L23">               ability[2] = new Ability((ID * 3) + 3);</span>
+<span class="fc" id="L21">               ability[0] = new Ability((ID * 3) + 1);</span>
+<span class="fc" id="L22">               ability[1] = new Ability((ID * 3) + 2);</span>
+<span class="fc" id="L23">               ability[2] = new Ability((ID * 3) + 3);</span>
                 
-<span class="nc" id="L25">                createRole(id);</span>
-<span class="nc" id="L26">	}</span>
+<span class="fc" id="L25">                createRole(id);</span>
+<span class="fc" id="L26">	}</span>
         
         public int getHitpoints(){
 <span class="nc" id="L29">            return hitpoints;</span>
@@ -39,15 +39,15 @@ public class PlayerRole {
      * @param ID
         */
 	public void createRole(int ID) {
-<span class="nc bnc" id="L42" title="All 5 branches missed.">            switch(ID){</span>
+<span class="pc bpc" id="L42" title="4 of 5 branches missed.">            switch(ID){</span>
             case 0:
 <span class="nc" id="L44">                    name = &quot;Rogue&quot;;</span>
 <span class="nc" id="L45">                    hitpoints = 190;</span>
 <span class="nc" id="L46">                break;</span>
             case 1:
-<span class="nc" id="L48">                    name = &quot;Mage&quot;;</span>
-<span class="nc" id="L49">                    hitpoints = 170;</span>
-<span class="nc" id="L50">                break;</span>
+<span class="fc" id="L48">                    name = &quot;Mage&quot;;</span>
+<span class="fc" id="L49">                    hitpoints = 170;</span>
+<span class="fc" id="L50">                break;</span>
             case 2:
 <span class="nc" id="L52">                    name = &quot;Warrior&quot;;</span>
 <span class="nc" id="L53">                    hitpoints = 290;</span>
@@ -57,7 +57,7 @@ public class PlayerRole {
 <span class="nc" id="L57">                    hitpoints = 180;</span>
             }
 		
-<span class="nc" id="L60">	}</span>
+<span class="fc" id="L60">	}</span>
         
         public String getInfo(){
 <span class="nc" id="L63">          String temp = &quot;Chooses a random character&quot;;</span>
