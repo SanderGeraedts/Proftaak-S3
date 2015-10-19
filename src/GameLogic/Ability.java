@@ -1,9 +1,15 @@
 package GameLogic;
 
+<<<<<<< HEAD
 
 import javafx.scene.image.Image;
 
 
+=======
+/**
+* Todo: add more constraints, class nearly impossible to test.
+*/
+>>>>>>> origin/master
 public class Ability {
 
     private String name;
