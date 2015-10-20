@@ -303,7 +303,7 @@ public class AMazeIng extends Application {
                         if (onePressed || abilityRunning == 1) {
                             
                             for (Node n : solidBlocks) {
-                                if (n.getLayoutX() == tempAbilityOne.getLayoutX() && n.getLayoutY() == tempAbilityOne.getLayoutY() - spritesize) {
+                                if (n.getLayoutX() == tempAbilityOne.getLayoutX() && n.getLayoutY() >= tempAbilityOne.getLayoutY() - spritesize && n.getLayoutY() <= tempAbilityOne.getLayoutY()-1) {
                                     collision = true;
                                 }
                             }
