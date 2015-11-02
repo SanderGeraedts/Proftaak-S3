@@ -10,25 +10,35 @@ public class Game {
 
 	private int gameID;
 	private int gameState;
+        private List&lt;Player&gt; players; 
 
 	/**
 	 * 
 	 * @param gameID
 	 * @param gameState
 	 */
-<span class="fc" id="L19">	public Game(int gameID, int gameState) {</span>
-<span class="fc" id="L20">		this.gameID = gameID;</span>
-<span class="fc" id="L21">                this.gameState = gameState;</span>
-<span class="fc" id="L22">	}</span>
-        
+<span class="fc" id="L20">	public Game(int gameID, int gameState) {</span>
+<span class="fc" id="L21">		this.gameID = gameID;</span>
+<span class="fc" id="L22">                this.gameState = gameState;</span>
+<span class="fc" id="L23">	}</span>
         
         /**
-         * Add a player to the game.
+         * 
+         * @return players
          */
-	public void addPlayer() {
-		// TODO - implement Game.addPlayer
-<span class="nc" id="L30">		throw new UnsupportedOperationException();</span>
-	}
+        public List&lt;Player&gt; getPlayers(){
+<span class="nc" id="L30">            return players;</span>
+        }                
+        
+        /**
+         * Adds a player to the game
+         * 
+         * @param player 
+         */
+	public void addPlayer(Player player) {
+            
+<span class="nc" id="L40">		players.add(player);</span>
+<span class="nc" id="L41">	}</span>
 
 	/**
 	 * Check if the players in the game are ready to start.
@@ -37,7 +47,7 @@ public class Game {
 	 */
 	public boolean checkReady(List&lt;Player&gt; players) {
 		// TODO - implement Game.checkReady
-<span class="nc" id="L40">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L50">		throw new UnsupportedOperationException();</span>
 	}
 
 }

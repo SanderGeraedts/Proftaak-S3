@@ -48,7 +48,7 @@ public class PlayerController {
 
     }
 
-    private void moveImage(int dx, int dy) throws InterruptedException {
+    public void moveImage(int dx, int dy) throws InterruptedException {
         if (dx == 0 && dy == 0) {
             return;
         }

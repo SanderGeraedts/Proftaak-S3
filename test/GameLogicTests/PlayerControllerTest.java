@@ -13,12 +13,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import a.maze.ing.AMazeIng;
 
 /**
  *
  * @author Kasper
  */
 public class PlayerControllerTest {
+    
+    PlayerController instance;
+    AMazeIng maze;
     
     public PlayerControllerTest() {
     }
@@ -33,6 +37,8 @@ public class PlayerControllerTest {
     
     @Before
     public void setUp() {
+        maze = new AMazeIng();
+        instance = new PlayerController(maze);
     }
     
     @After

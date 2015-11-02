@@ -8,6 +8,8 @@ package GameLogicTests;
 
 import GameLogic.Game;
 import GameLogic.Player;
+import GameLogic.PlayerRole;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,7 +24,7 @@ import static org.junit.Assert.*;
  */
 public class GameTest {
     
-    
+    Game game;
     
     public GameTest() {
     }
@@ -37,6 +39,7 @@ public class GameTest {
     
     @Before
     public void setUp() {
+        game = new Game(1, 1);
     }
     
     @After
@@ -56,10 +59,26 @@ public class GameTest {
     @Test
     public void testAddPlayer() {
         System.out.println("addPlayer");
-        Game instance = null;
-        instance.addPlayer();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Player player1 = new Player(1, 1, new PlayerRole(1));
+        
+        game.addPlayer(player1);
+        
+        List<Player> expected = new ArrayList<Player>();
+        expected.add(player1);
+        
+        List<Player> result = game.getPlayers();
+        
+        assertEquals("game.players should be equal to expected", expected, result);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddPlayerNull(){
+        System.out.println("addPlayer null");
+        Player player1 = null;
+        
+        game.addPlayer(player1);
+        
+        fail("Exception should have been thrown");
     }
 
     /**
@@ -73,8 +92,31 @@ public class GameTest {
         boolean expResult = false;
         boolean result = instance.checkReady(players);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    @Test
+    public void testGetPlayers(){
+        System.out.println("getPlayer");
+        Player player1 = new Player(1, 1, new PlayerRole(1));
+        Player player2 = new Player(1, 1, new PlayerRole(1));
+        Player player3 = new Player(1, 1, new PlayerRole(1));
+        Player player4 = new Player(1, 1, new PlayerRole(1));
+        
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+        game.addPlayer(player3);
+        game.addPlayer(player4);
+        
+        List<Player> expected = new ArrayList<Player>();
+        expected.add(player1);
+        expected.add(player2);
+        expected.add(player3);
+        expected.add(player4);
+        
+        List<Player> result = game.getPlayers();
+        
+        assertNotNull("Result shouldn't be null", result);
+        assertEquals("Result should be the same as the expected result", result, expected);
     }
     
 }
