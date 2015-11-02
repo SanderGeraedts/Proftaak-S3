@@ -173,6 +173,7 @@ public class AMazeIng extends Application {
         PlayerController playerController = new PlayerController(p, mazegrid);
 
         Player monster = new Player(2, 1, 2);
+        Player monster2 = new Player(3, 1, 2);
         
         int i=0;
         for(Node n : spawnPoints)
@@ -186,15 +187,25 @@ public class AMazeIng extends Application {
                 i++;
                 continue;
             }
-            group.getChildren().add(monster.GetLocation());
-            monster.SpawnPlayer(n);
-            monster.GetLocation().toFront();
-            break; //Break so it only adds one
+            if(i == 1)
+            {
+                group.getChildren().add(monster.GetLocation());
+                monster.SpawnPlayer(n);
+                monster.GetLocation().toFront();
+                i++;
+                continue;
+            }
+                group.getChildren().add(monster2.GetLocation());
+                monster2.SpawnPlayer(n);
+                monster2.GetLocation().toFront();
+                break; //Break so it only adds one
         }
         
         AIController aiController = new AIController(monster, mazegrid);
+        AIController aiController2 = new AIController(monster2, mazegrid);
         
         aiController.StartTracking(p);
+        aiController2.StartTracking(p);
         /*
          Monster m = new Monster(1, 1);
          group.getChildren().add(m.GetLocation());
