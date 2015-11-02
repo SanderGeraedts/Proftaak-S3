@@ -18,11 +18,16 @@ public class User {
      * @param stats can be null.
      */
     public User(int userID, String name, String email, Stat stats) {
-        throw new NotImplementedException();
+        this.userID = userID;
+        this.name = name;
+        this.email = email;
+        this.stats = stats;
     }
-    
-    public int getStatID()
-    {
+    public User(String name){
+        this.name = name;
+    }
+
+    public int getStatID() {
         return stats.getStatsID();
     }
 
@@ -36,6 +41,14 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String setName(String name) {
+        return this.name = name;
+    }
+
+    public String setEmail(String Email) {
+        return this.email = Email;
     }
 
     /**
