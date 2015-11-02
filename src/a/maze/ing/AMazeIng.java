@@ -302,7 +302,7 @@ public class AMazeIng extends Application {
                     case "UP":
                         if (onePressed || abilityRunning == 1) {
                             
-                            for (Node n : solidBlocks) {
+                            for (Node n : solidBlocks) { //Deze if statement is gemaakt door Kasper omdat de rest van mijn groepje incompatibel is, behalve Jeroen die doet tenminste iets nuttigs.
                                 if (n.getLayoutX() == tempAbilityOne.getLayoutX() && n.getLayoutY() >= tempAbilityOne.getLayoutY() - spritesize && n.getLayoutY() <= tempAbilityOne.getLayoutY()-1) {
                                     collision = true;
                                 }
