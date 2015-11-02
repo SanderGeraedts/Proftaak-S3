@@ -10,7 +10,9 @@ public class Player {
 	private int hitpoints;
         
         private Node location;
+        private ImageView imageView;
         
+        private PlayerRole playerRole;        
 
 	/**
 	 * 
@@ -20,10 +22,11 @@ public class Player {
 	 */
 	public Player(int id, int hitpoints) {
 		this.ID = id;
-                this.hitpoints = hitpoints;
-                
-                Image player = Sprite.LoadSprite("Resources/Player.jpg", 16, 16);
-                this.location = new ImageView(player);
+                this.hitpoints = hitpoints;                
+                this.playerRole = new PlayerRole(1);
+                this.imageView = new ImageView();
+                imageView.setImage(playerRole.getImage(0));
+                this.location = imageView;
                 this.location.relocate(0, 0);
 	}
         
@@ -32,9 +35,18 @@ public class Player {
             location.relocate(n.getLayoutX(), n.getLayoutY());
         }
         
+        public void setImage(int ID) {
+            imageView.setImage(playerRole.getImage(ID));
+        }
+        
         public Node GetLocation()
-        {
+        {            
             return location;
+        }
+        
+        public PlayerRole getPlayerRole()
+        {
+            return playerRole;
         }
 
 }

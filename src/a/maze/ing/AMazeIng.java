@@ -35,12 +35,12 @@ import javafx.stage.Stage;
 public class AMazeIng extends Application {
 
     static int spritesize = 16;
-    static long defCooldown = 30*1000;
+    static long defCooldown = 30 * 1000;
 
     public Image imgCharacter;
     public Node nodCharacter;
     public Rectangle recCharacter;
-    
+
     public Image imgEnemy;
     public Node nodEnemy;
     public Rectangle recEnemy;
@@ -66,7 +66,7 @@ public class AMazeIng extends Application {
     public Boolean collision;
 
     public Node tempNode;
-    
+
     //enemie moving checks
     public Node enemyPos;
     public Boolean enemyCollision;
@@ -85,9 +85,9 @@ public class AMazeIng extends Application {
     Node tempAbilityOne;
 
     int abilityRunning;
-    
+
     public List<Node> spawnPoints;
-    
+
     long abilityCooldown;
     ArrayList<Long> abilityCooldowns;
 
@@ -107,10 +107,10 @@ public class AMazeIng extends Application {
 
         Maze testmaze = new Maze(40, 2, 128);
         testmaze.printMaze();
-        
+
         Block[][] mazegrid = testmaze.GetGrid();
-        
-       //Create list of all the block images
+
+        //Create list of all the block images
         ArrayList<Image> images = new ArrayList<Image>();
         nodes = new ArrayList<Node>();
 
@@ -157,79 +157,70 @@ public class AMazeIng extends Application {
         primaryStage.setTitle("Pathfinding");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
         //For each spawnpoint, add a player.
         Player p = new Player(1, 1);
-        for(Node n : spawnPoints)
-        {
+        for (Node n : spawnPoints) {
             group.getChildren().add(p.GetLocation());
             p.SpawnPlayer(n);
             p.GetLocation().toFront();
-            System.out.println("Cur pos: " + p.GetLocation().getLayoutX() + ":" +p.GetLocation().getLayoutY());
+            System.out.println("Cur pos: " + p.GetLocation().getLayoutX() + ":" + p.GetLocation().getLayoutY());
             break; //Break so it only adds one
         }
-        
-        PlayerController  playerController = new PlayerController(p, mazegrid);
-        
+
+        PlayerController playerController = new PlayerController(p, mazegrid);
+
         /*
-        Monster m = new Monster(1, 1);
-        group.getChildren().add(m.GetLocation());
-        Node n = spawnPoints.get(1);
-        m.SpawnPlayer(n);
-        m.GetLocation().toFront();
+         Monster m = new Monster(1, 1);
+         group.getChildren().add(m.GetLocation());
+         Node n = spawnPoints.get(1);
+         m.SpawnPlayer(n);
+         m.GetLocation().toFront();
         
-        AIController aiController = new AIController(m, mazegrid);
-        */
-        
+         AIController aiController = new AIController(m, mazegrid);
+         */
         List<KeyCode> mkeys = new ArrayList<KeyCode>();
         mkeys.add(KeyCode.LEFT);
         mkeys.add(KeyCode.RIGHT);
         mkeys.add(KeyCode.UP);
         mkeys.add(KeyCode.DOWN);
-        
+
         List<KeyCode> akeys = new ArrayList<KeyCode>();
         akeys.add(KeyCode.DIGIT1); //Throw
         akeys.add(KeyCode.DIGIT2); //Defensive
         akeys.add(KeyCode.DIGIT3); //Trap
         akeys.add(KeyCode.DIGIT4); //Global
-        
+
         abilityCooldown = 0;// = System.currentTimeMillis(); 
         abilityCooldowns = new ArrayList<>();
-        Map<KeyCode,Long> cooldowns = new HashMap<KeyCode,Long>()
-        {{
-           put(KeyCode.DIGIT1, (long)0);
-           put(KeyCode.DIGIT2, (long)0);
-           put(KeyCode.DIGIT3, (long)0);
-           put(KeyCode.DIGIT4, (long)0);
-        }};
-        
-        
-        
-        //INPUT DETECTION:
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() 
-        {
-                  
-            
-            @Override
-            public void handle(KeyEvent event) 
+        Map<KeyCode, Long> cooldowns = new HashMap<KeyCode, Long>() {
             {
+                put(KeyCode.DIGIT1, (long) 0);
+                put(KeyCode.DIGIT2, (long) 0);
+                put(KeyCode.DIGIT3, (long) 0);
+                put(KeyCode.DIGIT4, (long) 0);
+            }
+        };
+
+        //INPUT DETECTION:
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent event) {
                 //Abilities while standing still:
-                if(akeys.contains(event.getCode()))
-                {
-                    if(playerController.getCurrentKey() == null) //If player is standing still
+                if (akeys.contains(event.getCode())) {
+                    if (playerController.getCurrentKey() == null) //If player is standing still
                     {
                         /*
-                        if(abilityCooldown >= System.currentTimeMillis())
-                        {
-                            System.out.println("Still in cooldown. Time left: " + (abilityCooldown - System.currentTimeMillis()) / 1000);
-                            return;
-                        }*/
-                        switch(event.getCode())
-                        {
+                         if(abilityCooldown >= System.currentTimeMillis())
+                         {
+                         System.out.println("Still in cooldown. Time left: " + (abilityCooldown - System.currentTimeMillis()) / 1000);
+                         return;
+                         }*/
+                        switch (event.getCode()) {
                             case DIGIT1: //Throw
                                 //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
-                                if(cooldowns.get(event.getCode()) >= System.currentTimeMillis())
-                                {
+                                if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
                                 }
@@ -238,8 +229,7 @@ public class AMazeIng extends Application {
                                 break;
                             case DIGIT2: //Defensive
                                 //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
-                                if(cooldowns.get(event.getCode()) >= System.currentTimeMillis())
-                                {
+                                if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
                                 }
@@ -248,8 +238,7 @@ public class AMazeIng extends Application {
                                 break;
                             case DIGIT3: //Trap
                                 //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
-                                if(cooldowns.get(event.getCode()) >= System.currentTimeMillis())
-                                {
+                                if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
                                 }
@@ -258,8 +247,7 @@ public class AMazeIng extends Application {
                                 break;
                             case DIGIT4: //Global
                                 //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
-                                if(cooldowns.get(event.getCode()) >= System.currentTimeMillis())
-                                {
+                                if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
                                 }
@@ -269,15 +257,15 @@ public class AMazeIng extends Application {
                         }
                     }
                 }
-                
+
                 //Abilities while moving:
-                if(mkeys.contains(playerController.getCurrentKey())) //If the 'current' key pressed is a movement key
+                if (mkeys.contains(playerController.getCurrentKey())) //If the 'current' key pressed is a movement key
                 {
-                    if(!akeys.contains(event.getCode())) //If the new key pressed is not in the abilities list
-                        return; //Do nothing with input
-                    else
+                    if (!akeys.contains(event.getCode())) //If the new key pressed is not in the abilities list
                     {
-                        switch(event.getCode()) //Get the key
+                        return; //Do nothing with input
+                    } else {
+                        switch (event.getCode()) //Get the key
                         {
                             case DIGIT1: //Throw
                                 //
@@ -294,12 +282,13 @@ public class AMazeIng extends Application {
                         }
                     }
                 }
-                
+
                 //If you are already moving, just return.
-                if(playerController.getCurrentKey() != null) //Can be modified to allow for multiple keypresses
-                    return;
-                switch (event.getCode())
+                if (playerController.getCurrentKey() != null) //Can be modified to allow for multiple keypresses
                 {
+                    return;
+                }
+                switch (event.getCode()) {
                     case LEFT:
                         //System.out.println("Left pressed");
                         playerController.setCurrentKey(KeyCode.LEFT);
@@ -307,29 +296,27 @@ public class AMazeIng extends Application {
                     case RIGHT:
                         //System.out.println("Right pressed");
                         playerController.setCurrentKey(KeyCode.RIGHT);
-                        break;  
+                        break;
                     case UP:
                         //System.out.println("Right pressed");
                         playerController.setCurrentKey(KeyCode.UP);
-                        break; 
+                        break;
                     case DOWN:
                         //System.out.println("Right pressed");
                         playerController.setCurrentKey(KeyCode.DOWN);
-                        break; 
+                        break;
                 }
             }
         });
-        
+
         //INPUT RELEASE DETECTION:
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() 
-        {
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(KeyEvent event) 
-            {
-                if(playerController.getCurrentKey() != event.getCode())
+            public void handle(KeyEvent event) {
+                if (playerController.getCurrentKey() != event.getCode()) {
                     return;
-                switch(event.getCode())
-                {
+                }
+                switch (event.getCode()) {
                     case LEFT:
                         //System.out.println("Left released");
                         playerController.setCurrentKey(null);
@@ -339,10 +326,10 @@ public class AMazeIng extends Application {
                         playerController.setCurrentKey(null);
                     case UP:
                         playerController.setCurrentKey(null);
-                        break; 
+                        break;
                     case DOWN:;
                         playerController.setCurrentKey(null);
-                        break; 
+                        break;
                 }
             }
         });

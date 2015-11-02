@@ -72,20 +72,27 @@ public class PlayerController
                 switch(animBusy)
                 {
                     case LEFT:
+                        player.setImage(1);
                         playerPos.relocate(playerPos.getLayoutX() -1, playerPos.getLayoutY());
-                        
+                        //currentImage = player.PlayerRole.getImage(1);
                         spriteMoves--;
                         break;
                     case RIGHT:
+                        player.setImage(2);
                         playerPos.relocate(playerPos.getLayoutX() +1, playerPos.getLayoutY());
+                        //currentImage = playerRole.getImage(2);
                         spriteMoves--;
                         break;
                     case UP:
+                        player.setImage(3);
                         playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() -1);
+                        //currentImage = playerRole.getImage(3);
                         spriteMoves--;
                         break;
                     case DOWN:
+                        player.setImage(0);
                         playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() +1);
+                        //currentImage = playerRole.getImage(0);
                         spriteMoves--;
                         break;
                 }

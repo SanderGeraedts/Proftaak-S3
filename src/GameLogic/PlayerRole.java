@@ -22,7 +22,9 @@ public class PlayerRole {
      */
     public PlayerRole(int id) {
         this.ID = id;
+        defaultImg = new ArrayList<Image>();
         createRole(id);
+        
     }
 
     public int getHitpoints() {
@@ -31,6 +33,10 @@ public class PlayerRole {
 
     public int setHitpoints(int hitpoints) {
         return this.hitpoints = hitpoints;
+    }
+    
+    public Image getImage(int imgID) {
+        return defaultImg.get(imgID);
     }
 
     /**
@@ -47,47 +53,47 @@ public class PlayerRole {
             case 0:
                 name = "Rogue";
                 hitpoints = 190;
-                defaultImg.add(Sprite.LoadSprite("Rogue-DOWN.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Rogue-LEFT.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Rogue-RIGHT.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Rogue-UP.png", 16, 16));
-                ability[0] = new Ability(0);
-                ability[1] = new Ability(1);
-                ability[2] = new Ability(2);
+                defaultImg.add(Sprite.LoadSprite("Resources/Monster.jpg", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/RogueLEFT.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/RogueRIGHT.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/RogueUP.png", 16, 16));
+//                ability[0] = new Ability(0);
+//                ability[1] = new Ability(1);
+//                ability[2] = new Ability(2);
 
                 break;
             case 1:
                 name = "Mage";
                 hitpoints = 170;
-                defaultImg.add(Sprite.LoadSprite("Mage-DOWN.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Mage-LEFT.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Mage-RIGHT.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Mage-UP.png", 16, 16));
-                ability[3] = new Ability(3);
-                ability[4] = new Ability(4);
-                ability[5] = new Ability(5);
+                defaultImg.add(Sprite.LoadSprite("Resources/Mage-DOWN.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Mage-LEFT.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Mage-RIGHT.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Mage-UP.png", 16, 16));
+//                ability[3] = new Ability(3);
+//                ability[4] = new Ability(4);
+//                ability[5] = new Ability(5);
                 break;
             case 2:
                 name = "Warrior";
                 hitpoints = 290;
-                defaultImg.add(Sprite.LoadSprite("Warrior-DOWN.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Warrior-LEFT.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Warrior-RIGHT.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Warrior-UP.png", 16, 16));
-                ability[6] = new Ability(6);
-                ability[7] = new Ability(7);
-                ability[8] = new Ability(8);
+                defaultImg.add(Sprite.LoadSprite("Resources/Warrior-DOWN.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Warrior-LEFT.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Warrior-RIGHT.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Warrior-UP.png", 16, 16));
+//                ability[6] = new Ability(6);
+//                ability[7] = new Ability(7);
+//                ability[8] = new Ability(8);
                 break;
             case 3:
                 name = "Hunter";
                 hitpoints = 180;
-                defaultImg.add(Sprite.LoadSprite("Hunter-DOWN.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Hunter-LEFT.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Hunter-RIGHT.png", 16, 16));
-                defaultImg.add(Sprite.LoadSprite("Hunter-UP.png", 16, 16));
-                ability[9] = new Ability(9);
-                ability[10] = new Ability(10);
-                ability[11] = new Ability(11);
+                defaultImg.add(Sprite.LoadSprite("Resources/Hunter-DOWN.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Hunter-LEFT.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Hunter-RIGHT.png", 16, 16));
+                defaultImg.add(Sprite.LoadSprite("Resources/Hunter-UP.png", 16, 16));
+//                ability[9] = new Ability(9);
+//                ability[10] = new Ability(10);
+//                ability[11] = new Ability(11);
         }
     }
 
