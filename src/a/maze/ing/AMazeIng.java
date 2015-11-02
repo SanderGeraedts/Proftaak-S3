@@ -5,6 +5,7 @@
  */
 package a.maze.ing;
 
+import AI.AIController;
 import GameLogic.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,6 +161,7 @@ public class AMazeIng extends Application {
 
         //For each spawnpoint, add a player.
         Player p = new Player(1, 1);
+        
         for (Node n : spawnPoints) {
             group.getChildren().add(p.GetLocation());
             p.SpawnPlayer(n);
@@ -170,6 +172,29 @@ public class AMazeIng extends Application {
 
         PlayerController playerController = new PlayerController(p, mazegrid);
 
+        Player monster = new Player(2, 1);
+        
+        int i=0;
+        for(Node n : spawnPoints)
+        {
+            if(i == 0)
+            {
+                group.getChildren().add(p.GetLocation());
+                p.SpawnPlayer(n);
+                p.GetLocation().toFront();
+                System.out.println("Cur pos: " + p.GetLocation().getLayoutX() + ":" +p.GetLocation().getLayoutY());
+                i++;
+                continue;
+            }
+            group.getChildren().add(monster.GetLocation());
+            monster.SpawnPlayer(n);
+            monster.GetLocation().toFront();
+            break; //Break so it only adds one
+        }
+        
+        AIController aiController = new AIController(monster, mazegrid);
+        
+        aiController.StartTracking(p);
         /*
          Monster m = new Monster(1, 1);
          group.getChildren().add(m.GetLocation());
