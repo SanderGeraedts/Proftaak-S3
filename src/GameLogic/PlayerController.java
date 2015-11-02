@@ -1,128 +1,143 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package GameLogic;
 
-import a.maze.ing.AMazeIng;
-import java.awt.Rectangle;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 
-public class PlayerController {
-
-    private int state;
-    public String direction;
-    private int location;
-
-    private AMazeIng guiMaze;
-
-    //logix
-    private String pressedKey = "";
-    private Boolean upPressed = false;
-    private Boolean downPressed = false;
-    private Boolean leftPressed = false;
-    private Boolean rightPressed = false;
-
-    private Image img;
-    private Node nod;
-    private Rectangle rec;
-
-    private String key;
-
-    /**
-     *
-     * @param guiMaze
-     * @param state
-     * @param direction
-     * @param location
-     */
-    public PlayerController(/*int state, String direction, int location,*/AMazeIng guiMaze) {
-//        this.state = state;
-//        this.direction = direction;
-//        this.location = location;
-        this.guiMaze = guiMaze;
-
-        //Logix
+/**
+ *
+ * @author Robin
+ */
+public class PlayerController 
+{
+    private Player player;
+    private KeyCode currentKey;
+    private Block[][] maze;
+    
+    private KeyCode lastDir;
+    
+    private final int spritesize = 16;
+    
+    public PlayerController(Player player, Block[][] maze)
+    {
+        this.player= player;
+        this.currentKey = null;
+        this.lastDir = KeyCode.DOWN;
+        this.maze = maze;
+        AnimationTimer timer = new AnimTask();
+        timer.start();
+    }
+    
+    public KeyCode getDirection()
+    {
+        return lastDir;
+    }
+    
+    public void setCurrentKey(KeyCode kc)
+    {
+        currentKey = kc;
+        if(kc != null)
+            lastDir = kc;
+        //System.out.println(lastDir);
+    }
+    
+    public KeyCode getCurrentKey()
+    {
+        return currentKey;
+    }
+    
+    private class AnimTask extends AnimationTimer
+    {
+        double curY;
+        double curX;
         
-
-    }
-
-    public void moveImage(int dx, int dy) throws InterruptedException {
-        if (dx == 0 && dy == 0) {
-            return;
+        Node playerPos = player.GetLocation();
+        
+        
+        KeyCode animBusy = null;
+        int spriteMoves = spritesize;
+        
+        @Override
+        public void handle(long now) 
+        {
+            if(animBusy != null)
+            {
+                switch(animBusy)
+                {
+                    case LEFT:
+                        playerPos.relocate(playerPos.getLayoutX() -1, playerPos.getLayoutY());
+                        spriteMoves--;
+                        break;
+                    case RIGHT:
+                        playerPos.relocate(playerPos.getLayoutX() +1, playerPos.getLayoutY());
+                        spriteMoves--;
+                        break;
+                    case UP:
+                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() -1);
+                        spriteMoves--;
+                        break;
+                    case DOWN:
+                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() +1);
+                        spriteMoves--;
+                        break;
+                }
+            }
+            if(spriteMoves == 0)
+            {
+                spriteMoves = spritesize;
+                animBusy = null;
+                return;
+            }
+            
+            /*
+            if(currentKey == null)
+            {
+                if ((curY == Math.floor(curY)) && !Double.isInfinite(curY)) 
+                {
+                    
+                }
+                if ((curX == Math.floor(curX)) && !Double.isInfinite(curX)) 
+                {
+                    
+                }
+            }*/
+            if(currentKey == null || animBusy != null)
+                return;
+            
+            
+            curY = player.GetLocation().getLayoutY() / spritesize;
+            curX = player.GetLocation().getLayoutX() / spritesize;
+            switch(currentKey)
+            {
+                case LEFT:
+                    //playerPos.relocate(playerPos.getLayoutX() -1, playerPos.getLayoutY());
+                    if(maze[(int)curY][(int)curX-1] != Block.SOLID)
+                        animBusy = currentKey;
+                    break;
+                case RIGHT:
+                    //playerPos.relocate(playerPos.getLayoutX() +1, playerPos.getLayoutY());
+                    if(maze[(int)curY][(int)curX+1] != Block.SOLID)
+                    animBusy = currentKey;
+                    break;
+                case DOWN:
+                    if(maze[(int)curY+1][(int)curX] != Block.SOLID)
+                    animBusy = currentKey;
+                    break;
+                case UP:
+                    if(maze[(int)curY-1][(int)curX] != Block.SOLID)
+                    animBusy = currentKey;
+                    break;
+                    
+            }
+            //System.out.println("Current location: " + curX + ":" + curY);
         }
-
-        final double cx = nod.getBoundsInLocal().getWidth() / 2;
-        final double cy = nod.getBoundsInLocal().getHeight() / 2;
-
-        double x = cx + nod.getLayoutX() + dx * 4.40f;
-        double y = cy + nod.getLayoutY() + dy * 4.40f;
-
-        moveImgTo(x, y);
+        
     }
-
-    private void moveImgTo(double x, double y) {
-        final double cx = nod.getBoundsInLocal().getWidth() / 2;
-        final double cy = nod.getBoundsInLocal().getHeight() / 2;
-        System.out.println("x: " + x + " - y: " + y);
-        if (x - cx >= 0
-                && x + cx <= 800
-                && y - cy >= 0
-                && y + cy <= 600) {
-            nod.relocate(x - cx, y - cy);
-            rec = new Rectangle((int) nod.getLayoutX(), (int) nod.getLayoutY(), 236, 236);
-        }
-    }
-
-    /*
-     *Check if the player is dead. If player life is lower then 1. player is dead.
-     */
-    public void isDead() {
-        // TODO - implement PlayerController.isDead
-        throw new UnsupportedOperationException();
-    }
-
-    /*
-     *Player move up,down,left,right.
-     */
-    public void playerMove() {
-        // TODO - implement PlayerController.playerMove
-        throw new UnsupportedOperationException();
-    }
-
-    /*
-     *
-     */
-    public void collisionCheck() {
-        // TODO - implement PlayerController.collisionCheck
-        throw new UnsupportedOperationException();
-    }
-
-    /*
-     * Check damage done to player.
-     */
-    public void checkDamage() {
-        // TODO - implement PlayerController.checkDamage
-        throw new UnsupportedOperationException();
-    }
-
-    /*
-     *Check if there is a trap.
-     */
-    public void checkTrap() {
-        // TODO - implement PlayerController.checkTrap
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Use a ability whit the given id.
-     *
-     * @param id
-     */
-    public void useAbility(int id) {
-        // TODO - implement PlayerController.useAbility
-        throw new UnsupportedOperationException();
-    }
-
+    
+    //public Move()
 }

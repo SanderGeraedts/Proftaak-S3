@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
 package GameLogic;
 
 import a.maze.ing.AMazeIng;
@@ -11,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  *
  * @author Sander Geraedts
- */
+ *//*
 public class EnemyController extends PlayerController{
     
     public EnemyController(AMazeIng guiMaze) {
@@ -63,3 +65,4 @@ public class EnemyController extends PlayerController{
         }
     }
 }
+*/

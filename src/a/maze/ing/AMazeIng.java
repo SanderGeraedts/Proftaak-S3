@@ -7,7 +7,10 @@ package a.maze.ing;
 
 import GameLogic.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -18,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -31,17 +35,7 @@ import javafx.stage.Stage;
 public class AMazeIng extends Application {
 
     static int spritesize = 16;
-
-    private String pressedKey = "";
-
-    private Boolean upPressed = false;
-    private Boolean downPressed = false;
-    private Boolean leftPressed = false;
-    private Boolean rightPressed = false;
-    private Boolean onePressed = false;
-    private Boolean twoPressed = false;
-    private Boolean threePressed = false;
-    private Boolean fourPressed = false;
+    static long defCooldown = 30*1000;
 
     public Image imgCharacter;
     public Node nodCharacter;
@@ -62,7 +56,7 @@ public class AMazeIng extends Application {
     public Scene scene;
 
     public PlayerController pController;
-    public EnemyController eController;
+    //public EnemyController eController;
 
     //Moving checks
     public List<Node> solidBlocks;
@@ -92,19 +86,18 @@ public class AMazeIng extends Application {
 
     int abilityRunning;
     
-    public List<Node> spawnpoints;
+    public List<Node> spawnPoints;
+    
+    long abilityCooldown;
+    ArrayList<Long> abilityCooldowns;
 
     //PlayerController
     @Override
     public void start(Stage primaryStage) {
-        pController = new PlayerController(this);
-        pController.direction = "UP";
-        eController = new EnemyController(this);
-        eController.direction = "UP";
         abilities = new ArrayList<Ability>();
         abilityNodes = new ArrayList<Node>();
         solidBlocks = new ArrayList<Node>();
-        spawnpoints = new ArrayList<Node>();
+        spawnPoints = new ArrayList<Node>();
 
         abilityRunning = 0;
 
@@ -114,9 +107,10 @@ public class AMazeIng extends Application {
 
         Maze testmaze = new Maze(40, 2, 128);
         testmaze.printMaze();
-
+        
         Block[][] mazegrid = testmaze.GetGrid();
-
+        
+       //Create list of all the block images
         ArrayList<Image> images = new ArrayList<Image>();
         nodes = new ArrayList<Node>();
 
@@ -141,10 +135,10 @@ public class AMazeIng extends Application {
                     case SPAWNPOINT:
                         Image spp = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 16, 16);
                         images.add(spp);
-                        sppp = new ImageView(spp);
+                        Node sppp = new ImageView(spp);
                         sppp.relocate(x * spritesize, y * spritesize);
                         nodes.add(sppp);
-                        spawnpoints.add(sppp);
+                        spawnPoints.add(sppp);
                         break;
                     case EDGE:
                         Image edg = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
@@ -158,299 +152,200 @@ public class AMazeIng extends Application {
             }
         }
 
-        double tempDoubleX = 0;
-        double tempDoubleY = 0;
-        
-        if (nodes.contains(sppp)) {
-            tempDoubleX = sppp.getLayoutX();
-            tempDoubleY = sppp.getLayoutY();
-        }
-        
-        //spawn player
-        imgCharacter = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 16, 16);
-        nodCharacter = new ImageView(imgCharacter);
-        nodCharacter.relocate(tempDoubleX, tempDoubleY);
-        nodes.add(nodCharacter);
-        playerPos = nodCharacter;
-        tempNode = playerPos;
-        
-        //spawn enemy
-        imgEnemy = Sprite.LoadSprite("Resources/Enemy.jpg", 16, 16);
-        nodEnemy = new ImageView(imgEnemy);
-        
-        tempDoubleX = spawnpoints.get(0).getLayoutX();
-        tempDoubleY = spawnpoints.get(0).getLayoutY();
-        
-        nodEnemy.relocate(tempDoubleX, tempDoubleY);
-        nodes.add(nodEnemy);
-        enemyPos = nodEnemy;
-        tempNodeEnemy = enemyPos;
-        
-
         group = new Group(nodes);
         scene = new Scene(group, testmaze.getGridSize() * spritesize, testmaze.getGridSize() * spritesize, Color.DARKSALMON);
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                
-                
-                
-                switch (event.getCode()) {
-                    case LEFT:
-                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
-                            leftPressed = true;
-                            leftCount = 1;
-                            pController.direction = "LEFT";
-                        }
-                        break;
-                    case RIGHT:
-                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
-                            rightPressed = true;
-                            rightCount = 1;
-                            pController.direction = "RIGHT";
-                        }
-                        break;
-                    case UP:
-                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
-                            upPressed = true;
-                            upCount = 1;
-                            pController.direction = "UP";
-                        }
-                        break;
-                    case DOWN:
-                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
-                            downPressed = true;
-                            downCount = 1;
-                            pController.direction = "DOWN";
-                        }
-                        break;
-                    case DIGIT1:
-                        onePressed = true;
-                        abilityCount++;
-                        if (abilityCount == 1) {
-                            Ability ability = new Ability(0);
-                            abilities.add(ability);
-                            tempAbilityOne = new ImageView(ability.img);
-                            tempAbilityOne.setLayoutX(playerPos.getLayoutX());
-                            tempAbilityOne.setLayoutY(playerPos.getLayoutY());
-                            group.getChildren().add(tempAbilityOne);
-                            nodCharacter.toFront();
-                        }
-                        break;
-                    case DIGIT2:
-                        twoPressed = true;
-                        abilityCount++;
-                        if (abilityCount == 1) {
-                            Ability ability = new Ability(1);
-                            abilities.add(ability);
-                            tempAbilityOne = new ImageView(ability.img);
-                            tempAbilityOne.setLayoutX(playerPos.getLayoutX());
-                            tempAbilityOne.setLayoutY(playerPos.getLayoutY());
-                            group.getChildren().add(tempAbilityOne);
-                            nodCharacter.toFront();
-                        }
-                        break;
-                    case DIGIT3:
-                        threePressed = true;
-                        abilityCount++;
-                        if (abilityCount == 1) {
-                            Ability ability = new Ability(2);
-                            abilities.add(ability);
-                            tempAbilityOne = new ImageView(ability.img);
-                            tempAbilityOne.setLayoutX(playerPos.getLayoutX());
-                            tempAbilityOne.setLayoutY(playerPos.getLayoutY());
-                            group.getChildren().add(tempAbilityOne);
-                            nodCharacter.toFront();
-                        }
-                        break;
-                    case DIGIT4:
-                        fourPressed = true;
-                        abilityCount++;
-                        if (abilityCount == 1) {
-                            Ability ability = new Ability(3);
-                            abilities.add(ability);
-                            tempAbilityOne = new ImageView(ability.img);
-                            tempAbilityOne.setLayoutX(playerPos.getLayoutX());
-                            tempAbilityOne.setLayoutY(playerPos.getLayoutY());
-                            group.getChildren().add(tempAbilityOne);
-                            nodCharacter.toFront();
-                        }
-                        break;
-                }
-            }
-
-        });
-
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-//                System.out.println(event.getCode());
-                switch (event.getCode()) {
-//                    case A:
-//                        leftPressed = false;
-//                        System.out.println("A released");
-//                        break;
-//                    case LEFT:
-//                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
-//                        leftPressed = false;
-//                        }
-//                        break;
-//                    case D:
-//                        rightPressed = false;
-//                        System.out.println("D released");
-//                        break;
-//                    case RIGHT:
-//                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
-//                        rightPressed = false;
-//                        }
-//                        break;
-//                    case W:
-//                        upPressed = false;
-//                        System.out.println("W released");
-//                        break;
-//                    case UP:
-//                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
-//                        upPressed = false;
-//                        }
-//                        break;
-//                    case S:
-//                        downPressed = false;
-//                        System.out.println("S released");
-//                        break;
-//                    case DOWN:
-//                        if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {
-//                        downPressed = false;
-//                        }
-//                        break;
-                    case DIGIT1:
-                        onePressed = false;
-                        abilityCount = 0;
-                        break;
-                    case DIGIT2:
-                        twoPressed = false;
-                        abilityCount = 0;
-                        break;
-                    case DIGIT3:
-                        threePressed = false;
-                        abilityCount = 0;
-                        break;
-                    case DIGIT4:
-                        fourPressed = false;
-                        abilityCount = 0;
-                        break;
-                }
-            }
-        });
-
-        primaryStage.setTitle("a-MAZE-ing");
+        primaryStage.setTitle("Pathfinding");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        AnimationTimer timer = new AnimationTimer() {
+        
+        //For each spawnpoint, add a player.
+        Player p = new Player(1, 1);
+        for(Node n : spawnPoints)
+        {
+            group.getChildren().add(p.GetLocation());
+            p.SpawnPlayer(n);
+            p.GetLocation().toFront();
+            System.out.println("Cur pos: " + p.GetLocation().getLayoutX() + ":" +p.GetLocation().getLayoutY());
+            break; //Break so it only adds one
+        }
+        
+        PlayerController  playerController = new PlayerController(p, mazegrid);
+        
+        /*
+        Monster m = new Monster(1, 1);
+        group.getChildren().add(m.GetLocation());
+        Node n = spawnPoints.get(1);
+        m.SpawnPlayer(n);
+        m.GetLocation().toFront();
+        
+        AIController aiController = new AIController(m, mazegrid);
+        */
+        
+        List<KeyCode> mkeys = new ArrayList<KeyCode>();
+        mkeys.add(KeyCode.LEFT);
+        mkeys.add(KeyCode.RIGHT);
+        mkeys.add(KeyCode.UP);
+        mkeys.add(KeyCode.DOWN);
+        
+        List<KeyCode> akeys = new ArrayList<KeyCode>();
+        akeys.add(KeyCode.DIGIT1); //Throw
+        akeys.add(KeyCode.DIGIT2); //Defensive
+        akeys.add(KeyCode.DIGIT3); //Trap
+        akeys.add(KeyCode.DIGIT4); //Global
+        
+        abilityCooldown = 0;// = System.currentTimeMillis(); 
+        abilityCooldowns = new ArrayList<>();
+        Map<KeyCode,Long> cooldowns = new HashMap<KeyCode,Long>()
+        {{
+           put(KeyCode.DIGIT1, (long)0);
+           put(KeyCode.DIGIT2, (long)0);
+           put(KeyCode.DIGIT3, (long)0);
+           put(KeyCode.DIGIT4, (long)0);
+        }};
+        
+        
+        
+        //INPUT DETECTION:
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() 
+        {
+                  
+            
             @Override
-            public void handle(long now) {
-                int dx = 0, dy = 0;
-                switch (pController.direction) {
-                    case "UP":
-                        if (onePressed || abilityRunning == 1) {
-                            
-                            for (Node n : solidBlocks) { //Deze if statement is gemaakt door Kasper omdat de rest van mijn groepje incompatibel is, behalve Jeroen die doet tenminste iets nuttigs.
-                                if (n.getLayoutX() == tempAbilityOne.getLayoutX() && n.getLayoutY() >= tempAbilityOne.getLayoutY() - spritesize && n.getLayoutY() <= tempAbilityOne.getLayoutY()-1) {
-                                    collision = true;
+            public void handle(KeyEvent event) 
+            {
+                //Abilities while standing still:
+                if(akeys.contains(event.getCode()))
+                {
+                    if(playerController.getCurrentKey() == null) //If player is standing still
+                    {
+                        /*
+                        if(abilityCooldown >= System.currentTimeMillis())
+                        {
+                            System.out.println("Still in cooldown. Time left: " + (abilityCooldown - System.currentTimeMillis()) / 1000);
+                            return;
+                        }*/
+                        switch(event.getCode())
+                        {
+                            case DIGIT1: //Throw
+                                //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
+                                if(cooldowns.get(event.getCode()) >= System.currentTimeMillis())
+                                {
+                                    System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
+                                    return;
                                 }
-                            }
-                            if (collision == false) {
-                            tempAbilityOne.relocate(tempAbilityOne.getLayoutX(), tempAbilityOne.getLayoutY() - 4);
-                            abilityRunning = 1;
-                            }
-                            else {
-                                abilityRunning = 0;
-                            }
+                                System.out.println("Throw activated. starting cooldown");
+                                cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
+                                break;
+                            case DIGIT2: //Defensive
+                                //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
+                                if(cooldowns.get(event.getCode()) >= System.currentTimeMillis())
+                                {
+                                    System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
+                                    return;
+                                }
+                                System.out.println("Defense activated. starting cooldown");
+                                cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
+                                break;
+                            case DIGIT3: //Trap
+                                //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
+                                if(cooldowns.get(event.getCode()) >= System.currentTimeMillis())
+                                {
+                                    System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
+                                    return;
+                                }
+                                System.out.println("Trap activated. starting cooldown");
+                                cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
+                                break;
+                            case DIGIT4: //Global
+                                //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
+                                if(cooldowns.get(event.getCode()) >= System.currentTimeMillis())
+                                {
+                                    System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
+                                    return;
+                                }
+                                System.out.println("Global activated. starting cooldown");
+                                cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
+                                break;
                         }
-                        break;
-                        case "DOWN":
-
-                    //if (onePressed)
-                    default:
-                    //donothing
+                    }
                 }
-                if (leftPressed || leftCount > 0) {
-                    collision = false;
-
-                    for (Node n : solidBlocks) {
-                        if (n.getLayoutX() == playerPos.getLayoutX() - spritesize && n.getLayoutY() == playerPos.getLayoutY()) {
-                            collision = true;
+                
+                //Abilities while moving:
+                if(mkeys.contains(playerController.getCurrentKey())) //If the 'current' key pressed is a movement key
+                {
+                    if(!akeys.contains(event.getCode())) //If the new key pressed is not in the abilities list
+                        return; //Do nothing with input
+                    else
+                    {
+                        switch(event.getCode()) //Get the key
+                        {
+                            case DIGIT1: //Throw
+                                //
+                                break;
+                            case DIGIT2: //Defensive
+                                //
+                                break;
+                            case DIGIT3: //Trap
+                                //
+                                break;
+                            case DIGIT4: //Global
+                                //
+                                break;
                         }
                     }
-                    System.out.println(leftCount);
-
-                    if (leftCount < 17 && collision == false) {
-                        playerPos.relocate(playerPos.getLayoutX() - 1, playerPos.getLayoutY());
-                        leftCount++;
-                    } else {
-                        leftPressed = false;
-                        leftCount = 0;
-                    }
-
-                } else if (rightPressed || rightCount > 0) {
-                    collision = false;
-
-                    for (Node n : solidBlocks) {
-                        if (n.getLayoutX() == playerPos.getLayoutX() + spritesize && n.getLayoutY() == playerPos.getLayoutY()) {
-                            collision = true;
-                        }
-                    }
-                    System.out.println(rightCount);
-
-                    if (rightCount < 17 && collision == false) {
-                        playerPos.relocate(playerPos.getLayoutX() + 1, playerPos.getLayoutY());
-                        rightCount++;
-                    } else {
-                        rightPressed = false;
-                        rightCount = 0;
-                    }
-
-                } else if (downPressed || downCount > 0) {
-                    collision = false;
-
-                    for (Node n : solidBlocks) {
-                        if (n.getLayoutX() == playerPos.getLayoutX() && n.getLayoutY() == playerPos.getLayoutY() + spritesize) {
-                            collision = true;
-                        }
-                    }
-                    System.out.println(downCount);
-
-                    if (downCount < 17 && collision == false) {
-                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() + 1);
-                        downCount++;
-                    } else {
-                        downPressed = false;
-                        downCount = 0;
-                    }
-
-                } else if (upPressed || upCount > 0) {
-                    collision = false;
-
-                    for (Node n : solidBlocks) {
-                        if (n.getLayoutX() == playerPos.getLayoutX() && n.getLayoutY() == playerPos.getLayoutY() - spritesize) {
-                            collision = true;
-                        }
-                    }
-                    System.out.println(upCount);
-
-                    if (upCount < 17 && collision == false) {
-                        playerPos.relocate(playerPos.getLayoutX(), playerPos.getLayoutY() - 1);
-                        upCount++;
-                    } else {
-                        upPressed = false;
-                        upCount = 0;
-                    }
-
+                }
+                
+                //If you are already moving, just return.
+                if(playerController.getCurrentKey() != null) //Can be modified to allow for multiple keypresses
+                    return;
+                switch (event.getCode())
+                {
+                    case LEFT:
+                        //System.out.println("Left pressed");
+                        playerController.setCurrentKey(KeyCode.LEFT);
+                        break;
+                    case RIGHT:
+                        //System.out.println("Right pressed");
+                        playerController.setCurrentKey(KeyCode.RIGHT);
+                        break;  
+                    case UP:
+                        //System.out.println("Right pressed");
+                        playerController.setCurrentKey(KeyCode.UP);
+                        break; 
+                    case DOWN:
+                        //System.out.println("Right pressed");
+                        playerController.setCurrentKey(KeyCode.DOWN);
+                        break; 
                 }
             }
-        };
-        timer.start();
+        });
+        
+        //INPUT RELEASE DETECTION:
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() 
+        {
+            @Override
+            public void handle(KeyEvent event) 
+            {
+                if(playerController.getCurrentKey() != event.getCode())
+                    return;
+                switch(event.getCode())
+                {
+                    case LEFT:
+                        //System.out.println("Left released");
+                        playerController.setCurrentKey(null);
+                        break;
+                    case RIGHT:
+                        //System.out.println("Right released");
+                        playerController.setCurrentKey(null);
+                    case UP:
+                        playerController.setCurrentKey(null);
+                        break; 
+                    case DOWN:;
+                        playerController.setCurrentKey(null);
+                        break; 
+                }
+            }
+        });
     }
 
     /**

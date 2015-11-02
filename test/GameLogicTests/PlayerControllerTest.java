@@ -35,11 +35,11 @@ public class PlayerControllerTest {
     public static void tearDownClass() {
     }
     
-    @Before
+    /*@Before
     public void setUp() {
         maze = new AMazeIng();
         instance = new PlayerController(maze);
-    }
+    }*/
     
     @After
     public void tearDown() {
@@ -47,7 +47,7 @@ public class PlayerControllerTest {
 
     /**
      * Test of isDead method, of class PlayerController.
-     */
+     */ /*
     @Test
     public void testIsDead() {
         System.out.println("isDead");
@@ -55,23 +55,23 @@ public class PlayerControllerTest {
         instance.isDead();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of playerMove method, of class PlayerController.
-     */
-    @Test
+     */ /*
+    @Test 
     public void testPlayerMove() {
         System.out.println("playerMove");
         PlayerController instance = null;
         instance.playerMove();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of collisionCheck method, of class PlayerController.
-     */
+     *//*
     @Test
     public void testCollisionCheck() {
         System.out.println("collisionCheck");
@@ -79,11 +79,11 @@ public class PlayerControllerTest {
         instance.collisionCheck();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of checkDamage method, of class PlayerController.
-     */
+     *//*
     @Test
     public void testCheckDamage() {
         System.out.println("checkDamage");
@@ -91,11 +91,11 @@ public class PlayerControllerTest {
         instance.checkDamage();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of checkTrap method, of class PlayerController.
-     */
+     */ /*
     @Test
     public void testCheckTrap() {
         System.out.println("checkTrap");
@@ -103,11 +103,11 @@ public class PlayerControllerTest {
         instance.checkTrap();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of useAbility method, of class PlayerController.
-     */
+     */ /*
     @Test
     public void testUseAbility() {
         System.out.println("useAbility");
@@ -116,6 +116,6 @@ public class PlayerControllerTest {
         instance.useAbility(id);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
     
 }
