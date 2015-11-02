@@ -46,6 +46,10 @@ public class AMazeIng extends Application {
     public Image imgCharacter;
     public Node nodCharacter;
     public Rectangle recCharacter;
+    
+    public Image imgEnemy;
+    public Node nodEnemy;
+    public Rectangle recEnemy;
 
     public Node sppp;
 
@@ -58,6 +62,7 @@ public class AMazeIng extends Application {
     public Scene scene;
 
     public PlayerController pController;
+    public EnemyController eController;
 
     //Moving checks
     public List<Node> solidBlocks;
@@ -67,6 +72,11 @@ public class AMazeIng extends Application {
     public Boolean collision;
 
     public Node tempNode;
+    
+    //enemie moving checks
+    public Node enemyPos;
+    public Boolean enemyCollision;
+    public Node tempNodeEnemy;
 
     int leftCount = 0;
     int rightCount = 0;
@@ -81,15 +91,20 @@ public class AMazeIng extends Application {
     Node tempAbilityOne;
 
     int abilityRunning;
+    
+    public List<Node> spawnpoints;
 
     //PlayerController
     @Override
     public void start(Stage primaryStage) {
         pController = new PlayerController(this);
         pController.direction = "UP";
+        eController = new EnemyController(this);
+        eController.direction = "UP";
         abilities = new ArrayList<Ability>();
         abilityNodes = new ArrayList<Node>();
         solidBlocks = new ArrayList<Node>();
+        spawnpoints = new ArrayList<Node>();
 
         abilityRunning = 0;
 
@@ -129,6 +144,7 @@ public class AMazeIng extends Application {
                         sppp = new ImageView(spp);
                         sppp.relocate(x * spritesize, y * spritesize);
                         nodes.add(sppp);
+                        spawnpoints.add(sppp);
                         break;
                     case EDGE:
                         Image edg = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
@@ -144,16 +160,32 @@ public class AMazeIng extends Application {
 
         double tempDoubleX = 0;
         double tempDoubleY = 0;
+        
         if (nodes.contains(sppp)) {
             tempDoubleX = sppp.getLayoutX();
             tempDoubleY = sppp.getLayoutY();
         }
+        
+        //spawn player
         imgCharacter = Sprite.LoadSprite("Resources/SpawnPoint.jpg", 16, 16);
         nodCharacter = new ImageView(imgCharacter);
         nodCharacter.relocate(tempDoubleX, tempDoubleY);
         nodes.add(nodCharacter);
         playerPos = nodCharacter;
         tempNode = playerPos;
+        
+        //spawn enemy
+        imgEnemy = Sprite.LoadSprite("Resources/Enemy.jpg", 16, 16);
+        nodEnemy = new ImageView(imgEnemy);
+        
+        tempDoubleX = spawnpoints.get(0).getLayoutX();
+        tempDoubleY = spawnpoints.get(0).getLayoutY();
+        
+        nodEnemy.relocate(tempDoubleX, tempDoubleY);
+        nodes.add(nodEnemy);
+        enemyPos = nodEnemy;
+        tempNodeEnemy = enemyPos;
+        
 
         group = new Group(nodes);
         scene = new Scene(group, testmaze.getGridSize() * spritesize, testmaze.getGridSize() * spritesize, Color.DARKSALMON);
@@ -161,6 +193,9 @@ public class AMazeIng extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                
+                
+                
                 switch (event.getCode()) {
                     case LEFT:
                         if (leftCount == 0 && rightCount == 0 && upCount == 0 && downCount == 0) {

@@ -12,17 +12,17 @@ import javafx.scene.input.KeyEvent;
 public class PlayerController {
 
     private int state;
-    private int direction;
+    public String direction;
     private int location;
 
     private AMazeIng guiMaze;
 
     //logix
-<span class="nc" id="L21">    private String pressedKey = &quot;&quot;;</span>
-<span class="nc" id="L22">    private Boolean upPressed = false;</span>
-<span class="nc" id="L23">    private Boolean downPressed = false;</span>
-<span class="nc" id="L24">    private Boolean leftPressed = false;</span>
-<span class="nc" id="L25">    private Boolean rightPressed = false;</span>
+<span class="fc" id="L21">    private String pressedKey = &quot;&quot;;</span>
+<span class="fc" id="L22">    private Boolean upPressed = false;</span>
+<span class="fc" id="L23">    private Boolean downPressed = false;</span>
+<span class="fc" id="L24">    private Boolean leftPressed = false;</span>
+<span class="fc" id="L25">    private Boolean rightPressed = false;</span>
 
     private Image img;
     private Node nod;
@@ -37,16 +37,16 @@ public class PlayerController {
      * @param direction
      * @param location
      */
-<span class="nc" id="L40">    public PlayerController(/*int state, int direction, int location,*/AMazeIng guiMaze) {</span>
+<span class="fc" id="L40">    public PlayerController(/*int state, String direction, int location,*/AMazeIng guiMaze) {</span>
 //        this.state = state;
 //        this.direction = direction;
 //        this.location = location;
-<span class="nc" id="L44">        this.guiMaze = guiMaze;</span>
+<span class="fc" id="L44">        this.guiMaze = guiMaze;</span>
 
         //Logix
         
 
-<span class="nc" id="L49">    }</span>
+<span class="fc" id="L49">    }</span>
 
     private void moveImage(int dx, int dy) throws InterruptedException {
 <span class="nc bnc" id="L52" title="All 4 branches missed.">        if (dx == 0 &amp;&amp; dy == 0) {</span>

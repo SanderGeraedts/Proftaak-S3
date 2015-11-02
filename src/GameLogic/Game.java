@@ -10,6 +10,7 @@ public class Game {
 
 	private int gameID;
 	private int gameState;
+        private List<Player> players; 
 
 	/**
 	 * 
@@ -21,13 +22,22 @@ public class Game {
                 this.gameState = gameState;
 	}
         
+        /**
+         * 
+         * @return players
+         */
+        public List<Player> getPlayers(){
+            return players;
+        }                
         
         /**
-         * Add a player to the game.
+         * Adds a player to the game
+         * 
+         * @param player 
          */
-	public void addPlayer() {
-		// TODO - implement Game.addPlayer
-		throw new UnsupportedOperationException();
+	public void addPlayer(Player player) {
+            
+		players.add(player);
 	}
 
 	/**
