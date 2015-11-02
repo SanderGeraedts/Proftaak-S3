@@ -37,6 +37,22 @@ public class MazeTest {
     @After
     public void tearDown() {
     }
+    
+    /**
+         * 
+         * @param gridsize: The size of the grid in blocks. If gridsize = 16, the maze will be 16x16 blocks.
+         * @param roomsize: The max width or heigth of a room.
+         * @param roomtries: The number of times the maze tries to generate a room 
+         */
+    @Test(expected = IllegalArgumentException.class)
+    public void testMazeIllegalGridsize(){
+        
+        System.out.println("printMaze");
+        Maze maze = new Maze(-2, 24, 48);
+        
+        
+        
+    }
 
     /**
      * Test of printMaze method, of class Maze.
