@@ -18,22 +18,27 @@ import static org.junit.Assert.*;
  * @author Hovsep
  */
 public class PlayerRoleTest {
-    
+
+    PlayerRole instance;
+
     public PlayerRoleTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
+
+        instance = new PlayerRole(1);
+
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,12 +49,9 @@ public class PlayerRoleTest {
     @Test
     public void testGetHitpoints() {
         System.out.println("getHitpoints");
-        PlayerRole instance = null;
-        int expResult = 0;
+        int expResult = 170;
         int result = instance.getHitpoints();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -59,12 +61,9 @@ public class PlayerRoleTest {
     public void testSetHitpoints() {
         System.out.println("setHitpoints");
         int hitpoints = 0;
-        PlayerRole instance = null;
         int expResult = 0;
         int result = instance.setHitpoints(hitpoints);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -73,11 +72,37 @@ public class PlayerRoleTest {
     @Test
     public void testCreateRole() {
         System.out.println("createRole");
-        int ID = 0;
-        PlayerRole instance = null;
-        instance.createRole(ID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        String[] names = {"Rogue", "Mage", "Warrior", "Hunter"};
+        int[] hitpoints = {190, 170, 290, 180};
+        
+        int id = 0;
+        String expected = "";
+        String result = "";
+        
+        instance.createRole(id);
+        expected = "Character info" + "\nName: " + names[id] + "\nHitpoints: " + hitpoints[id];
+        result = instance.toString();
+        assertEquals("The result should be the same", expected, result);
+        id++;
+        
+        instance.createRole(id);
+        expected = "Character info" + "\nName: " + names[id] + "\nHitpoints: " + hitpoints[id];
+        result = instance.toString();
+        assertEquals("The result should be the same", expected, result);
+        id++;
+        
+        instance.createRole(id);
+        expected = "Character info" + "\nName: " + names[id] + "\nHitpoints: " + hitpoints[id];
+        result = instance.toString();
+        assertEquals("The result should be the same", expected, result);
+        id++;
+        
+        instance.createRole(id);
+        expected = "Character info" + "\nName: " + names[id] + "\nHitpoints: " + hitpoints[id];
+        result = instance.toString();
+        assertEquals("The result should be the same", expected, result);
+        id++;        
     }
 
     /**
@@ -93,5 +118,5 @@ public class PlayerRoleTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

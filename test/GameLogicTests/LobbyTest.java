@@ -9,6 +9,7 @@ package GameLogicTests;
 import GameLogic.Lobby;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,18 +43,19 @@ public class LobbyTest {
     /**
      * Test of hostGame method, of class Lobby.
      */
-    @Test
+    @Test (expected = UnsupportedOperationException.class)
     public void testHostGame() {
         System.out.println("hostGame");
         Lobby instance = new Lobby();
         instance.hostGame();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Assert.fail("Not implemented");
     }
 
     /**
-     * Test of joinGame method, of class Lobby.
-     */
+	 * Join a hosted game.
+	 * @param gameID
+	 */
     @Test
     public void testJoinGame() {
         System.out.println("joinGame");
@@ -64,4 +66,13 @@ public class LobbyTest {
         fail("The test case is a prototype.");
     }
     
+    @Test(expected = IllegalArgumentException.class)
+    public void testJoinGameWithInvalidIdentifier() {
+        System.out.println("joinGame");
+        int gameID = -10;
+        Lobby instance = new Lobby();
+        instance.joinGame(gameID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("Er moest een illegalArgumentException gegooid worden.");
+    }
 }
