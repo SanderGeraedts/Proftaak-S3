@@ -5,6 +5,7 @@
  */
 package Database;
 
+import GameLogic.Ability;
 import GameLogic.PlayerRole;
 import GameLogic.Stat;
 import GameLogic.User;
@@ -19,6 +20,9 @@ import java.util.List;
 public class DatabaseConnection {
 
     Connection conn;
+    String username;
+
+    private Stat stats;//testfield
 
     public DatabaseConnection() {
         String url = "jdbc:mysql://sql2.freesqldatabase.com:3306/";
@@ -45,11 +49,17 @@ public class DatabaseConnection {
         return null;
     }
 
+    //todo
+    public List<Ability> getAbility() {
+        return null;
+    }
+
     //test
     public String getUsername() throws SQLException {
         Statement st = conn.createStatement();
-        ResultSet srs = st.executeQuery("SELECT * FROM User");
-        String username = "";
+        st.executeQuery("SELECT * FROM User");
+        ResultSet srs = st.getResultSet();
+        username = "";
         while (srs.next()) {
             username = srs.getString("user_name");
         }
@@ -58,26 +68,27 @@ public class DatabaseConnection {
 
     public String getPassword() throws SQLException {
         Statement st = conn.createStatement();
-        ResultSet srs = st.executeQuery("SELECT * FROM User");
+        ResultSet srs = st.executeQuery("SELECT * FROM User WHERE user_name = '" + username + "'");
         String password = "";
         while (srs.next()) {
             password = srs.getString("user_password");
         }
+        st.close();
         return password;
     }
 
     //todo
-    public List<User> getUsers() throws SQLException {
+    public ArrayList<User> getUsers() throws SQLException {
         Statement st = conn.createStatement();
         ResultSet srs = st.executeQuery("SELECT * FROM User");
         ArrayList<User> userlist = new ArrayList<>();
-        String username = "";
+
         while (srs.next()) {
             int userid = srs.getInt("user_id");
-            username = srs.getString("user_name");
+            String username = srs.getString("user_name");
             String password = srs.getString("user_password");
 
-            User usr = new User(username);
+            User usr = new User(userid, username, password, stats);
             userlist.add(usr);
         }
         st.close();

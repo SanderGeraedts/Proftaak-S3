@@ -23,9 +23,6 @@ public class User {
         this.email = email;
         this.stats = stats;
     }
-    public User(String name){
-        this.name = name;
-    }
 
     public int getStatID() {
         return stats.getStatsID();
