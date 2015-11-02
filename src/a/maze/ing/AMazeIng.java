@@ -160,7 +160,7 @@ public class AMazeIng extends Application {
         primaryStage.show();
 
         //For each spawnpoint, add a player.
-        Player p = new Player(1, 1);
+        Player p = new Player(1, 1, 1);
         
         for (Node n : spawnPoints) {
             group.getChildren().add(p.GetLocation());
@@ -172,14 +172,14 @@ public class AMazeIng extends Application {
 
         PlayerController playerController = new PlayerController(p, mazegrid);
 
-        Player monster = new Player(2, 1);
+        Player monster = new Player(2, 1, 2);
         
         int i=0;
         for(Node n : spawnPoints)
         {
             if(i == 0)
             {
-                group.getChildren().add(p.GetLocation());
+                //group.getChildren().add(p.GetLocation());
                 p.SpawnPlayer(n);
                 p.GetLocation().toFront();
                 System.out.println("Cur pos: " + p.GetLocation().getLayoutX() + ":" +p.GetLocation().getLayoutY());

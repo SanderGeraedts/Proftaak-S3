@@ -20,10 +20,10 @@ public class Player {
 	 * @param hitpoints
 	 * @param cooldown
 	 */
-	public Player(int id, int hitpoints) {
+	public Player(int id, int hitpoints, int roleID) {
 		this.ID = id;
                 this.hitpoints = hitpoints;                
-                this.playerRole = new PlayerRole(1);
+                this.playerRole = new PlayerRole(roleID);
                 this.imageView = new ImageView();
                 imageView.setImage(playerRole.getImage(0));
                 this.location = imageView;
