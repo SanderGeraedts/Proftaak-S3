@@ -207,21 +207,39 @@ public class AMazeIng extends Application {
                         twoPressed = true;
                         abilityCount++;
                         if (abilityCount == 1) {
-                            abilities.add(new Ability(1));
+                            Ability ability = new Ability(1);
+                            abilities.add(ability);
+                            tempAbilityOne = new ImageView(ability.img);
+                            tempAbilityOne.setLayoutX(playerPos.getLayoutX());
+                            tempAbilityOne.setLayoutY(playerPos.getLayoutY());
+                            group.getChildren().add(tempAbilityOne);
+                            nodCharacter.toFront();
                         }
                         break;
                     case DIGIT3:
                         threePressed = true;
                         abilityCount++;
                         if (abilityCount == 1) {
-                            abilities.add(new Ability(2));
+                            Ability ability = new Ability(2);
+                            abilities.add(ability);
+                            tempAbilityOne = new ImageView(ability.img);
+                            tempAbilityOne.setLayoutX(playerPos.getLayoutX());
+                            tempAbilityOne.setLayoutY(playerPos.getLayoutY());
+                            group.getChildren().add(tempAbilityOne);
+                            nodCharacter.toFront();
                         }
                         break;
                     case DIGIT4:
                         fourPressed = true;
                         abilityCount++;
                         if (abilityCount == 1) {
-                            abilities.add(new Ability(3));
+                            Ability ability = new Ability(3);
+                            abilities.add(ability);
+                            tempAbilityOne = new ImageView(ability.img);
+                            tempAbilityOne.setLayoutX(playerPos.getLayoutX());
+                            tempAbilityOne.setLayoutY(playerPos.getLayoutY());
+                            group.getChildren().add(tempAbilityOne);
+                            nodCharacter.toFront();
                         }
                         break;
                 }
@@ -316,7 +334,7 @@ public class AMazeIng extends Application {
                             }
                         }
                         break;
-                        //case "DOWN":
+                        case "DOWN":
 
                     //if (onePressed)
                     default:
