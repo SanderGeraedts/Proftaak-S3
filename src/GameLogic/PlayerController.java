@@ -7,6 +7,7 @@ package GameLogic;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -18,6 +19,7 @@ public class PlayerController
     private Player player;
     private KeyCode currentKey;
     private Block[][] maze;
+    private Image currentImage;
     
     private KeyCode lastDir;
     
@@ -71,6 +73,7 @@ public class PlayerController
                 {
                     case LEFT:
                         playerPos.relocate(playerPos.getLayoutX() -1, playerPos.getLayoutY());
+                        
                         spriteMoves--;
                         break;
                     case RIGHT:
