@@ -38,7 +38,7 @@ public class AIController {
         this.maze = maze;
         AnimationTimer timer = new AnimTask();
         Timer aiTimer = new Timer();
-        aiTimer.scheduleAtFixedRate(new AITask(), 200, 1000);
+        aiTimer.scheduleAtFixedRate(new AITask(), 200, 200);
         timer.start();
         moving = null;
     }
@@ -67,42 +67,68 @@ public class AIController {
                 int absolutePos[] = new int[2];
                 absolutePos[0] = (int)(ploc.getLayoutX() /spritesize);
                 absolutePos[1] = (int)(ploc.getLayoutY() /spritesize);
-                if(ploc.getLayoutX() / spritesize < tloc.getLayoutX() / spritesize)
-                {
-                    if(maze[absolutePos[1]][absolutePos[0]+1] != Block.SOLID)
-                    {
-                        moving = KeyCode.RIGHT;
-                        return;
-                    }
-                    System.out.println("Stuck going RIGHT");
-                }
-                if(ploc.getLayoutX() / spritesize > tloc.getLayoutX() / spritesize)
-                {
-                    if(maze[absolutePos[1]][absolutePos[0] -1] != Block.SOLID)
-                    {
-                        moving = KeyCode.LEFT;
-                        return;
-                    }
-                    System.out.println("Stuck going LEFT");
-                }
+                int stuck = 0;
+                boolean priorY= false;
+                double test = ploc.getLayoutX()-tloc.getLayoutX()*-1;
+                double test2 = ploc.getLayoutY()-tloc.getLayoutY()*-1;
+                if((ploc.getLayoutX()-tloc.getLayoutX())*-1 /spritesize < (ploc.getLayoutY()-tloc.getLayoutY())*-1/spritesize)
+                    priorY=true;
                 
-                if(ploc.getLayoutY() /spritesize < tloc.getLayoutY() /spritesize)
+                while(moving == null)
                 {
-                    if(maze[absolutePos[1]+1][absolutePos[0]] != Block.SOLID)
+                    if(!priorY)
                     {
-                        moving = KeyCode.DOWN;
-                        return;
+                        if(ploc.getLayoutX() / spritesize < tloc.getLayoutX() / spritesize)
+                        {
+                            if(maze[absolutePos[1]][absolutePos[0]+1] != Block.SOLID)
+                            {
+                                stuck =0;
+                                moving = KeyCode.RIGHT;
+                                break;
+                            }
+                            else
+                                stuck++;
+                        }
+                        if(ploc.getLayoutX() / spritesize > tloc.getLayoutX() / spritesize)
+                        {
+                            if(maze[absolutePos[1]][absolutePos[0] -1] != Block.SOLID)
+                            {
+                                stuck =0;
+                                moving = KeyCode.LEFT;
+                                break;
+                            }
+                            else
+                                stuck++;
+                        }
                     }
-                    System.out.println("Stuck going DOWN");
-                }
-                if(ploc.getLayoutY() /spritesize > tloc.getLayoutY() /spritesize)
-                {
-                    if(maze[absolutePos[1]-1][absolutePos[0]] != Block.SOLID)
+
+                    if(ploc.getLayoutY() /spritesize < tloc.getLayoutY() /spritesize)
                     {
-                        moving = KeyCode.UP;
-                        return;
+                        if(maze[absolutePos[1]+1][absolutePos[0]] != Block.SOLID)
+                        {
+                            stuck =0;
+                            moving = KeyCode.DOWN;
+                            break;
+                        }
+                        else
+                            stuck++;
                     }
-                    System.out.println("Stuck going UP");
+                    if(ploc.getLayoutY() /spritesize > tloc.getLayoutY() /spritesize)
+                    {
+                        if(maze[absolutePos[1]-1][absolutePos[0]] != Block.SOLID)
+                        {
+                            stuck = 0;
+                            moving = KeyCode.UP;
+                            break;
+                        }
+                        else
+                            stuck++;
+                    }
+                    stuck++;
+                    if(stuck >= 3)
+                    {
+                        priorY=false;
+                    }
                 }
             }
             
