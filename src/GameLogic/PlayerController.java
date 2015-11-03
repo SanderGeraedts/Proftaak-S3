@@ -95,6 +95,18 @@ public class PlayerController
                         //currentImage = playerRole.getImage(0);
                         spriteMoves--;
                         break;
+                    case DIGIT1:
+                        //Ability 1;
+                        break;
+                    case DIGIT2:
+                        //Ability 2;
+                        break;
+                    case DIGIT3:
+                        //Ability 3;
+                        break;
+                    case DIGIT4:
+                        //Ability 4;
+                        break;
                 }
             }
             if(spriteMoves == 0)

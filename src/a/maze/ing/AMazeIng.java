@@ -256,6 +256,7 @@ public class AMazeIng extends Application {
                         switch (event.getCode()) {
                             case DIGIT1: //Throw
                                 //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
+                                playerController.setCurrentKey(KeyCode.DIGIT1);
                                 if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
@@ -265,6 +266,7 @@ public class AMazeIng extends Application {
                                 break;
                             case DIGIT2: //Defensive
                                 //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
+                                playerController.setCurrentKey(KeyCode.DIGIT2);
                                 if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
@@ -274,6 +276,7 @@ public class AMazeIng extends Application {
                                 break;
                             case DIGIT3: //Trap
                                 //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
+                                playerController.setCurrentKey(KeyCode.DIGIT3);
                                 if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
@@ -283,6 +286,7 @@ public class AMazeIng extends Application {
                                 break;
                             case DIGIT4: //Global
                                 //System.out.println(cooldowns.get(event.getCode()) + " EN: " +System.currentTimeMillis());
+                                playerController.setCurrentKey(KeyCode.DIGIT4);
                                 if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
@@ -303,17 +307,41 @@ public class AMazeIng extends Application {
                     } else {
                         switch (event.getCode()) //Get the key
                         {
-                            case DIGIT1: //Throw
-                                //
+                            case DIGIT1: //Ability1
+                                playerController.setCurrentKey(KeyCode.DIGIT1);
+                                if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
+                                    System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
+                                    return;
+                                }
+                                System.out.println("Throw activated. starting cooldown");
+                                cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
                                 break;
-                            case DIGIT2: //Defensive
-                                //
+                            case DIGIT2: //Ability2
+                                playerController.setCurrentKey(KeyCode.DIGIT2);
+                                if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
+                                    System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
+                                    return;
+                                }
+                                System.out.println("Defense activated. starting cooldown");
+                                cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
                                 break;
-                            case DIGIT3: //Trap
-                                //
+                            case DIGIT3: //Ability3
+                                playerController.setCurrentKey(KeyCode.DIGIT3);
+                                if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
+                                    System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
+                                    return;
+                                }
+                                System.out.println("Trap activated. starting cooldown");
+                                cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
                                 break;
-                            case DIGIT4: //Global
-                                //
+                            case DIGIT4: //Ultimate
+                                playerController.setCurrentKey(KeyCode.DIGIT4);
+                                if (cooldowns.get(event.getCode()) >= System.currentTimeMillis()) {
+                                    System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
+                                    return;
+                                }
+                                System.out.println("Global activated. starting cooldown");
+                                cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
                                 break;
                         }
                     }
