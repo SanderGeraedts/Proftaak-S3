@@ -1,6 +1,5 @@
 package GameLogic;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Stat class used in User
@@ -28,7 +27,7 @@ public class Stat {
      * @param rating
      */
     public Stat(int statsid, int totalwins, int totallosses, int totalkills, int totaldeaths, int rating) {
-        throw new NotImplementedException();
+    
 
     }
 
@@ -58,7 +57,6 @@ public class Stat {
      * @param kills how many players were killed.
      */
     public void addKills(int kills) {
-        throw new NotImplementedException();
     }
 
     /**
@@ -67,7 +65,6 @@ public class Stat {
      * @param deaths how many times player died.
      */
     public void addDeaths(int deaths) {
-        throw new NotImplementedException();
     }
 
     /**
@@ -76,7 +73,6 @@ public class Stat {
      * @param won if won is true one win is added otherwise one loss.
      */
     public void winOrLose(boolean won) {
-        throw new NotImplementedException();
     }
 
     /**
@@ -91,6 +87,5 @@ public class Stat {
      * @param rating
      */
     public void requestStats() {
-        throw new NotImplementedException();
     }
 }
