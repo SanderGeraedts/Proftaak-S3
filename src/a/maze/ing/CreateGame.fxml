@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="141.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a.maze.ing.LoginController">
+   <children>
+      <Label layoutX="42.0" layoutY="49.0" text="Game name:" />
+      <TextField fx:id="tfCreateGameName" layoutX="122.0" layoutY="45.0" prefHeight="25.0" prefWidth="317.0" promptText="Enter game name" />
+      <Button fx:id="btCreateCreateGame" layoutX="195.0" layoutY="96.0" mnemonicParsing="false" onAction="#CreateGame" text="Create Game" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="apCreateUser" prefHeight="193.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a.maze.ing.LoginController">
+   <children>
+      <TextField fx:id="tfNewUserUsername" layoutX="152.0" layoutY="39.0" />
+      <TextField fx:id="tfNewUserPassword" layoutX="152.0" layoutY="84.0" />
+      <Button fx:id="btCreateAccount" layoutX="152.0" layoutY="132.0" mnemonicParsing="false" onAction="#newUser" text="Create account" />
+      <Label layoutX="66.0" layoutY="43.0" text="Username" />
+      <Label layoutX="66.0" layoutY="79.0" text="Password" />
+   </children>
+</AnchorPane>

@@ -32,7 +32,6 @@ public class DatabaseConnection {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url + dbName, userName, password);
-            System.out.println("Connecting to database works");
         } catch (Exception e) {
             System.out.println("Connecting to database failed");
             e.printStackTrace();
@@ -77,8 +76,27 @@ public class DatabaseConnection {
         return password;
     }
 
+    //get list of players currently connected
+    public List<User>getPlayers() throws SQLException {
+        Statement st = conn.createStatement();
+        ResultSet srs = st.executeQuery("SELECT * FROM User");
+        ArrayList<User> playerlist = new ArrayList<>();
+
+        while (srs.next()) {
+            int userid = srs.getInt("user_id");
+            String username = srs.getString("user_name");
+            String password = srs.getString("user_password");
+
+            User usr = new User(userid, username, password, stats);
+            playerlist.add(usr);
+        }
+        st.close();
+        return playerlist;
+    }
+    
+    //get list of all users.
     //todo
-    public ArrayList<User> getUsers() throws SQLException {
+    public List<User> getUsers() throws SQLException {
         Statement st = conn.createStatement();
         ResultSet srs = st.executeQuery("SELECT * FROM User");
         ArrayList<User> userlist = new ArrayList<>();
@@ -93,6 +111,21 @@ public class DatabaseConnection {
         }
         st.close();
         return userlist;
+    }
+    
+    public void newUser(String naam, String password) throws SQLException{
+       String query = " INSERT INTO User (user_name, user_password)"
+        + " values (?, ?)";
+ 
+      // create the mysql insert preparedstatement
+      PreparedStatement preparedStmt = conn.prepareStatement(query);
+      preparedStmt.setString (1, naam);
+      preparedStmt.setString (2, password);
+      // execute the preparedstatement
+      preparedStmt.execute();
+       
+      conn.close();
+        
     }
 
 }
