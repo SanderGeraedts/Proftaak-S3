@@ -3,6 +3,7 @@ package GameLogic;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 
 public class Player {
 
@@ -12,7 +13,8 @@ public class Player {
         private Node location;
         private ImageView imageView;
         
-        private PlayerRole playerRole;        
+        private PlayerRole playerRole;
+        
 
 	/**
 	 * 

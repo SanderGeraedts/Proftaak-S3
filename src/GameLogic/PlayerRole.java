@@ -63,7 +63,7 @@ public class PlayerRole {
                 defaultImg.add(Sprite.LoadSprite("Resources/RogueRIGHT.png", 16, 16));
                 defaultImg.add(Sprite.LoadSprite("Resources/RogueUP.png", 16, 16));
                 for (int i = 0; i < 4; i++) {
-                    ability[i] = new Ability(i);
+                    //ability[i] = new Ability(i);
                 }
 //                ability[0] = new Ability(0);
 //                ability[1] = new Ability(1);
@@ -78,7 +78,7 @@ public class PlayerRole {
                 defaultImg.add(Sprite.LoadSprite("Resources/Mage-RIGHT.png", 16, 16));
                 defaultImg.add(Sprite.LoadSprite("Resources/Mage-UP.png", 16, 16));
                 for (int i = 4; i < 8; i++) {
-                    ability[i] = new Ability(i);
+                    //ability[i] = new Ability(i);
                 }
 //                ability[4] = new Ability(4);
 //                ability[5] = new Ability(5);
@@ -93,7 +93,7 @@ public class PlayerRole {
                 defaultImg.add(Sprite.LoadSprite("Resources/Warrior-RIGHT.png", 16, 16));
                 defaultImg.add(Sprite.LoadSprite("Resources/Warrior-UP.png", 16, 16));
                 for (int i = 8; i < 12; i++) {
-                    ability[i] = new Ability(i);
+                    //bility[i] = new Ability(i);
                 }                
 //                ability[8] = new Ability(8);
 //                ability[9] = new Ability(9);
@@ -108,7 +108,7 @@ public class PlayerRole {
                 defaultImg.add(Sprite.LoadSprite("Resources/Hunter-RIGHT.png", 16, 16));
                 defaultImg.add(Sprite.LoadSprite("Resources/Hunter-UP.png", 16, 16));
                 for (int i = 12; i < 16; i++) {
-                    ability[i] = new Ability(i);
+                    //ability[i] = new Ability(i);
                 }                   
 //                ability[12] = new Ability(12);
 //                ability[13] = new Ability(13);

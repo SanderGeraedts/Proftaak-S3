@@ -6,6 +6,7 @@
 package GameLogic;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -30,13 +31,16 @@ public class PlayerController
     private Ability ab3;
     private Ability ab4;
     
+    private Group nodes;
     
-    public PlayerController(Player player, Block[][] maze)
+    
+    public PlayerController(Player player, Block[][] maze, Group nodes)
     {
         this.player= player;
         this.currentKey = null;
         this.lastDir = KeyCode.DOWN;
         this.maze = maze;
+        this.nodes= nodes;
         AnimationTimer timer = new AnimTask();
         timer.start();
     }
@@ -49,6 +53,8 @@ public class PlayerController
     public Ability getAbility(int ID) {
         switch (ID) {
             case 1:
+                ab1= new Ability((player.getPlayerRole().getID()* 4) + 0, getDirection(), maze, nodes);
+                ab1.abilityNode.relocate(player.GetLocation().getLayoutX(), player.GetLocation().getLayoutY());
                 return ab1;
             case 2:
                 return ab2;
@@ -116,9 +122,10 @@ public class PlayerController
                         //currentImage = playerRole.getImage(0);
                         spriteMoves--;
                         break;
+                        /*
                     case DIGIT1:
-                        ab1 = new Ability((player.getPlayerRole().getID()* 4) + 0);
-                        ab1.abilityNode.relocate(playerPos.getLayoutX(), playerPos.getLayoutY());
+                        //ab1 = new Ability((player.getPlayerRole().getID()* 4) + 0);
+                        
                         break;
                     case DIGIT2:
                         ab2 = new Ability((player.getPlayerRole().getID()* 4) + 1);
@@ -128,7 +135,7 @@ public class PlayerController
                         break;
                     case DIGIT4:
                         ab4 = new Ability((player.getPlayerRole().getID()* 4) + 3);
-                        break;
+                        break;*/
                 }
             }
             if(spriteMoves == 0)
@@ -176,6 +183,7 @@ public class PlayerController
                     if(maze[(int)curY-1][(int)curX] != Block.SOLID)
                     animBusy = currentKey;
                     break;
+                    
                 case DIGIT1:
                     animBusy = currentKey;
                     break;

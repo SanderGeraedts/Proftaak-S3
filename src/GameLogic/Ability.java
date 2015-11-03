@@ -1,17 +1,20 @@
 package GameLogic;
 
-
+import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.input.KeyCode;
 
 /**
-* Todo: add more constraints, class nearly impossible to test.
-* 
-* TEST TEST TEST TEST TEST 
-*/
+ * Todo: add more constraints, class nearly impossible to test.
+ * 
+* TEST TEST TEST TEST TEST
+ */
 public class Ability {
+
+    static final int spritesize = 16;
 
     private String name;
     private int damage;
@@ -20,18 +23,124 @@ public class Ability {
     public Image img;
     Node abilityNode;
 
+    private KeyCode moving;
+    private Block[][] maze;
+    private Group nodes;
+
     /**
      *
      * @param id
      */
-    public Ability(int id) {  
+    public Ability(int id, KeyCode moving, Block[][] maze, Group nodes) {
         LoadAbility(id);
+        this.moving = moving;
+        this.maze = maze;
+        this.nodes = nodes;
+        AnimationTimer timer = new AnimTask();
+        timer.start();
     }
 
+    private class AnimTask extends AnimationTimer {
+
+        double curY;
+        double curX;
+
+        Node abilityPos = abilityNode;
+
+        KeyCode animBusy = null;
+        int spriteMoves = spritesize;
+
+        @Override
+        public void handle(long now) {
+            if (animBusy != null) {
+                switch (animBusy) {
+                    case LEFT:
+                        abilityPos.relocate(abilityPos.getLayoutX() - 1, abilityPos.getLayoutY());
+                        spriteMoves--;
+                        break;
+                    case RIGHT:
+                        abilityPos.relocate(abilityPos.getLayoutX() + 1, abilityPos.getLayoutY());
+                        spriteMoves--;
+                        break;
+                    case UP:
+                        abilityPos.relocate(abilityPos.getLayoutX(), abilityPos.getLayoutY() - 1);
+                        spriteMoves--;
+                        break;
+                    case DOWN:
+                        abilityPos.relocate(abilityPos.getLayoutX(), abilityPos.getLayoutY() + 1);
+                        spriteMoves--;
+                        break;
+                }
+            }
+            if (spriteMoves == 0) {
+                spriteMoves = spritesize;
+                animBusy = null;
+                //moving = null;
+                return;
+            }
+
+            /*
+             if(moving == null)
+             {
+             if ((curY == Math.floor(curY)) && !Double.isInfinite(curY)) 
+             {
+                    
+             }
+             if ((curX == Math.floor(curX)) && !Double.isInfinite(curX)) 
+             {
+                    
+             }
+             }*/
+            if (moving == null || animBusy != null) {
+                return;
+            }
+
+            curY = abilityPos.getLayoutY() / spritesize;
+            curX = abilityPos.getLayoutX() / spritesize;
+            switch (moving) {
+                case LEFT:
+                    //playerPos.relocate(abilityPos.getLayoutX() -1, abilityPos.getLayoutY());
+                    if (maze[(int) curY][(int) curX - 1] != Block.SOLID) {
+                        animBusy = moving;
+                    } else {
+                        DestructAbility();
+                    }
+                    break;
+                case RIGHT:
+                    //playerPos.relocate(abilityPos.getLayoutX() +1, abilityPos.getLayoutY());
+                    if (maze[(int) curY][(int) curX + 1] != Block.SOLID) {
+                        animBusy = moving;
+                    } else {
+                        DestructAbility();
+                    }
+                    break;
+                case DOWN:
+                    if (maze[(int) curY + 1][(int) curX] != Block.SOLID) {
+                        animBusy = moving;
+                    } else {
+                        DestructAbility();
+                    }
+                    break;
+                case UP:
+                    if (maze[(int) curY - 1][(int) curX] != Block.SOLID) {
+                        animBusy = moving;
+                    } else {
+                        DestructAbility();
+                    }
+                    break;
+
+            }
+        }
+    }
+
+    private void DestructAbility() {
+        nodes.getChildren().remove(abilityNode);
+    }
     /*
      *Create all Abilities. With given ID u select the right Role.
      * @param id
      */
+
     private void LoadAbility(int id) {
 
         switch (id) {
@@ -41,7 +150,7 @@ public class Ability {
                 damage = 10;
                 spriteID = "0";
                 cooldownTimer = 1;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 1:
@@ -49,7 +158,7 @@ public class Ability {
                 damage = 30;
                 spriteID = "1";
                 cooldownTimer = 30;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 2:
@@ -57,7 +166,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "2";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 3:
@@ -65,7 +174,7 @@ public class Ability {
                 damage = 40;
                 spriteID = "3";
                 cooldownTimer = 30;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
 
@@ -75,7 +184,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "4";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/Firebolt-DOWN.png",16,16);
+                img = Sprite.LoadSprite("Resources/Firebolt-DOWN.png", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 5:
@@ -83,7 +192,7 @@ public class Ability {
                 damage = 0;
                 spriteID = "5";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/Iceblock-ALL.png",16,16);
+                img = Sprite.LoadSprite("Resources/Iceblock-ALL.png", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 6:
@@ -91,7 +200,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "6";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/Frosttrap-ALL.png",16,16);
+                img = Sprite.LoadSprite("Resources/Frosttrap-ALL.png", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 7:
@@ -109,7 +218,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "8";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 9:
@@ -117,7 +226,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "9";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 10:
@@ -125,7 +234,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "10";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 11:
@@ -143,7 +252,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "12";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 13:
@@ -151,7 +260,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "13";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 14:
@@ -159,7 +268,7 @@ public class Ability {
                 damage = 15;
                 spriteID = "14";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/MapEdge.jpg",16,16);
+                img = Sprite.LoadSprite("Resources/MapEdge.jpg", 16, 16);
                 abilityNode = new ImageView(img);
                 break;
             case 15:
@@ -176,10 +285,10 @@ public class Ability {
     public Node getAbilityNode() {
         return abilityNode;
     }
-    
+
     /*
-    *  Get al Ability Information
-    */
+     *  Get al Ability Information
+     */
     @Override
     public String toString() {
         String temp = "Name: " + name + "\nDamage: " + damage + "\nCooldown: " + cooldownTimer;
