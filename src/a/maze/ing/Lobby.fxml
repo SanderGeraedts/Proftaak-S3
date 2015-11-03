@@ -4,14 +4,17 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a.maze.ing.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a.maze.ing.LoginController">
    <children>
       <TextArea fx:id="tfLobbyChat" layoutX="21.0" layoutY="327.0" prefHeight="60.0" prefWidth="325.0" />
-      <ListView fx:id="lvLobbyUsers" layoutX="458.0" layoutY="22.0" prefHeight="293.0" prefWidth="128.0" />
+      <ListView fx:id="lvLobbyUsers" layoutX="468.0" layoutY="22.0" prefHeight="293.0" prefWidth="150.0" />
       <Button fx:id="btLobbySend" layoutX="372.0" layoutY="344.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="25.0" prefWidth="69.0" text="Send" />
-      <Button fx:id="btLobbyCreateGame" layoutX="458.0" layoutY="357.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Create Game" />
-      <Button fx:id="btLobbyJoinGame" layoutX="458.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Join Game" />
-      <ListView fx:id="lvLobbyGames" layoutX="23.0" layoutY="22.0" prefHeight="293.0" prefWidth="128.0" />
-      <ListView fx:id="lvLobbyChat" layoutX="163.0" layoutY="22.0" prefHeight="293.0" prefWidth="279.0" />
+      <Button fx:id="btLobbyCreateGame" layoutX="468.0" layoutY="369.0" mnemonicParsing="false" onAction="#CreateLobby" prefHeight="25.0" prefWidth="128.0" text="Create Game" />
+      <Button fx:id="btLobbyJoinGame" layoutX="468.0" layoutY="332.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Join Game" />
+      <ListView fx:id="lvLobbyGames" layoutX="23.0" layoutY="22.0" prefHeight="293.0" prefWidth="150.0" />
+      <ListView fx:id="lvLobbyChat" layoutX="196.0" layoutY="22.0" prefHeight="293.0" prefWidth="250.0" />
+      <Label layoutX="80.0" layoutY="6.0" text="Games" />
+      <Label layoutX="309.0" layoutY="6.0" text="Chat" />
+      <Label layoutX="524.0" layoutY="6.0" text="Players" />
    </children>
 </Pane>

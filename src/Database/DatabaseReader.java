@@ -5,6 +5,7 @@
  */
 package Database;
 
+import GameLogic.User;
 import java.sql.*;
 
 /**
@@ -16,6 +17,10 @@ public class DatabaseReader {
     public static void main(String[] args) throws SQLException {
         DatabaseConnection db = new DatabaseConnection();
         System.out.println("Username: "+db.getUsername() + "\nPassword: " + db.getPassword());
-
+        for (User user : db.getUsers())
+        {
+            System.out.println("Userlijst: "+user.getName());
+        }
+        
     }
 }
