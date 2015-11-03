@@ -261,6 +261,7 @@ public class AMazeIng extends Application {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
                                 }
+                                group.getChildren().add(playerController.getAbility(1).getAbilityNode());
                                 System.out.println("Throw activated. starting cooldown");
                                 cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
                                 break;

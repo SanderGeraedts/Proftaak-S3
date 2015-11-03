@@ -25,6 +25,12 @@ public class PlayerController
     
     private final int spritesize = 16;
     
+    private Ability ab1;
+    private Ability ab2;
+    private Ability ab3;
+    private Ability ab4;
+    
+    
     public PlayerController(Player player, Block[][] maze)
     {
         this.player= player;
@@ -38,6 +44,21 @@ public class PlayerController
     public KeyCode getDirection()
     {
         return lastDir;
+    }
+    
+    public Ability getAbility(int ID) {
+        switch (ID) {
+            case 1:
+                return ab1;
+            case 2:
+                return ab2;
+            case 3:
+                return ab3;
+            case 4:
+                return ab4;
+            default:
+                return null;
+        }
     }
     
     public void setCurrentKey(KeyCode kc)
@@ -96,16 +117,17 @@ public class PlayerController
                         spriteMoves--;
                         break;
                     case DIGIT1:
-                        //Ability 1;
+                        ab1 = new Ability((player.getPlayerRole().getID()* 4) + 0);
+                        ab1.abilityNode.relocate(playerPos.getLayoutX(), playerPos.getLayoutY());
                         break;
                     case DIGIT2:
-                        //Ability 2;
+                        ab2 = new Ability((player.getPlayerRole().getID()* 4) + 1);
                         break;
                     case DIGIT3:
-                        //Ability 3;
+                        ab3 = new Ability((player.getPlayerRole().getID()* 4) + 2);
                         break;
                     case DIGIT4:
-                        //Ability 4;
+                        ab4 = new Ability((player.getPlayerRole().getID()* 4) + 3);
                         break;
                 }
             }
@@ -154,7 +176,18 @@ public class PlayerController
                     if(maze[(int)curY-1][(int)curX] != Block.SOLID)
                     animBusy = currentKey;
                     break;
-                    
+                case DIGIT1:
+                    animBusy = currentKey;
+                    break;
+                case DIGIT2:
+                    animBusy = currentKey;
+                    break;   
+                case DIGIT3:
+                    animBusy = currentKey;
+                    break;   
+                case DIGIT4:
+                    animBusy = currentKey;
+                    break;    
             }
             //System.out.println("Current location: " + curX + ":" + curY);
         }

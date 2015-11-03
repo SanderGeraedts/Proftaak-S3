@@ -39,6 +39,10 @@ public class PlayerRole {
     public Image getImage(int imgID) {
         return defaultImg.get(imgID);
     }
+    
+    public int getID() {
+        return ID;
+    }
 
     /**
      * Create all roles. With given ID u select the right Role.
