@@ -1,6 +1,6 @@
 package GameLogic;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 
 public class User {
 
@@ -58,7 +58,7 @@ public class User {
      * @return User if account exists otherwise return null.
      */
     public User login(String name, String password) {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -72,7 +72,7 @@ public class User {
      * @return true if succesfully added in database.
      */
     public Boolean createAccount(String userid, String name, String password, String email, Stat stats) {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -83,6 +83,6 @@ public class User {
      * @param win if the game is won must be true, lost is false;
      */
     public void changeStats(int kills, int deaths, boolean win) {
-        throw new NotImplementedException();
+
     }
 }
