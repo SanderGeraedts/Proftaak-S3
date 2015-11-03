@@ -85,8 +85,7 @@ public class PlayerController
         double curY;
         double curX;
         
-        Node playerPos = player.GetLocation();
-        
+        Node playerPos = player.GetLocation();        
         
         KeyCode animBusy = null;
         int spriteMoves = spritesize;
@@ -196,7 +195,7 @@ public class PlayerController
                 case DIGIT4:
                     animBusy = currentKey;
                     break;    
-            }
+            }            
             //System.out.println("Current location: " + curX + ":" + curY);
         }
         

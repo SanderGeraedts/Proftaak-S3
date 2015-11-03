@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class AMazeIng extends Application {
 
     static int spritesize = 16;
-    static long defCooldown = 30 * 1000;
+    static long defCooldown = 3 * 1000;
 
     public Image imgCharacter;
     public Node nodCharacter;
@@ -173,7 +173,7 @@ public class AMazeIng extends Application {
         PlayerController playerController = new PlayerController(p, mazegrid, group);
 
         Player monster = new Player(2, 1, 2);
-        Player monster2 = new Player(3, 1, 2);
+        Player monster2 = new Player(3, 1, 3);
         
         int i=0;
         for(Node n : spawnPoints)

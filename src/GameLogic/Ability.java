@@ -1,5 +1,7 @@
 package GameLogic;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -21,6 +23,8 @@ public class Ability {
     private String spriteID;
     private int cooldownTimer;
     public Image img;
+    List<Image> images;
+    ImageView imageView;
     Node abilityNode;
 
     private KeyCode moving;
@@ -32,6 +36,8 @@ public class Ability {
      * @param id
      */
     public Ability(int id, KeyCode moving, Block[][] maze, Group nodes) {
+        imageView = new ImageView();
+        images = new ArrayList<Image>();
         LoadAbility(id);
         this.moving = moving;
         this.maze = maze;
@@ -55,19 +61,28 @@ public class Ability {
             if (animBusy != null) {
                 switch (animBusy) {
                     case LEFT:
-                        abilityPos.relocate(abilityPos.getLayoutX() - 1, abilityPos.getLayoutY());
+                        abilityPos.relocate(abilityPos.getLayoutX() - 1, abilityPos.getLayoutY());                        
+                        imageView.setImage(images.get(1));
+                        abilityNode = imageView;
+                        //img = 
                         spriteMoves--;
                         break;
                     case RIGHT:
                         abilityPos.relocate(abilityPos.getLayoutX() + 1, abilityPos.getLayoutY());
+                        imageView.setImage(images.get(2));
+                        abilityNode = imageView;
                         spriteMoves--;
                         break;
                     case UP:
                         abilityPos.relocate(abilityPos.getLayoutX(), abilityPos.getLayoutY() - 1);
+                        imageView.setImage(images.get(3));
+                        abilityNode = imageView;
                         spriteMoves--;
                         break;
                     case DOWN:
                         abilityPos.relocate(abilityPos.getLayoutX(), abilityPos.getLayoutY() + 1);
+                        imageView.setImage(images.get(0));
+                        abilityNode = imageView;
                         spriteMoves--;
                         break;
                 }
@@ -93,7 +108,7 @@ public class Ability {
              }*/
             if (moving == null || animBusy != null) {
                 return;
-            }
+            }            
 
             curY = abilityPos.getLayoutY() / spritesize;
             curX = abilityPos.getLayoutX() / spritesize;
@@ -133,8 +148,8 @@ public class Ability {
         }
     }
 
-    private void DestructAbility() {
-        nodes.getChildren().remove(abilityNode);
+    public void DestructAbility() {
+        nodes.getChildren().remove(abilityNode);        
     }
     /*
      *Create all Abilities. With given ID u select the right Role.
@@ -184,8 +199,13 @@ public class Ability {
                 damage = 15;
                 spriteID = "4";
                 cooldownTimer = 15;
-                img = Sprite.LoadSprite("Resources/Firebolt-DOWN.png", 16, 16);
-                abilityNode = new ImageView(img);
+                images.add(Sprite.LoadSprite("Resources/Firebolt-DOWN.png", 16, 16));                
+                images.add(Sprite.LoadSprite("Resources/Firebolt-LEFT.png", 16, 16));                
+                images.add(Sprite.LoadSprite("Resources/Firebolt-RIGHT.png", 16, 16));
+                images.add(Sprite.LoadSprite("Resources/Firebolt-UP.png", 16, 16));
+                //img = Sprite.LoadSprite("Resources/Firebolt-DOWN.png", 16, 16);
+                //imageView.setImage(img);
+                abilityNode = imageView;
                 break;
             case 5:
                 name = "Frost Block";

@@ -28,8 +28,7 @@ public class AIController {
     
     private final int spritesize = 16;
     
-    private Player trackingPlayer;
-    
+    private Player trackingPlayer;    
     
     public AIController(Player player, Block[][] maze)
     {
@@ -153,8 +152,7 @@ public class AIController {
         double curY;
         double curX;
         
-        Node playerPos = player.GetLocation();
-        
+        Node playerPos = player.GetLocation();        
         
         KeyCode animBusy = null;
         int spriteMoves = spritesize;
@@ -233,8 +231,7 @@ public class AIController {
                     if(maze[(int)curY-1][(int)curX] != Block.SOLID)
                         animBusy = moving;
                     else moving = null;
-                    break;
-                    
+                    break;                    
             }
         }
     }
