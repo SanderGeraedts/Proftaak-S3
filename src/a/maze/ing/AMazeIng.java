@@ -174,6 +174,13 @@ public class AMazeIng extends Application {
 
         Player monster = new Player(2, 1, 2);
         Player monster2 = new Player(3, 1, 3);
+        monster.isAi = true;
+        monster2.isAi = true;
+        
+        CollisionController cc = new CollisionController();
+        cc.addPlayer(p);
+        cc.addPlayer(monster);
+        cc.addPlayer(monster2);
         
         int i=0;
         for(Node n : spawnPoints)

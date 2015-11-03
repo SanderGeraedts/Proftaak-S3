@@ -15,6 +15,8 @@ public class Player {
         
         private PlayerRole playerRole;
         
+        public boolean isAi;
+        
 
 	/**
 	 * 
@@ -30,7 +32,10 @@ public class Player {
                 imageView.setImage(playerRole.getImage(0));
                 this.location = imageView;
                 this.location.relocate(0, 0);
+                isAi= false;
 	}
+        
+        
         
         public void SpawnPlayer(Node n)
         {
@@ -46,9 +51,34 @@ public class Player {
             return location;
         }
         
+        public int getID()
+        {
+            return this.ID;
+        }
+        
         public PlayerRole getPlayerRole()
         {
             return playerRole;
+        }
+        
+        public void CollisionWith(Player p)
+        {
+            if(this.isAi && p.isAi){ //Collision between 2 AI players
+                //System.out.println("");
+            }
+            else if(!this.isAi && p.isAi){ //Collision between player(this) and ai(p)
+                System.out.println("I: " + this.ID + " Collision with: " + p.getID() + " added 10 damage. HP:" + (hitpoints-10));
+                this.hitpoints-=10;
+                if(hitpoints < 0)
+                {
+                    System.out.println("You died! resetting hp..");
+                    hitpoints = 100;
+                }                
+            }
+        }
+        
+        public void CollisionWith(Ability a) {
+            
         }
 
 }
