@@ -123,7 +123,7 @@ public class LoginController implements Initializable {
         for (User user : db.getUsers()) {
             if (tfBeginUsername.getText().equals(user.getName()) && tfBeginPassword.getText().equals(user.getEmail())) {
 
-                 stage = (Stage) btBeginLogIn.getScene().getWindow();
+                stage = (Stage) btBeginLogIn.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("Lobby.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
@@ -156,7 +156,13 @@ public class LoginController implements Initializable {
             fakegames.add(tfCreateGameName.getText());
             fakegames.add("WTF");
             initViews();
+            AMazeIng a = new AMazeIng();
+            //stage = (Stage) btBeginLogIn.getScene().getWindow();
+            Stage stageAMazeIng = new Stage();
+            a.start(stageAMazeIng);
+            stageAMazeIng.show();
 
+//            stage.show();
             //placeholder code//going back to the lobby // todo !!!!!!!!!!!!!!!!!!!!
             /*stage = (Stage) btCreateCreateGame.getScene().getWindow();
              root = FXMLLoader.load(getClass().getResource("Lobby.fxml"));
