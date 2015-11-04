@@ -50,11 +50,12 @@ public class PlayerController
         return lastDir;
     }
     
-    public Ability getAbility(int ID) {
+    public Ability getAbility(int ID, CollisionController cc) {
         switch (ID) {
             case 1:
                 ab1= new Ability((player.getPlayerRole().getID()* 4) + 0, getDirection(), maze, nodes);
                 ab1.abilityNode.relocate(player.GetLocation().getLayoutX(), player.GetLocation().getLayoutY());
+                cc.addAbility(ab1);
                 return ab1;
             case 2:
                 return ab2;

@@ -37,7 +37,7 @@ public class AIController {
         this.maze = maze;
         AnimationTimer timer = new AnimTask();
         Timer aiTimer = new Timer();
-        aiTimer.scheduleAtFixedRate(new AITask(), 200, 200);
+        aiTimer.scheduleAtFixedRate(new AITask(), 200, 500);
         timer.start();
         moving = null;
     }
@@ -59,6 +59,8 @@ public class AIController {
         @Override
         public void run() 
         {
+            if(!player.active)
+                this.cancel();
             if(trackingPlayer != null && moving == null)
             {
                 Node ploc = player.GetLocation();
@@ -149,6 +151,7 @@ public class AIController {
     
     private class AnimTask extends AnimationTimer
     {
+        
         double curY;
         double curX;
         

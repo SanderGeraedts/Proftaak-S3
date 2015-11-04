@@ -92,6 +92,7 @@ public class AMazeIng extends Application {
     long abilityCooldown;
     ArrayList<Long> abilityCooldowns;
 
+    
     //PlayerController
     @Override
     public void start(Stage primaryStage) {
@@ -160,7 +161,7 @@ public class AMazeIng extends Application {
         primaryStage.show();
 
         //For each spawnpoint, add a player.
-        Player p = new Player(1, 1, 1);
+        Player p = new Player(1, 400, 1);
         
         for (Node n : spawnPoints) {
             group.getChildren().add(p.GetLocation());
@@ -172,8 +173,8 @@ public class AMazeIng extends Application {
 
         PlayerController playerController = new PlayerController(p, mazegrid, group);
 
-        Player monster = new Player(2, 1, 2);
-        Player monster2 = new Player(3, 1, 3);
+        Player monster = new Player(2, 30, 2);
+        Player monster2 = new Player(3, 30, 3);
         monster.isAi = true;
         monster2.isAi = true;
         
@@ -269,7 +270,8 @@ public class AMazeIng extends Application {
                                     return;
                                 }
                                 //Node nullkut = playerController.getAbility(1).getAbilityNode();
-                                group.getChildren().add(playerController.getAbility(1).getAbilityNode());
+                                
+                                group.getChildren().add(playerController.getAbility(1, cc).getAbilityNode());
                                 System.out.println("Throw activated. starting cooldown");
                                 cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
                                 break;
@@ -322,7 +324,7 @@ public class AMazeIng extends Application {
                                     System.out.println("Still in cooldown. Time left: " + (cooldowns.get(event.getCode()) - System.currentTimeMillis()) / 1000);
                                     return;
                                 }
-                                group.getChildren().add(playerController.getAbility(1).getAbilityNode());
+                                group.getChildren().add(playerController.getAbility(1, cc).getAbilityNode());
                                 System.out.println("Throw activated. starting cooldown");
                                 cooldowns.put(event.getCode(), System.currentTimeMillis() + defCooldown);
                                 break;
@@ -417,6 +419,10 @@ public class AMazeIng extends Application {
     public static void main(String[] args) {
         launch(args);
 
+    }
+    
+    public void destructAbility(Ability a) {
+        a.DestructAbility();
     }
 
     private void moveImage(int dx, int dy) {

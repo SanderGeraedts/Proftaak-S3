@@ -3,6 +3,7 @@ package GameLogic;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -30,6 +31,8 @@ public class Ability {
     private KeyCode moving;
     private Block[][] maze;
     private Group nodes;
+    
+    public boolean active=false;
 
     /**
      *
@@ -44,6 +47,11 @@ public class Ability {
         this.nodes = nodes;
         AnimationTimer timer = new AnimTask();
         timer.start();
+        this.active=true;
+    }
+    
+    public String getName() {
+        return name;
     }
 
     private class AnimTask extends AnimationTimer {
@@ -149,7 +157,15 @@ public class Ability {
     }
 
     public void DestructAbility() {
-        nodes.getChildren().remove(abilityNode);        
+        active=false;
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run(){
+                nodes.getChildren().remove(abilityNode);
+            }
+        });
+        
+                
     }
     /*
      *Create all Abilities. With given ID u select the right Role.

@@ -1,5 +1,7 @@
 package GameLogic;
 
+import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +18,7 @@ public class Player {
         private PlayerRole playerRole;
         
         public boolean isAi;
+        public boolean active = false;
         
 
 	/**
@@ -33,6 +36,7 @@ public class Player {
                 this.location = imageView;
                 this.location.relocate(0, 0);
                 isAi= false;
+                active =true;
 	}
         
         
@@ -77,8 +81,26 @@ public class Player {
             }
         }
         
+        
         public void CollisionWith(Ability a) {
-            
+            if(isAi){
+                this.hitpoints-=10;
+                a.DestructAbility();
+                System.out.println("I:" + ID + " Got hit by: " +a.getName() +" HP:" + hitpoints);
+                if(hitpoints <= 0)
+                    Die();
+            }
+        }
+        
+        public void Die() {
+            active = false;
+            Platform.runLater(new Runnable(){
+            @Override
+            public void run(){
+                location.toBack();
+            }
+        });
+            System.out.println("Someone got killedd!");
         }
 
 }
