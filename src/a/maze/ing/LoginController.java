@@ -156,6 +156,7 @@ public class LoginController implements Initializable {
             fakegames.add(tfCreateGameName.getText());
             fakegames.add("WTF");
             initViews();
+            //stage.close();
             AMazeIng a = new AMazeIng();
             //stage = (Stage) btBeginLogIn.getScene().getWindow();
             Stage stageAMazeIng = new Stage();
