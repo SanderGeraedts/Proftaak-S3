@@ -37,8 +37,7 @@ public class AbilityTest {
     
     @Before
     public void setUp() {        
-        good = new Ability(1);       
-        good = new Ability(-1);
+
     }
     
     @After
@@ -47,19 +46,8 @@ public class AbilityTest {
 
     @Test
     //Check
-    public void testConstructor() {
-        Ability a = new Ability(-1);
-        Ability b = new Ability(1);
-        Ability c = new Ability(3);
-        Ability d = new Ability(5);
-        Ability e = new Ability(2);
-        
-        //exception
-        assertNull("bad input, should be null", a);
-        assertNotNull("Should not be null", b);
-        assertNotNull("Should not be null", c);
-        assertNull("bad input, should be null", d);
-        assertNotNull("Should not be null", e);
+    public void testConstructor() {        
+
     }
     
     @Test
