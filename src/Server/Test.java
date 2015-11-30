@@ -5,10 +5,29 @@
  */
 package Server;
 
+import fontys.observer.BasicPublisher;
+import fontys.observer.RemotePropertyListener;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 /**
  *
  * @author Jeroen0606
  */
-public class Test {
+public class Test extends UnicastRemoteObject implements ITest{
+    private BasicPublisher publisher;    
     
+    public Test() throws RemoteException{
+               
+    }
+    
+    
+    public void addListener(RemotePropertyListener RPL, String property) {
+        publisher.addListener(RPL, property);
+    }    
+
+    @Override
+    public String getText() throws RemoteException {
+        return "HOI KASPÈR!!";
+    }
 }

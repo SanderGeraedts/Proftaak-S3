@@ -24,7 +24,7 @@ public class Server {
     private static final int portNumber = 1099;
 
     // Set binding name for mEFB
-    private static final String bindingName = "AEXBanner";
+    private static final String bindingName = "Test";
 
     // References to registry and mEFB
     private Registry registry = null;
@@ -35,7 +35,11 @@ public class Server {
     public Server() {
         
         // Print port number for registry
-        System.out.println("Server: Port number " + portNumber);        
+        System.out.println("Server: Port number " + portNumber);  
+        
+        String[] properties = new String[1];
+        properties[0] = "Refresh";
+        publisher = new BasicPublisher(properties);
 
         // Create registry at port number
         try {
@@ -48,12 +52,13 @@ public class Server {
         }
 
         // Bind mEFB using registry
-//        try {
-//            registry.rebind(bindingName, mEFB);
-//        } catch (RemoteException ex) {
-//            System.out.println("Server: Cannot bind mEFB");
-//            System.out.println("Server: RemoteException: " + ex.getMessage());
-//        }
+        try {
+            Test test = new Test();
+            registry.rebind(bindingName, test);
+        } catch (RemoteException ex) {
+            System.out.println("Server: Cannot bind mEFB");
+            System.out.println("Server: RemoteException: " + ex.getMessage());
+        }
     }
 
     // Print IP addresses and network interfaces
