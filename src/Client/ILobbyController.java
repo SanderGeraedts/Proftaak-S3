@@ -5,10 +5,16 @@
  */
 package Client;
 
+import java.rmi.Remote;
+
 /**
  *
  * @author Jeroen0606
  */
-public interface ILobbyController {
+public interface ILobbyController extends Remote {
+    public void startGame();
     
+    public int getUserID();
+    
+    public boolean getReady();
 }

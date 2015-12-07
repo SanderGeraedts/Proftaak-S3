@@ -9,12 +9,6 @@ package Client;
  *
  * @author Jeroen0606
  */
-public class GraphicsController {
-    private int playerID;
-    private int gameID;
+public interface IPlayer {
     
-    public GraphicsController(int playerID, int gameID) {
-        this.playerID = playerID;
-        this.gameID = gameID; 
-    }
 }

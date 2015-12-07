@@ -10,5 +10,23 @@ package Client;
  * @author Jeroen0606
  */
 public class LobbyController {
+    public void loginUser(String username, String password) {
+        
+    }
     
+    public void hostLobby(String lobbyName) {
+        
+    }
+    
+    public boolean joinLobby(int lobbyID) {
+        return true;
+    }
+    
+    public void leaveLobby() {
+        
+    }
+    
+    public void setReady(boolean ready) {
+        
+    }
 }
